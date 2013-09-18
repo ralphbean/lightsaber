@@ -27,6 +27,9 @@
   - name: Print out node info
     debug: msg={{ buttermilk.droplet.ip_address }}
 
+# TODO - use the add_host module to build a dynamic inventory
+# TODO - use the assemble module to build a dynamic /etc/hosts file from that.
+
 - name: Set up buttermilk content and config
   hosts: buttermilk
 
