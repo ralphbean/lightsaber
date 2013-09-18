@@ -25,7 +25,7 @@
     register: buttermilk
 
   - name: Print out node info
-    debug: msg=buttermilk has IP {{ buttermilk.droplet.ip_address }}
+    debug: msg={{ buttermilk.droplet.ip_address }}
 
 - name: Set up buttermilk content and config
   hosts: buttermilk
