@@ -1,4 +1,4 @@
-
+---
 - name: provision cloud nodes
   hosts: localhost
   connection: local
@@ -25,4 +25,16 @@
     register: buttermilk
 
   - name: Print out node info
-    debug: msg="buttermilk has IP {{ buttermilk.droplet.ip_address }}"
+    debug: msg=buttermilk has IP {{ buttermilk.droplet.ip_address }}
+
+- name: Set up buttermilk content and config
+  hosts: buttermilk
+
+  vars_files:
+  - $private/vars.yml
+
+  roles:
+  - common
+  - server
+  - irc-bouncer
+  - task-server
