@@ -1,0 +1,15 @@
+- name: install server packages
+  yum: state=present name=$item
+  with_items:
+  - mosh
+  tags:
+  - packages
+
+- name: setup some users
+  user: name={{item.user}} shell=/usr/bin/zsh
+  with_items: ${all_users}
+
+- name: give $username an ssh key
+  authorized_key: >
+    user=$username
+    key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

@@ -1,0 +1,14 @@
+alias task="task proj.isnt:house"
+
+export BODHI_USER="ralph"
+
+# Virtualenv stuff
+export WORKON_HOME=/home/threebean/.virtualenvs;
+source /usr/bin/virtualenvwrapper.sh;
+
+PATH=/home/threebean/bin:$PATH
+PATH=$PATH:/home/threebean/local/bin
+
+# Git stuff
+source ~/.githelpers
+alias glog="pretty_git_log"

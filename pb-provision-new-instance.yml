@@ -1,0 +1,21 @@
+
+- name: create the nodes out of thin air
+  hosts: localhost
+  connection: local
+
+  tasks:
+
+  # Use the digital ocean module to spin up a cloud node.
+  # This expects DO_API_KEY and DO_CLIENT_ID env vars to be defined.
+  - name: Do the hard work of talking to digital ocean.
+    digital_ocean: >
+      state=active
+      name=buttermilk
+      ssh_key_ids=threebean
+      size_id=66
+      region_id=4
+      image_id=696598
+      wait_timeout=500
+    register: new_droplet
+
+  - debug: msg={{ new_droplet }}

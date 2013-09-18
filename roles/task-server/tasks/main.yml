@@ -1,0 +1,49 @@
+- name: install required packages
+  yum: state=present name=$item
+  with_items:
+  - cmake
+  - git
+  - wget
+  - tree
+  - gnutls-utils
+  - gcc
+  - gcc-c++
+  - gnutls-devel
+  - libuuid-devel
+  tags:
+  - packages
+
+- name: ensure /usr/local exists
+  file: path=/usr/local/bin state=directory
+
+- name: Attempt to check if gnutls-certool has the right name
+  action: shell test -f /usr/bin/gnutls-certtool && echo "in_place" || echo ""
+  register: certtool_right_name
+
+- name: create a gnutls-certtool shim
+  copy: src=gnutls-certtool-shim dest=/usr/local/bin/gnutls-certtool mode=0755
+  when_string: ${certtool_right_name} != "in_place"
+
+- name: copy over the build scripts to /usr/local
+  copy: src=$item dest=/usr/local/bin/$item mode=0755
+  with_items:
+  - build-taskd-from-source.sh
+  - build-certs.sh
+  - configure-taskd.sh
+
+- name: template any build scripts to /usr/local
+  template: src=$item dest=/usr/local/bin/$item mode=0755
+  with_items:
+  - create-taskd-user.sh
+
+- name: build taskd from source
+  command: /usr/local/bin/build-taskd-from-source.sh creates=/var/tmp/taskd
+
+- name: build taskd certs
+  command: /usr/local/bin/build-certs.sh creates=/var/tmp/taskd/pki/server.cert.pem
+
+- name: configure taskd
+  command: /usr/local/bin/configure-taskd.sh creates=/var/tmp/taskd/demo/server/root/
+
+- name: create taskd user
+  command: /usr/local/bin/create-taskd-user.sh creates=/var/tmp/taskd/demo/server/add_user.sh

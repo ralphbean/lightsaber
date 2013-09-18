@@ -1,0 +1,2 @@
+localhost
+buttermilk ansible_ssh_user=root

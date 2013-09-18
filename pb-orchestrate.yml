@@ -1,0 +1,11 @@
+- name: Set up buttermilk
+  hosts: buttermilk
+
+  vars_files:
+  - $private/vars.yml
+
+  roles:
+  - common
+  - server
+  - irc-bouncer
+  - task-server
