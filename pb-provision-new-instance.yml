@@ -1,13 +1,16 @@
 
-- name: create the nodes out of thin air
+- name: provision cloud nodes
   hosts: localhost
   connection: local
 
+  # digital ocean creds are kept in the private repo
+  vars_files:
+  - $private/vars.yml
+
   tasks:
 
-  # Use the digital ocean module to spin up a cloud node.
-  # This expects DO_API_KEY and DO_CLIENT_ID env vars to be defined.
-  - name: Do the hard work of talking to digital ocean.
+  # Use the digital ocean module to spin up cloud nodes.
+  - name: Provision buttermilk if necessary
     digital_ocean: >
       state=active
       name=buttermilk
@@ -16,6 +19,10 @@
       region_id=4
       image_id=696598
       wait_timeout=500
-    register: new_droplet
+      client_id={{ do_client_id }}
+      api_key={{ do_api_key }}
+      unique_name=true
+    register: buttermilk
 
-  - debug: msg={{ new_droplet }}
+  - name: Print out node info
+    debug: msg="buttermilk has IP {{ buttermilk.droplet.ip_address }}"
