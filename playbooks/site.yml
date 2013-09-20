@@ -34,10 +34,11 @@
   hosts: buttermilk
 
   vars_files:
+  - vars/global.yml
   - $private/vars.yml
 
   roles:
-  - common
-  - server
-  - irc-bouncer
-  - task-server
+  - $roles/common
+  - $roles/server
+  - $roles/irc-bouncer
+  - $roles/task-server
