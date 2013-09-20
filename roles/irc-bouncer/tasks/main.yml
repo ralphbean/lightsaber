@@ -1,11 +1,11 @@
-- name: install common packages
+- name: IRC-Bouncer | install common packages
   yum: state=present name=$item
   with_items:
   - weechat
   tags:
   - packages
 
-- name: Copy weechat config with rsync
+- name: IRC-Bouncer | weechat | Copy weechat config with rsync
   local_action: >
     command
     rsync
@@ -15,5 +15,5 @@
     $roles/irc-bouncer/files/weechat/
     {{ username }}@{{ ansible_hostname }}:~/.weechat
 
-- name: Copy weechat config template directly
+- name: IRC-Bouncer | weechat | Copy weechat config template directly
   template: src=irc.conf dest=/home/{{ username }}/.weechat/irc.conf owner={{ username }}

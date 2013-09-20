@@ -1,5 +1,5 @@
 ---
-- name: provision cloud nodes
+- name: playbook | site | provision cloud nodes
   hosts: localhost
   connection: local
 
@@ -10,7 +10,7 @@
   tasks:
 
   # Use the digital ocean module to spin up cloud nodes.
-  - name: Provision buttermilk if necessary
+  - name: playbook | site | Provision buttermilk if necessary
     digital_ocean: >
       state=active
       name=buttermilk
@@ -30,7 +30,7 @@
 # TODO - use the add_host module to build a dynamic inventory
 # TODO - use the assemble module to build a dynamic /etc/hosts file from that.
 
-- name: Set up buttermilk content and config
+- name: playbook | site | Set up buttermilk content and config
   hosts: buttermilk
 
   vars_files:
@@ -39,6 +39,7 @@
 
   roles:
   - $roles/common
+  - $roles/security
   - $roles/server
   - $roles/irc-bouncer
   - $roles/task-server
