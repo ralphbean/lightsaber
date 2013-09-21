@@ -1,6 +1,6 @@
 #!/bin/bash
 # Create certs
-cd /var/tmp/
+cd /srv
 cd taskd
 cd pki
 ./generate

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Configure taskd
-cd /var/tmp
+cd /srv
 cd taskd
 cd demo/server
 ./setup

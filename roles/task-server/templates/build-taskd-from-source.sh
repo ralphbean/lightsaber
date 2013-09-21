@@ -1,6 +1,6 @@
 #!/bin/bash
 # Install taskd from source
-cd /var/tmp
+cd /srv
 rm -rf taskd/
 git clone git://tasktools.org/taskd.git
 cd taskd
