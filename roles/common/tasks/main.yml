@@ -5,6 +5,7 @@
   - tmux
   - zsh
   - pss
+  - ccze
   - git
   - python-virtualenvwrapper
   tags:
