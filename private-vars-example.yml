@@ -1,0 +1,7 @@
+
+freenode_password: this is a secret from you
+
+# These are digital ocean creds
+do_api_key: ABCDEFGHIJKLMNOPQRSTUV12345
+do_client_id: ABCDEFGHIJKLMNOPQRSTUV12345
+
