@@ -1,4 +1,4 @@
-roles: /home/threebean/devel/ansible-threebean/roles
+roles: /home/threebean/devel/snackpack/roles
 private: /home/threebean/devel/ansible-threebean-private
 
 username: threebean
