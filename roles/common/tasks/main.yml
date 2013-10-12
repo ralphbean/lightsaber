@@ -11,6 +11,10 @@
   tags:
   - packages
 
+- name: Server | users | setup some users
+  user: name={{item.user}} shell=/usr/bin/zsh
+  with_items: ${all_users}
+
 - name: Common | Ensure the all users have a bin dir
   file: dest={{item.homedir}}/bin/ state=directory
   with_items: ${all_users}

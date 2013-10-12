@@ -5,10 +5,6 @@
   tags:
   - packages
 
-- name: Server | users | setup some users
-  user: name={{item.user}} shell=/usr/bin/zsh
-  with_items: ${all_users}
-
 - name: Server | users | give $username an ssh key
   authorized_key: >
     user=$username
