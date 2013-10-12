@@ -15,6 +15,14 @@
   user: name={{item.user}} shell=/usr/bin/zsh
   with_items: ${all_users}
 
+- name: Common | Ensure that those users own their homedir
+  file: >
+      dest={{item.homedir}}
+      owner={{item.user}}
+      group={{item.user}}
+      state=directory
+  with_items: ${all_users}
+
 - name: Common | Ensure the all users have a bin dir
   file: dest={{item.homedir}}/bin/ state=directory
   with_items: ${all_users}
@@ -25,6 +33,7 @@
 - name: Common | tmux | Copy over tmux config
   copy: src=tmux.conf dest=/etc/tmux.conf
 
+# TODO -- do this one just like the custom zshrc config so we can drop 'username'
 - name: Common | git | Copy over git config
   copy: src=$item dest=/home/{{ username }}/.$item
   with_items:
@@ -45,7 +54,11 @@
   copy: src=zshrc-global dest=/etc/zshrc
 
 - name: Common | zsh | Copy over user-specific zshrc
-  copy: src=zshrc-{{item.user}} dest={{item.homedir}}/.zshrc
+  copy: >
+      src=zshrc-{{item.user}}
+      dest={{item.homedir}}/.zshrc
+      owner={{item.user}}
+      group={{item.user}}
   with_items: ${all_users}
 
 - name: Common | vim | Get the spf13-vim3 installer
