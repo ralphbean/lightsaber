@@ -1,7 +1,1 @@
 localhost
-buttermilk ansible_ssh_user=root
-compute01 ansible_ssh_user=root
-compute02 ansible_ssh_user=root
-compute03 ansible_ssh_user=root
-compute04 ansible_ssh_user=root
-compute05 ansible_ssh_user=root

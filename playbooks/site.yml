@@ -27,7 +27,12 @@
   - name: Print out node info
     debug: msg={{ buttermilk.droplet.ip_address }}
 
-# TODO - use the add_host module to build a dynamic inventory
+  - name: playbook | site | add host to dynamic inventory
+    add_host: >
+        name=buttermilk
+        ansible_ssh_host={{ buttermilk.droplet.ip_address }}
+        ansible_ssh_user=root
+
 # TODO - use the assemble module to build a dynamic /etc/hosts file from that.
 
 - name: playbook | site | Set up buttermilk content and config
