@@ -5,6 +5,7 @@
 
   # digital ocean creds are kept in the private repo
   vars_files:
+  - vars/global.yml
   - $private/vars.yml
 
   tasks:
@@ -33,7 +34,21 @@
         ansible_ssh_host={{ buttermilk.droplet.ip_address }}
         ansible_ssh_user=root
 
-# TODO - use the assemble module to build a dynamic /etc/hosts file from that.
+
+- name: playbook | ipython | setup a local /etc/hosts
+  hosts: localhost
+  connection: local
+  user: root
+
+  vars_files:
+  - vars/global.yml
+
+  tasks:
+  - name: setup a local etc/hosts
+    template: >
+        src={{ templates }}/hosts-localhost
+        dest=/etc/hosts
+
 
 - name: playbook | site | Set up buttermilk content and config
   hosts: buttermilk
