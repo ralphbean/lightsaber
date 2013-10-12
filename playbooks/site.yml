@@ -31,6 +31,7 @@
   - name: playbook | site | add host to dynamic inventory
     add_host: >
         name=buttermilk
+        groups=dynamic
         ansible_ssh_host={{ buttermilk.droplet.ip_address }}
         ansible_ssh_user=root
 
