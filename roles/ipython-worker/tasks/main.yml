@@ -1,0 +1,33 @@
+- name: IPython | install required packages
+  yum: state=present name=$item
+  with_items:
+  - ipython
+  - systemd
+  tags:
+  - packages
+
+- name: IPython | create the required user.
+  user: name=ipynb
+
+- name: IPython | create the required group.
+  group: name=ipynb
+
+- name: IPython | Ensure that the ipynb user has a homedir
+  file: >
+      dest={{ item }}
+      owner=ipynb
+      group=ipynb
+      state=directory
+  with_items:
+      - /home/ipynb
+      - /home/ipynb/notebooks
+
+- name: IPython | Copy over the systemd service file
+  copy: >
+      src=ipython-notebook.service
+      dest=/usr/lib/systemd/system/ipython-notebook.service
+
+- name: IPython | Start the notebook daemon
+  service: >
+      name=ipython-notebook
+      state=started

@@ -1,0 +1,62 @@
+---
+- name: playbook | ipython | provision cloud nodes
+  hosts: localhost
+  connection: local
+
+  # digital ocean creds are kept in the private repo
+  vars_files:
+  - vars/global.yml
+  - $private/vars.yml
+
+  tasks:
+
+  # Use the digital ocean module to spin up cloud nodes.
+  - name: playbook | ipython | Provision compute01 if necessary
+    digital_ocean: >
+      state=active
+      name=compute01
+      ssh_key_ids=36649
+      size_id=66
+      region_id=4
+      image_id=696598
+      wait_timeout=500
+      client_id={{ do_client_id }}
+      api_key={{ do_api_key }}
+      unique_name=true
+    register: compute01
+
+  - name: playbook | ipython | add host to dynamic inventory
+    add_host: >
+        name=compute01
+        groups=dynamic
+        ansible_ssh_host={{ compute01.droplet.ip_address }}
+        ansible_ssh_user=root
+
+
+- name: playbook | ipython | setup a local /etc/hosts
+  hosts: localhost
+  connection: local
+  user: root
+
+  vars_files:
+  - vars/global.yml
+
+  tasks:
+  - name: setup a local etc/hosts
+    template: >
+        src={{ templates }}/hosts-localhost
+        dest=/etc/hosts
+
+
+- name: playbook | ipython | Set up compute01 content and config
+  hosts: compute01
+
+  vars_files:
+  - vars/global.yml
+  - $private/vars.yml
+
+  roles:
+  - $roles/common
+  - $roles/security
+  - $roles/server
+  - $roles/ipython-worker
