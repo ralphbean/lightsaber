@@ -36,6 +36,9 @@
         ansible_ssh_user=root
 
 
+# This is tricky, b/c we need to be root to write locally to /etc/hosts but
+# we don't want to have to be root for any other reason.  How best to pull it
+# off?
 - name: playbook | ipython | setup a local /etc/hosts
   hosts: localhost
   connection: local
