@@ -1,5 +1,5 @@
 ---
-- name: playbook | site | provision cloud nodes
+- name: playbook | provision | provision cloud nodes
   hosts: localhost
   connection: local
 
@@ -9,53 +9,16 @@
   - $private/vars.yml
 
   tasks:
+  - include: $tasks/provision.yml
 
-  # Use the digital ocean module to spin up cloud nodes.
-  - name: playbook | site | Provision buttermilk if necessary
-    digital_ocean: >
-      state=active
-      name=buttermilk
-      ssh_key_ids=threebean
-      size_id=66
-      region_id=4
-      image_id=696598
-      wait_timeout=500
-      client_id={{ do_client_id }}
-      api_key={{ do_api_key }}
-      unique_name=true
-    register: buttermilk
-
-  - name: Print out node info
-    debug: msg={{ buttermilk.droplet.ip_address }}
-
-  - name: playbook | site | add host to dynamic inventory
-    add_host: >
-        name=buttermilk
-        groups=dynamic
-        ansible_ssh_host={{ buttermilk.droplet.ip_address }}
-        ansible_ssh_user=root
-
-
-# This is tricky, b/c we need to be root to write locally to /etc/hosts but
-# we don't want to have to be root for any other reason.  How best to pull it
-# off?
-- name: playbook | ipython | setup a local /etc/hosts
-  hosts: localhost
-  connection: local
-  user: root
-
-  vars_files:
-  - vars/global.yml
-
+- name: playvook | site | Prepare for accelerate mode
+  hosts: buttermilk;compute01
   tasks:
-  - name: setup a local etc/hosts
-    template: >
-        src={{ templates }}/hosts-localhost
-        dest=/etc/hosts
+  - name: Install package required for accelerate mode
+    yum: name=python-keyczar state=installed
 
-
-- name: playbook | site | Set up buttermilk content and config
-  hosts: buttermilk
+- name: playbook | site | Set up basic server config
+  hosts: buttermilk;compute01
 
   vars_files:
   - vars/global.yml
@@ -65,5 +28,24 @@
   - $roles/common
   - $roles/security
   - $roles/server
+
+- name: playbook | site | Set up buttermilk content
+  hosts: compute01
+
+  vars_files:
+  - vars/global.yml
+  - $private/vars.yml
+
+  roles:
   - $roles/irc-bouncer
   - $roles/task-server
+
+- name: playbook | site | Set up compute01 content
+  hosts: compute01
+
+  vars_files:
+  - vars/global.yml
+  - $private/vars.yml
+
+  roles:
+  - $roles/ipython-worker
