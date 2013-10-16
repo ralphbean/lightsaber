@@ -30,7 +30,7 @@
   - $roles/server
 
 - name: playbook | site | Set up buttermilk content
-  hosts: compute01
+  hosts: buttermilk
 
   vars_files:
   - vars/global.yml
