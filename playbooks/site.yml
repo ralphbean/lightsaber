@@ -11,7 +11,7 @@
   tasks:
   - include: $tasks/provision.yml
 
-- name: playvook | site | Prepare for accelerate mode
+- name: playbook | site | Prepare for accelerate mode
   hosts: buttermilk;compute01
   tasks:
   - name: Install package required for accelerate mode
