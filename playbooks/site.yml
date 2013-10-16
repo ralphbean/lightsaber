@@ -2,6 +2,7 @@
 - name: playbook | provision | provision cloud nodes
   hosts: localhost
   connection: local
+  gather_facts: false
 
   # digital ocean creds are kept in the private repo
   vars_files:
