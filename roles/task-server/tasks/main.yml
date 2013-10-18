@@ -65,3 +65,14 @@
   command: /usr/local/bin/create-taskd-user.sh creates=/srv/taskd/demo/server/add_user.sh
   tags:
   - taskd
+
+- name: task-server | Open a port
+  firewalld: >
+      port={{ item }}/tcp
+      state=enabled
+      permanent=true
+      zone=public
+  with_items:
+      - 6544
+  notify:
+    - restart firewalld
