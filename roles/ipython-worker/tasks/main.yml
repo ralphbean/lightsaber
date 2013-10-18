@@ -42,5 +42,3 @@
       - 8891
   notify:
     - restart firewalld
-  tags:
-    - firewalld
