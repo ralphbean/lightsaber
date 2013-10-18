@@ -6,4 +6,3 @@
 
 - name: SELinux Enforcing (Targeted)
   selinux: policy=targeted state=enforcing
-
