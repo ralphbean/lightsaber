@@ -5,6 +5,21 @@
   tags:
   - packages
 
+- name: Server | open some ports for mosh
+  firewalld: >
+      port={{ item }}/udp
+      state=enabled
+      permanent=true
+      zone=public
+  with_items:
+      - 60000
+      - 60001
+      - 60002
+      - 60003
+      - 60004
+  notify:
+    - restart firewalld
+
 - name: Server | users | give $username an ssh key
   authorized_key: >
     user=$username

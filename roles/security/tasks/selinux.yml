@@ -1,0 +1,9 @@
+- name: Ensure Installed - policycoreutils
+  yum: pkg=policycoreutils state=latest
+
+- name: Ensure Installed - policycoreutils-python
+  yum: pkg=policycoreutils-python state=latest
+
+- name: SELinux Enforcing (Targeted)
+  selinux: policy=targeted state=enforcing
+
