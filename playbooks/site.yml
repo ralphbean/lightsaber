@@ -26,8 +26,8 @@
   - $private/vars.yml
 
   roles:
-  - $roles/common
   - $roles/security
+  - $roles/common
   - $roles/server
 
 - name: playbook | site | Set up buttermilk content
