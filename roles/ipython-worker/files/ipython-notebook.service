@@ -11,4 +11,3 @@ WorkingDirectory=/home/ipynb/notebooks
 
 [Install]
 WantedBy=multi-user.target
-

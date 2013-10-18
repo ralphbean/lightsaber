@@ -31,3 +31,16 @@
   service: >
       name=ipython-notebook
       state=started
+
+- name: IPython | Open a port
+  firewalld: >
+      port={{ item }}/tcp
+      state=enabled
+      permanent=true
+      zone=public
+  with_items:
+      - 8891
+  notify:
+    - restart firewalld
+  tags:
+    - firewalld
