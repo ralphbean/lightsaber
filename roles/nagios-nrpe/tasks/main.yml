@@ -1,0 +1,26 @@
+- name: nrpe | install nrpe
+  yum: state=latest pkg={{ item }}
+  with_items:
+  - nagios-plugins-all
+  - nrpe
+  notify:
+    - restart nrpe
+
+- name: nrpe | copy over basic nrpe tasks
+  template: src=nrpe.cfg dest=/etc/nagios/nrpe.cfg
+  notify:
+    - restart nrpe
+
+- name: nrpe | start nrpe
+  service: name=nrpe enabled=yes state=started
+
+- name: nrpe | open a port
+  firewalld: >
+      port={{ item }}/tcp
+      state=enabled
+      permanent=true
+      zone=public
+  with_items:
+      - 5666
+  notify:
+    - restart firewalld

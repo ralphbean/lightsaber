@@ -29,6 +29,7 @@
   - $roles/security
   - $roles/common
   - $roles/server
+  - $roles/nagios-nrpe
 
 - name: playbook | site | Set up buttermilk content
   hosts: buttermilk
