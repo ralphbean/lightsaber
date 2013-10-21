@@ -1,3 +1,4 @@
 - include: fail2ban.yml
 - include: rkhunter.yml
 - include: lynis.yml
+- include: firewalld.yml

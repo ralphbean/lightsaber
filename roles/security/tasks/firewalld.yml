@@ -1,0 +1,7 @@
+# file: roles/security/tasks/firewalld.yml
+
+- name: Security | firewalld | Make sure firewalld is installed
+  yum: name=firewalld state=present
+
+- name: Security | firewalld | Start the firewalld service
+  service: name=firewalld enabled=yes state=started
