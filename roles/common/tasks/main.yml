@@ -1,7 +1,7 @@
 - name: Common | install common packages
   yum: state=present name=$item
   with_items:
-  - vim
+  - vim-enhanced
   - tmux
   - zsh
   - pss

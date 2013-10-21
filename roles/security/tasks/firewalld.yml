@@ -1,7 +1,5 @@
-- name: Ensure Install - firewalld
-  yum: pkg=firewalld state=latest
+- name: Security | firewalld | Make sure firewalld is installed
+  yum: name=firewalld state=present
 
-- name: Start and Enable firewalld daemon
-  service: name=firewalld state=started enabled=yes
-  async: 10
-  poll: 2
+- name: Security | firewalld | Start the firewalld service
+  service: name=firewalld enabled=yes state=started
