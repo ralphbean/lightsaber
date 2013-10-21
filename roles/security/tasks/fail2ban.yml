@@ -12,3 +12,6 @@
   copy: src=fail2ban/jail.conf dest=/etc/fail2ban/jail.conf owner=root group=root mode=0644
   notify:
     - restart fail2ban
+
+- name: Security | fail2ban | Start the fail2ban service
+  service: name=fail2ban enabled=yes state=started
