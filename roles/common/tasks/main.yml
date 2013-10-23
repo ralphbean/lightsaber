@@ -6,6 +6,7 @@
   - zsh
   - pss
   - ccze
+  - htop
   - git
   - python-virtualenvwrapper
   tags:
