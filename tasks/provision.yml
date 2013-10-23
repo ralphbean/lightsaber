@@ -30,7 +30,7 @@
 - name: playbook | provision | add buttermilk to dynamic inventory
   add_host: >
       name=buttermilk
-      groups=dynamic,servers
+      groups=dynamic,servers,bouncer,task-server
       ansible_ssh_host={{ buttermilk.droplet.ip_address }}
       ansible_ssh_user=root
 

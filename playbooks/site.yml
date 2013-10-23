@@ -13,13 +13,20 @@
   - include: $tasks/provision.yml
 
 - name: playbook | site | Prepare for accelerate mode
-  hosts: buttermilk;compute01
+  hosts: servers
   tasks:
   - name: Install package required for accelerate mode
     yum: name=python-keyczar state=installed
+  - name: Open the ansible accelerate port
+    firewalld: >
+        port=40319/tcp
+        state=enabled
+        zone=public
+        permanent=false
 
 - name: playbook | site | Set up basic server config
-  hosts: buttermilk;compute01
+  hosts: servers
+  accelerate: true
 
   vars_files:
   - vars/global.yml
@@ -31,8 +38,9 @@
   - $roles/server
   - $roles/nagios-nrpe
 
-- name: playbook | site | Set up buttermilk content
-  hosts: buttermilk
+- name: playbook | site | Set up bouncer
+  hosts: bouncer
+  accelerate: true
 
   vars_files:
   - vars/global.yml
@@ -40,10 +48,21 @@
 
   roles:
   - $roles/irc-bouncer
+
+- name: playbook | site | Set up task server
+  hosts: task-server
+  accelerate: true
+
+  vars_files:
+  - vars/global.yml
+  - $private/vars.yml
+
+  roles:
   - $roles/task-server
 
 - name: playbook | site | Set up compute01 content
   hosts: compute01
+  accelerate: true
 
   vars_files:
   - vars/global.yml
