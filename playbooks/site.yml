@@ -36,6 +36,27 @@
   - $roles/security
   - $roles/common
   - $roles/server
+
+- name: playbook | site | Set up nagios head
+  hosts: nagios
+  accelerate: true
+
+  vars_files:
+  - vars/global.yml
+  - $private/vars.yml
+
+  roles:
+  - $roles/nagios-head
+
+- name: playbook | site | Set up nrpe monitoring on all our nodes
+  hosts: servers
+  accelerate: true
+
+  vars_files:
+  - vars/global.yml
+  - $private/vars.yml
+
+  roles:
   - $roles/nagios-nrpe
 
 - name: playbook | site | Set up bouncer
@@ -60,6 +81,8 @@
   roles:
   - $roles/task-server
 
+
+# TODO -- nuke this
 - name: playbook | site | Set up compute01 content
   hosts: compute01
   accelerate: true
