@@ -37,6 +37,6 @@
 - name: playbook | provision | add compute01 to dynamic inventory
   add_host: >
       name=compute01
-      groups=dynamic,servers,compute
+      groups=dynamic,servers,compute,nagios
       ansible_ssh_host={{ compute01.droplet.ip_address }}
       ansible_ssh_user=root
