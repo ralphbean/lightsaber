@@ -10,6 +10,7 @@
   - ftop
   - git
   - python-virtualenvwrapper
+  - bpython
   tags:
   - packages
 
