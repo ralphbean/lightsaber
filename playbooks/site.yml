@@ -12,6 +12,16 @@
   tasks:
   - include: $tasks/provision.yml
 
+- name: playbook | site | Set up security
+  hosts: servers
+
+  vars_files:
+  - vars/global.yml
+  - $private/vars.yml
+
+  roles:
+  - $roles/security
+
 - name: playbook | site | Prepare for accelerate mode
   hosts: servers
   tasks:
@@ -33,7 +43,6 @@
   - $private/vars.yml
 
   roles:
-  - $roles/security
   - $roles/common
   - $roles/server
 

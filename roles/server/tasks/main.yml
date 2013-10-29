@@ -2,6 +2,7 @@
   yum: state=present name=$item
   with_items:
   - mosh
+  - firewalld
   tags:
   - packages
 
