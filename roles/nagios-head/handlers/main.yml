@@ -1,2 +1,5 @@
 - name: restart nagios
   action: service name=nagios state=restarted
+
+- name: restart firewalld
+  action: service name=firewalld state=restarted
