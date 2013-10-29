@@ -32,7 +32,7 @@
 
 - name: task-server | create a gnutls-certtool shim
   copy: src=gnutls-certtool-shim dest=/usr/local/bin/gnutls-certtool mode=0755
-  when_string: ${certtool_right_name} != "in_place"
+  when: certtool_right_name != "in_place"
   tags:
   - taskd
 
