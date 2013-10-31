@@ -91,8 +91,8 @@
     path: /
   - role: $roles/nagios/nrpe/site
     site: monroe-threebean.rhcloud.com
-    target: OK
-    path: /health
+    target: foreclosures
+    path: /graph?from_date=01%2F01%2F2013&to_date=01%2F01%2F2013
   #- role: $roles/nagios/nrpe/site
   # site_fqdn: badges.threebean.org
   # target: threebean
