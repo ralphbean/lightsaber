@@ -19,6 +19,9 @@
   delegate_to: compute01
   notify: restart nagios
 
+- name: nrpe | make sure nrpe can ping (sticky bit)
+  file: dest=/usr/bin/ping mode=4755
+
 - name: nrpe | start nrpe
   service: name=nrpe enabled=yes state=started
 
