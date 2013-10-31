@@ -2,6 +2,7 @@
   yum: state=latest pkg={{ item }}
   with_items:
   - nagios
+  - nagios-plugins-nrpe
   - perl-Text-ParseWords
   notify:
     - restart nagios
@@ -34,7 +35,6 @@
 
 - name: nagios | start httpd
   service: name=httpd enabled=yes state=started
-
 
 - name: nrpe | open a port
   firewalld: >

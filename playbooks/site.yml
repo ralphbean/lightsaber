@@ -66,7 +66,37 @@
   - $private/vars.yml
 
   roles:
-  - $roles/nagios/nrpe
+  - $roles/nagios/nrpe/common
+
+- name: playbook | site | Set up nrpe website monitoring.
+  hosts: nagios
+  accelerate: true
+
+  vars_files:
+  - vars/global.yml
+  - $private/vars.yml
+
+  roles:
+  - role: $roles/nagios/nrpe/site
+    site: narcissus.rc.rit.edu
+    target: narcissus
+    path: /
+  - role: $roles/nagios/nrpe/site
+    site: threebean.org
+    target: widget
+    path: /blog/
+  - role: $roles/nagios/nrpe/site
+    site: tw2-demos.threebean.org
+    target: widget
+    path: /
+  - role: $roles/nagios/nrpe/site
+    site: monroe-threebean.rhcloud.com
+    target: OK
+    path: /health
+  #- role: $roles/nagios/nrpe/site
+  # site_fqdn: badges.threebean.org
+  # target: threebean
+  # path: /
 
 - name: playbook | site | Set up bouncer
   hosts: bouncer
