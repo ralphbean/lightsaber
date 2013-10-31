@@ -80,7 +80,7 @@
   - role: $roles/nagios/nrpe/site
     site: narcissus.rc.rit.edu
     target: narcissus
-    path: /
+    path: /map/
   - role: $roles/nagios/nrpe/site
     site: threebean.org
     target: widget
