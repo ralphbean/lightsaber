@@ -6,11 +6,35 @@
   notify:
     - restart nagios
 
+- name: nagios | remove some default files
+  file: dest=/etc/nagios/objects/{{ item }} state=absent
+  with_items:
+  - localhost.cfg
+  - printer.cfg
+  - switch.cfg
+  - windows.cfg
+
+- name: nagios | add our master nagios config
+  copy: src=nagios.cfg dest=/etc/nagios/nagios.cfg
+  notify:
+    - restart nagios
+
+- name: nagios | copy over the supporting config
+  copy: src={{ item }} dest=/etc/nagios/objects/{{ item }}
+  with_items:
+      - commands.cfg
+  notify:
+      - restart nagios
+
+- name: nagios | ensure /etc/nagios/hosts is there
+  file: dest=/etc/nagios/hosts state=directory
+
 - name: nagios | start nagios
   service: name=nagios enabled=yes state=started
 
 - name: nagios | start httpd
   service: name=httpd enabled=yes state=started
+
 
 - name: nrpe | open a port
   firewalld: >

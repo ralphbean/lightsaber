@@ -11,6 +11,14 @@
   notify:
     - restart nrpe
 
+- name: nrpe | copy host config to the nagios head
+  template: >
+    src=nrpe-nagios-side.cfg
+    dest=/etc/nagios/hosts/{{ inventory_hostname }}.cfg
+    mode=0644
+  delegate_to: compute01
+  notify: restart nagios
+
 - name: nrpe | start nrpe
   service: name=nrpe enabled=yes state=started
 
