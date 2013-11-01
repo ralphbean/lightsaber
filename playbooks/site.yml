@@ -121,6 +121,7 @@
   - $roles/task-server
   - role: $roles/nagios/nrpe/proc
     proc: taskd
+    user: taskd
 
 
 # TODO -- nuke this
@@ -136,3 +137,4 @@
   - $roles/ipython-worker
   - role: $roles/nagios/nrpe/proc
     proc: ipython
+    user: ipynb
