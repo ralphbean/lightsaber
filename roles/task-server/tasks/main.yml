@@ -12,29 +12,20 @@
   - libuuid-devel
   tags:
   - packages
-  - taskd
 
 - name: task-server | ensure /usr/local exists
   file: path=/usr/local/bin state=directory
-  tags:
-  - taskd
 
 - name: task-server | ensure /srv exists
   file: path=/srv state=directory
-  tags:
-  - taskd
 
 - name: task-server | Attempt to check if gnutls-certtool has the right name
   action: shell test -f /usr/bin/gnutls-certtool && echo "in_place" || echo ""
   register: certtool_right_name
-  tags:
-  - taskd
 
 - name: task-server | create a gnutls-certtool shim
   copy: src=gnutls-certtool-shim dest=/usr/local/bin/gnutls-certtool mode=0755
   when: certtool_right_name != "in_place"
-  tags:
-  - taskd
 
 - name: task-server | template any build scripts to /usr/local
   template: src=$item dest=/usr/local/bin/$item mode=0755
@@ -43,28 +34,32 @@
   - build-taskd-from-source.sh
   - build-certs.sh
   - configure-taskd.sh
-  tags:
-  - taskd
+
+- name: task-server | create the required system user.
+  user: name=taskd
+
+- name: task-server | create the required system group.
+  group: name=taskd
+
+- name: task-server | Copy over the systemd service file
+  copy: >
+      src=taskd.service
+      dest=/usr/lib/systemd/system/taskd.service
 
 - name: task-server | build taskd from source
   command: /usr/local/bin/build-taskd-from-source.sh creates=/srv/taskd
-  tags:
-  - taskd
 
 - name: task-server | build taskd certs
   command: /usr/local/bin/build-certs.sh creates=/srv/taskd/pki/server.cert.pem
-  tags:
-  - taskd
 
 - name: task-server | configure taskd
   command: /usr/local/bin/configure-taskd.sh creates=/srv/taskd/demo/server/root/
-  tags:
-  - taskd
 
 - name: task-server | create taskd user
   command: /usr/local/bin/create-taskd-user.sh creates=/srv/taskd/demo/server/add_user.sh
-  tags:
-  - taskd
+
+- name: task-server | start the service
+  service: name=taskd state=started
 
 - name: task-server | Open a port
   firewalld: >

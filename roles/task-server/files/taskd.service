@@ -1,0 +1,13 @@
+[Unit]
+Description=Task Server
+
+[Service]
+Type=simple
+PIDFile=/var/run/taskd.pid
+ExecStart=/usr/local/bin/taskd server --data /srv/taskd/demo/server/root --debug
+User=taskd
+Group=taskd
+WorkingDirectory=/srv/taskd/demo/server/root
+
+[Install]
+WantedBy=multi-user.target
