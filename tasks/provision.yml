@@ -3,7 +3,7 @@
   digital_ocean: >
     state=active
     name=buttermilk
-    ssh_key_ids=threebean
+    ssh_key_ids=36649
     size_id=66
     region_id=4
     image_id=696598
