@@ -30,9 +30,6 @@
 - name: nagios | ensure /etc/nagios/hosts is there
   file: dest=/etc/nagios/hosts state=directory
 
-- name: nagios | start nagios
-  service: name=nagios enabled=yes state=started
-
 - name: nagios | start httpd
   service: name=httpd enabled=yes state=started
 
