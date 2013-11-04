@@ -4,7 +4,7 @@ cd /srv
 rm -rf taskd/
 git clone git://tasktools.org/taskd.git
 cd taskd
-git checkout d02090ba433b6ba15a64672016ae0ee056ab4328
+git checkout 1.0.0
 cmake .
 make
 make install
