@@ -1,0 +1,94 @@
+---
+# Configuration for the tahrir webapp
+
+- name: install needed packages
+  yum: pkg=$item state=installed
+  with_items:
+  - python-tahrir
+  - python-psycopg2
+  - python-memcached
+  - python-sqlalchemy0.8
+  - python-rdflib
+  tags:
+  - packages
+
+- name: copy tahrir app configuration
+  template: >
+    src=$item dest=/etc/tahrir/$item
+    owner=tahrir group=tahrir mode=0600
+  with_items:
+  - tahrir.ini
+  tags:
+  - config
+  notify:
+  - restart apache
+
+- name: copy tahrir wsgi script
+  copy: >
+    src=$item dest=/usr/share/tahrir/$item
+    owner=apache group=apache mode=0644
+  with_items:
+  - tahrir.wsgi
+  tags:
+  - config
+  notify:
+  - restart apache
+
+- name: copy tahrir httpd config
+  copy: >
+    src=$item dest=/etc/httpd/conf.d/$item
+    owner=apache group=apache mode=0644
+  with_items:
+  - tahrir.conf
+  tags:
+  - config
+  notify:
+  - restart apache
+
+- name: hotfix - allow velruse to do stateless openid
+  copy: >
+    src=openid.py
+    dest=/usr/lib/python2.6/site-packages/velruse/providers/openid.py
+    owner=root group=root mode=0644
+  tags:
+  - hotfix
+  notify:
+  - restart apache
+
+- name: make badge rst directory
+  file: >
+    path=/usr/share/badges/sitedocs
+    state=directory
+    owner=root group=root mode=0755
+  tags:
+  - config
+  - assets
+
+- name: copy over all our .rst site docs
+  copy: >
+    src=$item
+    dest=/usr/share/badges/sitedocs
+    owner=root group=root mode=0644
+  with_fileglob:
+  - fedora-sitedocs/*.rst
+  tags:
+  - config
+  - assets
+
+- name: make badge png directory
+  file: >
+    path=/usr/share/badges/pngs
+    state=directory
+    owner=root group=root mode=0755
+  tags:
+  - assets
+
+- name: copy over all our badge images
+  copy: >
+    src=$item
+    dest=/usr/share/badges/pngs/
+    owner=root group=root mode=0644
+  with_fileglob:
+  - /srv/web/infra/badges/pngs/*.png
+  tags:
+  - assets
