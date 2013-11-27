@@ -14,3 +14,7 @@ sed -i "s/localhost/${IP_ADDR}/g" {{ username }}.taskdconfig
 
 # This also needs to happen, although it doesn't have anything to do with creating a user.
 sed -i "s/localhost/${IP_ADDR}/g" root/config
+
+
+# Lastly, this is kind of unrelated, but chown everything to the taskd user.
+chown -R taskd:taskd /srv/taskd/demo/server

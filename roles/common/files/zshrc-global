@@ -35,6 +35,7 @@ export MAILCHECK=0
 export HGMERGE=/usr/bin/meld
 alias fdate="date '+%F'"
 alias gthumb="eog"
+alias yum="dnf"
 
 bindkey '^[[1;5D' emacs-backward-word
 bindkey '^[[1;5C' emacs-forward-word

@@ -22,6 +22,9 @@
   roles:
   - $roles/security
 
+  #tasks:
+  #- $tasks/update-all-packages.yml
+
 - name: playbook | site | Prepare for accelerate mode
   hosts: servers
   tasks:
