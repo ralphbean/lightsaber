@@ -78,3 +78,20 @@
   - /srv/web/infra/badges/pngs/*.png
   tags:
   - assets
+
+- name: ensure /var/run/tahrir exists
+  file: >
+      dest=/var/run/tahrir/
+      state=directory
+      owner=tahrir
+      group=tahrir
+      mode=0755
+      setype=httpd_sys_script_rw_t
+
+- name: create our badges db
+  command: >
+      /usr/bin/initialize_tahrir_db /etc/tahrir/tahrir.ini
+      creates=/var/run/tahrir/tahrir-db.sql
+
+- name: ensure sqlite db is readable by tahrir
+  file: dest=/var/run/tahrir/tahrir-db.sql owner=tahrir group=tahrir mode=0644

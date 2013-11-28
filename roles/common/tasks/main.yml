@@ -11,6 +11,7 @@
   - git
   - python-virtualenvwrapper
   - bpython
+  - dnf
   tags:
   - packages
 
