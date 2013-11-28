@@ -126,8 +126,6 @@
     proc: taskd
     user: taskd
 
-
-# TODO -- nuke this
 - name: playbook | site | Set up compute01 content
   hosts: compute01
   accelerate: true
@@ -137,6 +135,9 @@
   - $private/vars.yml
 
   roles:
+  - $roles/badges
+# TODO -- add nrpe check for badges website.
+# TODO -- nuke this
   - $roles/ipython-worker
   - role: $roles/nagios/nrpe/proc
     proc: ipython

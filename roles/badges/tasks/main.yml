@@ -5,10 +5,6 @@
   yum: pkg=$item state=installed
   with_items:
   - python-tahrir
-  - python-psycopg2
-  - python-memcached
-  - python-sqlalchemy0.8
-  - python-rdflib
   tags:
   - packages
 
@@ -21,7 +17,7 @@
   tags:
   - config
   notify:
-  - restart apache
+  - restart httpd
 
 - name: copy tahrir wsgi script
   copy: >
@@ -32,7 +28,7 @@
   tags:
   - config
   notify:
-  - restart apache
+  - restart httpd
 
 - name: copy tahrir httpd config
   copy: >
@@ -43,17 +39,7 @@
   tags:
   - config
   notify:
-  - restart apache
-
-- name: hotfix - allow velruse to do stateless openid
-  copy: >
-    src=openid.py
-    dest=/usr/lib/python2.6/site-packages/velruse/providers/openid.py
-    owner=root group=root mode=0644
-  tags:
-  - hotfix
-  notify:
-  - restart apache
+  - restart httpd
 
 - name: make badge rst directory
   file: >
@@ -70,7 +56,7 @@
     dest=/usr/share/badges/sitedocs
     owner=root group=root mode=0644
   with_fileglob:
-  - fedora-sitedocs/*.rst
+  - threebean-sitedocs/*.rst
   tags:
   - config
   - assets
