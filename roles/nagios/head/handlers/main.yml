@@ -3,3 +3,6 @@
 
 - name: restart firewalld
   action: service name=firewalld state=restarted
+
+- name: restart httpd
+  action: service name=httpd state=restarted

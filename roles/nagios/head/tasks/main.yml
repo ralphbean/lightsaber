@@ -30,6 +30,13 @@
 - name: nagios | ensure /etc/nagios/hosts is there
   file: dest=/etc/nagios/hosts state=directory
 
+- name: copy nagios httpd config
+  copy: >
+    src=nagios.conf dest=/etc/httpd/conf.d/nagios.conf
+    owner=apache group=apache mode=0644
+  notify:
+  - restart httpd
+
 - name: nagios | start httpd
   service: name=httpd enabled=yes state=started
 
