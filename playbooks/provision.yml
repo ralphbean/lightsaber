@@ -6,10 +6,10 @@
   # digital ocean creds are kept in the private repo
   vars_files:
   - vars/global.yml
-  - $private/vars.yml
+  - {{ private }}/vars.yml
 
   tasks:
-  - include: $tasks/provision.yml
+  - include: {{ tasks }}/provision.yml
 
 - name: playbook | provision | setup a local /etc/hosts
   hosts: localhost
@@ -20,4 +20,4 @@
   - vars/global.yml
 
   tasks:
-  - include: $tasks/record_hosts.yml
+  - include: {{ tasks }}/record_hosts.yml

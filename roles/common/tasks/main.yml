@@ -1,5 +1,5 @@
 - name: Common | install common packages
-  yum: state=present name=$item
+  yum: state=present name={{ item }}
   with_items:
   - vim-enhanced
   - tmux
@@ -17,7 +17,7 @@
 
 - name: Server | users | setup some users
   user: name={{item.user}} shell=/usr/bin/zsh
-  with_items: ${all_users}
+  with_items: "{{ all_users }}"
 
 - name: Common | Ensure that those users own their homedir
   file: >
@@ -25,11 +25,11 @@
       owner={{item.user}}
       group={{item.user}}
       state=directory
-  with_items: ${all_users}
+  with_items: "{{ all_users }}"
 
 - name: Common | Ensure the all users have a bin dir
   file: dest={{item.homedir}}/bin/ state=directory
-  with_items: ${all_users}
+  with_items: "{{ all_users }}"
 
 - name: Common | Copy over custom bashrc prompt
   copy: src=bashrc-gitprompt dest=/etc/profile.d/bashrc-gitprompt.sh
@@ -39,7 +39,7 @@
 
 # TODO -- do this one just like the custom zshrc config so we can drop 'username'
 - name: Common | git | Copy over git config
-  copy: src=$item dest=/home/{{ username }}/.$item
+  copy: src={{ item }} dest=/home/{{ username }}/.{{ item }}
   with_items:
   - gitconfig
   - githelpers
@@ -51,7 +51,7 @@
     -e ssh
     --delete
     -uaSHAXEx
-    $roles/common/files/oh-my-zsh/
+    {{ roles }}/common/files/oh-my-zsh/
     root@{{ ansible_hostname }}:/usr/local/share/
 
 - name: Common | zsh | Copy over global zshrc
@@ -63,7 +63,7 @@
       dest={{item.homedir}}/.zshrc
       owner={{item.user}}
       group={{item.user}}
-  with_items: ${all_users}
+  with_items: "{{ all_users }}"
 
 - name: Common | vim | Get the spf13-vim3 installer
   get_url: url=http://j.mp/spf13-vim3 dest=/usr/local/bin/install-spf13-vim3 mode=0755
@@ -72,6 +72,6 @@
 
 - name: Common | vim | Run the spf13-vim3 installer
   command: su - {{item.user}} /usr/local/bin/install-spf13-vim3 creates={{item.homedir}}/.vimrc
-  with_items: ${all_users}
+  with_items: "{{ all_users }}"
   tags:
   - vim

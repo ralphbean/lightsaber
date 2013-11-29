@@ -7,23 +7,23 @@
   # digital ocean creds are kept in the private repo
   vars_files:
   - vars/global.yml
-  - $private/vars.yml
+  - "{{ private }}/vars.yml"
 
   tasks:
-  - include: $tasks/provision.yml
+  - include: "{{ tasks }}/provision.yml"
 
 - name: playbook | site | Set up security
   hosts: servers
 
   vars_files:
   - vars/global.yml
-  - $private/vars.yml
+  - "{{ private }}/vars.yml"
 
   roles:
-  - $roles/security
+    - role: "{{ roles }}/security"
 
   #tasks:
-  #- $tasks/update-all-packages.yml
+  #- "{{ tasks }}/update-all-packages.yml"
 
 - name: playbook | site | Prepare for accelerate mode
   hosts: servers
@@ -43,11 +43,11 @@
 
   vars_files:
   - vars/global.yml
-  - $private/vars.yml
+  - "{{ private }}/vars.yml"
 
   roles:
-  - $roles/common
-  - $roles/server
+      - role: "{{ roles }}/common"
+      - role: "{{ roles }}/server"
 
 - name: playbook | site | Set up nagios head
   hosts: nagios
@@ -55,10 +55,10 @@
 
   vars_files:
   - vars/global.yml
-  - $private/vars.yml
+  - "{{ private }}/vars.yml"
 
   roles:
-  - $roles/nagios/head
+      - role: "{{ roles }}/nagios/head"
 
 - name: playbook | site | Set up nrpe monitoring on all our nodes
   hosts: servers
@@ -66,10 +66,10 @@
 
   vars_files:
   - vars/global.yml
-  - $private/vars.yml
+  - "{{ private }}/vars.yml"
 
   roles:
-  - $roles/nagios/nrpe/common
+      - role: "{{ roles }}/nagios/nrpe/common"
 
 - name: playbook | site | Set up nrpe website monitoring.
   hosts: nagios
@@ -77,29 +77,25 @@
 
   vars_files:
   - vars/global.yml
-  - $private/vars.yml
+  - "{{ private }}/vars.yml"
 
   roles:
-  - role: $roles/nagios/nrpe/site
+  - role: "{{ roles }}/nagios/nrpe/site"
     site: narcissus.rc.rit.edu
     target: narcissus
     path: /map/
-  - role: $roles/nagios/nrpe/site
+  - role: "{{ roles }}/nagios/nrpe/site"
     site: threebean.org
     target: widget
     path: /blog/
-  - role: $roles/nagios/nrpe/site
+  - role: "{{ roles }}/nagios/nrpe/site"
     site: tw2-demos.threebean.org
     target: widget
     path: /
-  - role: $roles/nagios/nrpe/site
+  - role: "{{ roles }}/nagios/nrpe/site"
     site: monroe-threebean.rhcloud.com
     target: foreclosures
     path: /graph?from_date=01%2F01%2F2013&to_date=01%2F01%2F2013
-  #- role: $roles/nagios/nrpe/site
-  # site_fqdn: badges.threebean.org
-  # target: threebean
-  # path: /
 
 - name: playbook | site | Set up bouncer
   hosts: bouncer
@@ -107,38 +103,41 @@
 
   vars_files:
   - vars/global.yml
-  - $private/vars.yml
+  - "{{ private }}/vars.yml"
 
   roles:
-  - $roles/irc-bouncer
+      - role: "{{ roles }}/irc-bouncer"
 
 - name: playbook | site | Set up task server
   hosts: task-server
   accelerate: true
 
   vars_files:
-  - vars/global.yml
-  - $private/vars.yml
+      - vars/global.yml
+      - "{{ private }}/vars.yml"
 
   roles:
-  - $roles/task-server
-  - role: $roles/nagios/nrpe/proc
-    proc: taskd
-    user: taskd
+      - role: "{{ roles }}/task-server"
+      - role: "{{ roles }}/nagios/nrpe/proc"
+        proc: taskd
+        user: taskd
 
 - name: playbook | site | Set up compute01 content
   hosts: compute01
   accelerate: true
 
   vars_files:
-  - vars/global.yml
-  - $private/vars.yml
+      - vars/global.yml
+      - "{{ private }}/vars.yml"
 
   roles:
-  - $roles/badges
-# TODO -- add nrpe check for badges website.
-# TODO -- nuke this
-  - $roles/ipython-worker
-  - role: $roles/nagios/nrpe/proc
-    proc: ipython
-    user: ipynb
+      - role: "{{ roles }}/badges"
+      - role: "{{ roles }}/nagios/nrpe/site"
+        site: badges.threebean.net
+        target: Tahrir
+        path: /
+      # TODO -- nuke this
+      - role: "{{ roles }}/ipython-worker"
+      - role: "{{ roles }}/nagios/nrpe/proc"
+        proc: ipython
+        user: ipynb

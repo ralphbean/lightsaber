@@ -2,7 +2,7 @@
 # Configuration for the tahrir webapp
 
 - name: install needed packages
-  yum: pkg=$item state=installed
+  yum: pkg={{ item }} state=installed
   with_items:
   - python-tahrir
   tags:
@@ -10,7 +10,7 @@
 
 - name: copy tahrir app configuration
   template: >
-    src=$item dest=/etc/tahrir/$item
+    src={{ item }} dest=/etc/tahrir/{{ item }}
     owner=tahrir group=tahrir mode=0600
   with_items:
   - tahrir.ini
@@ -21,7 +21,7 @@
 
 - name: copy tahrir wsgi script
   copy: >
-    src=$item dest=/usr/share/tahrir/$item
+    src={{ item }} dest=/usr/share/tahrir/{{ item }}
     owner=apache group=apache mode=0644
   with_items:
   - tahrir.wsgi
@@ -32,7 +32,7 @@
 
 - name: copy tahrir httpd config
   copy: >
-    src=$item dest=/etc/httpd/conf.d/$item
+    src={{ item }} dest=/etc/httpd/conf.d/{{ item }}
     owner=apache group=apache mode=0644
   with_items:
   - tahrir.conf
@@ -52,7 +52,7 @@
 
 - name: copy over all our .rst site docs
   copy: >
-    src=$item
+    src={{ item }}
     dest=/usr/share/badges/sitedocs
     owner=root group=root mode=0644
   with_fileglob:
@@ -71,7 +71,7 @@
 
 - name: copy over all our badge images
   copy: >
-    src=$item
+    src={{ item }}
     dest=/usr/share/badges/pngs/
     owner=root group=root mode=0644
   with_fileglob:

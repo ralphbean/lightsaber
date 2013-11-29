@@ -1,5 +1,5 @@
 - name: IPython | install required packages
-  yum: state=present name=$item
+  yum: state=present name={{ item }}
   with_items:
   - ipython
   - systemd

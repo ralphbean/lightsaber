@@ -1,5 +1,5 @@
 - name: Server | install server packages
-  yum: state=present name=$item
+  yum: state=present name={{ item }}
   with_items:
   - mosh
   - firewalld
@@ -21,7 +21,7 @@
   notify:
     - restart firewalld
 
-- name: Server | users | give $username an ssh key
+- name: Server | users | give {{ username }} an ssh key
   authorized_key: >
-    user=$username
+    user={{ username }}
     key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

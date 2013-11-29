@@ -1,5 +1,5 @@
 - name: task-server | install required packages
-  yum: state=present name=$item
+  yum: state=present name={{ item }}
   with_items:
   - cmake
   - git
@@ -28,7 +28,7 @@
   when: certtool_right_name != "in_place"
 
 - name: task-server | template any build scripts to /usr/local
-  template: src=$item dest=/usr/local/bin/$item mode=0755
+  template: src={{ item }} dest=/usr/local/bin/{{ item }} mode=0755
   with_items:
   - create-taskd-user.sh
   - build-taskd-from-source.sh

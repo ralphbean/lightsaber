@@ -1,5 +1,5 @@
 - name: IRC-Bouncer | install common packages
-  yum: state=present name=$item
+  yum: state=present name={{ item }}
   with_items:
   - weechat
   tags:
@@ -12,7 +12,7 @@
     -e ssh
     --delete
     -uaSHAXEx
-    $roles/irc-bouncer/files/weechat/
+    {{ roles }}/irc-bouncer/files/weechat/
     {{ username }}@{{ ansible_hostname }}:~/.weechat
 
 - name: IRC-Bouncer | weechat | Copy weechat config template directly
