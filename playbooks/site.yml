@@ -13,7 +13,7 @@
   - include: "{{ tasks }}/provision.yml"
 
 - name: playbook | site | Set up security
-  hosts: servers
+  hosts: dynamic
 
   vars_files:
   - vars/global.yml
@@ -26,7 +26,7 @@
   #- "{{ tasks }}/update-all-packages.yml"
 
 - name: playbook | site | Prepare for accelerate mode
-  hosts: servers
+  hosts: dynamic
   tasks:
   - name: Install package required for accelerate mode
     yum: name=python-keyczar state=installed
@@ -38,7 +38,7 @@
         permanent=false
 
 - name: playbook | site | Set up basic server config
-  hosts: servers
+  hosts: dynamic
   accelerate: true
 
   vars_files:
@@ -61,7 +61,7 @@
       - role: "{{ roles }}/nagios/head"
 
 - name: playbook | site | Set up nrpe monitoring on all our nodes
-  hosts: servers
+  hosts: dynamic
   accelerate: true
 
   vars_files:

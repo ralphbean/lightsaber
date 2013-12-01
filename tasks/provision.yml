@@ -11,7 +11,6 @@
     client_id={{ do_client_id }}
     api_key={{ do_api_key }}
     unique_name=true
-  register: buttermilk
 
 - name: playbook | provision | Provision compute01 if necessary
   digital_ocean: >
@@ -25,18 +24,3 @@
     client_id={{ do_client_id }}
     api_key={{ do_api_key }}
     unique_name=true
-  register: compute01
-
-- name: playbook | provision | add buttermilk to dynamic inventory
-  add_host: >
-      name=buttermilk
-      groups=dynamic,servers,bouncer,task-server
-      ansible_ssh_host={{ buttermilk.droplet.ip_address }}
-      ansible_ssh_user=root
-
-- name: playbook | provision | add compute01 to dynamic inventory
-  add_host: >
-      name=compute01
-      groups=dynamic,servers,compute,nagios
-      ansible_ssh_host={{ compute01.droplet.ip_address }}
-      ansible_ssh_user=root
