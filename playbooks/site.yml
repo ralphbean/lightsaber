@@ -32,10 +32,10 @@
     yum: name=python-keyczar state=installed
   - name: Open the ansible accelerate port
     firewalld: >
-        port=40319/tcp
+        port=10319/tcp
         state=enabled
         zone=public
-        permanent=false
+        permanent=true
 
 - name: playbook | site | Set up basic server config
   hosts: dynamic

@@ -13,3 +13,5 @@ all_users:
   homedir: /home/threebean
 - user: root
   homedir: /root
+
+ansible_ssh_user: root
