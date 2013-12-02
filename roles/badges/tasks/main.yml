@@ -46,6 +46,8 @@
     owner=root group=root mode=0644
   with_fileglob:
   - threebean-sitedocs/*.rst
+  notify:
+  - restart httpd
 
 - name: make badge png directory
   file: >
