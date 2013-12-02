@@ -241,6 +241,10 @@ or environment variables (DO_CLIENT_ID and DO_API_KEY)'''
         if config.has_option('digital_ocean', 'cache_max_age'):
             self.cache_max_age = config.getint('digital_ocean', 'cache_max_age')
 
+        self.nagios_host = None
+        if config.has_option('digital_ocean', 'nagios_host'):
+            self.nagios_host = config.get('digital_ocean', 'nagios_host')
+
 
     def read_environment(self):
         ''' Reads the settings from environment variables '''
@@ -345,11 +349,14 @@ or environment variables (DO_CLIENT_ID and DO_API_KEY)'''
 
             self.inventory[droplet['id']] = [dest]
             self.push(self.inventory, droplet['name'], dest)
-            self.push(self.inventory, 'region_'+droplet['region_id'], dest)
-            self.push(self.inventory, 'image_' +droplet['image_id'], dest)
-            self.push(self.inventory, 'size_'  +droplet['size_id'], dest)
-            self.push(self.inventory, 'status_'+droplet['status'], dest)
+            self.push(self.inventory, 'region_'+ droplet['region_id'], dest)
+            self.push(self.inventory, 'image_' + droplet['image_id'], dest)
+            self.push(self.inventory, 'size_' + droplet['size_id'], dest)
+            self.push(self.inventory, 'status_'+ droplet['status'], dest)
             self.push(self.inventory, 'dynamic', dest)
+
+            if droplet['name'] == self.nagios_host:
+                self.push(self.inventory, 'nagios', dest)
 
             region_name = self.index['region_to_name'].get(droplet['region_id'])
             if region_name:
@@ -408,6 +415,8 @@ or environment variables (DO_CLIENT_ID and DO_API_KEY)'''
         if droplet.has_key('image_id'):
             info['do_image']  = self.index['image_to_name'].get(droplet['image_id'])
             info['do_distro'] = self.index['image_to_distro'].get(droplet['image_id'])
+
+        info['ansible_ssh_host'] = info['ip_address']
 
         return info
 

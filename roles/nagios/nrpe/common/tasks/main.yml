@@ -16,7 +16,7 @@
     src=nrpe-nagios-side.cfg
     dest=/etc/nagios/hosts/{{ inventory_hostname }}.cfg
     mode=0644
-  delegate_to: compute01
+  delegate_to: "{{ hostvars[groups['nagios'][0]]['ansible_default_ipv4']['address'] }}"
   notify: restart nagios
 
 - name: nrpe | make sure nrpe can ping (sticky bit)

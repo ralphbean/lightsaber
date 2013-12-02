@@ -98,7 +98,7 @@
     path: /graph?from_date=01%2F01%2F2013&to_date=01%2F01%2F2013
 
 - name: playbook | site | Set up bouncer
-  hosts: bouncer
+  hosts: buttermilk
   accelerate: true
 
   vars_files:
@@ -109,7 +109,7 @@
       - role: "{{ roles }}/irc-bouncer"
 
 - name: playbook | site | Set up task server
-  hosts: task-server
+  hosts: buttermilk
   accelerate: true
 
   vars_files:
