@@ -1,0 +1,18 @@
+# Requires a --extra-vars="target=compute01" option to be passed
+---
+- name: reboot them all
+  hosts: {{target}}
+  gather_facts: false
+
+  # digital ocean creds are kept in the private repo
+  vars_files:
+  - vars/global.yml
+  - "{{ private }}/vars.yml"
+
+  tasks:
+      - name: reboot
+        shell: sleep 3; /usr/sbin/shutdown -r now --no-wall
+        async: 45
+        poll: 0
+      - name: wait for ssh to become available again
+        local_action: wait_for host={{inventory_hostname}} port=22 delay=5
