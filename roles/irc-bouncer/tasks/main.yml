@@ -6,14 +6,9 @@
   - packages
 
 - name: IRC-Bouncer | weechat | Copy weechat config with rsync
-  local_action: >
-    command
-    rsync
-    -e ssh
-    --delete
-    -uaSHAXEx
-    {{ roles }}/irc-bouncer/files/weechat/
-    {{ username }}@{{ ansible_hostname }}:~/.weechat
+  synchronize: >
+      src={{roles}}/irc-bouncer/files/weechat/
+      dest=/home/{{username}}/.weechat/
 
 - name: IRC-Bouncer | weechat | Copy weechat config template directly
   template: src=irc.conf dest=/home/{{ username }}/.weechat/irc.conf owner={{ username }}

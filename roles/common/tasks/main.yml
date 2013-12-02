@@ -44,14 +44,10 @@
   - githelpers
 
 - name: Common | zsh | Copy over the oh-my-zsh bundle
-  local_action: >
-    command
-    rsync
-    -e ssh
-    --delete
-    -uaSHAXEx
-    {{ roles }}/common/files/oh-my-zsh/
-    root@{{ ansible_hostname }}:/usr/local/share/
+  synchronize: >
+      src={{roles}}/common/files/oh-my-zsh/
+      dest=/usr/local/share/oh-my-zsh/
+      owner=false
 
 - name: Common | zsh | Copy over global zshrc
   copy: src=zshrc-global dest=/etc/zshrc
