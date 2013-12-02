@@ -39,6 +39,15 @@
     state=directory
     owner=root group=root mode=0755
 
+- name: hotfix velruse so that stateless openid works (fml)
+  file: >
+    src={{item}}
+    dest=/usr/lib/python2.7/site-packages/velruse/providers/{{item}}
+  with_items:
+  - openid.py
+  notify:
+  - restart httpd
+
 - name: copy over all our .rst site docs
   copy: >
     src={{ item }}
