@@ -81,3 +81,6 @@
       owner=tahrir
       group=tahrir
       mode=0644
+
+- name: install the threebean theme...
+  pip: name=threebean-tahrir-theme state=latest
