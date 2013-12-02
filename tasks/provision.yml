@@ -1,4 +1,5 @@
 # Use the digital ocean module to spin up cloud nodes.
+# TODO -- use host_vars, group_vars and looping over 'dynamic' to automate this
 - name: playbook | provision | Provision buttermilk if necessary
   digital_ocean: >
     state=active
