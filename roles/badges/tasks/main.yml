@@ -5,8 +5,6 @@
   yum: pkg={{ item }} state=installed
   with_items:
   - python-tahrir
-  tags:
-  - packages
 
 - name: copy tahrir app configuration
   template: >
@@ -14,8 +12,6 @@
     owner=tahrir group=tahrir mode=0600
   with_items:
   - tahrir.ini
-  tags:
-  - config
   notify:
   - restart httpd
 
@@ -25,8 +21,6 @@
     owner=apache group=apache mode=0644
   with_items:
   - tahrir.wsgi
-  tags:
-  - config
   notify:
   - restart httpd
 
@@ -36,8 +30,6 @@
     owner=apache group=apache mode=0644
   with_items:
   - tahrir.conf
-  tags:
-  - config
   notify:
   - restart httpd
 
@@ -46,9 +38,6 @@
     path=/usr/share/badges/sitedocs
     state=directory
     owner=root group=root mode=0755
-  tags:
-  - config
-  - assets
 
 - name: copy over all our .rst site docs
   copy: >
@@ -57,17 +46,12 @@
     owner=root group=root mode=0644
   with_fileglob:
   - threebean-sitedocs/*.rst
-  tags:
-  - config
-  - assets
 
 - name: make badge png directory
   file: >
     path=/usr/share/badges/pngs
     state=directory
     owner=root group=root mode=0755
-  tags:
-  - assets
 
 - name: copy over all our badge images
   copy: >
@@ -76,12 +60,10 @@
     owner=root group=root mode=0644
   with_fileglob:
   - /srv/web/infra/badges/pngs/*.png
-  tags:
-  - assets
 
-- name: ensure /var/run/tahrir exists
+- name: ensure /var/cache/tahrir exists
   file: >
-      dest=/var/run/tahrir/
+      dest=/var/cache/tahrir/
       state=directory
       owner=tahrir
       group=tahrir
@@ -91,7 +73,11 @@
 - name: create our badges db
   command: >
       /usr/bin/initialize_tahrir_db /etc/tahrir/tahrir.ini
-      creates=/var/run/tahrir/tahrir-db.sql
+      creates=/var/cache/tahrir/tahrir-db.sql
 
 - name: ensure sqlite db is readable by tahrir
-  file: dest=/var/run/tahrir/tahrir-db.sql owner=tahrir group=tahrir mode=0644
+  file: >
+      dest=/var/cache/tahrir/tahrir-db.sql
+      owner=tahrir
+      group=tahrir
+      mode=0644
