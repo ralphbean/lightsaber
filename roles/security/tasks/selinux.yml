@@ -6,3 +6,8 @@
 
 - name: SELinux Enforcing (Targeted)
   selinux: policy=targeted state=enforcing
+  register: selinux_result
+
+- name: Reboot to enable selinux if necessary
+  include: "{{ tasks }}/reboot.yml"
+  when: selinux_result|changed
