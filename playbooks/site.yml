@@ -11,6 +11,36 @@
 
   tasks:
   - include: "{{ tasks }}/provision.yml"
+  - name: dns | set up dns for fml.threebean.net
+    route53: >
+        aws_access_key={{ aws_access_key }}
+        aws_secret_key={{ aws_secret_key }}
+        command=create
+        overwrite=yes
+        zone=threebean.net
+        record=fml.threebean.net
+        type=A
+        value={{hostvars.compute01.ansible_ssh_host}}
+  - name: dns | set up dns for badges.threebean.net
+    route53: >
+        aws_access_key={{ aws_access_key }}
+        aws_secret_key={{ aws_secret_key }}
+        command=create
+        overwrite=yes
+        zone=threebean.net
+        record=badges.threebean.net
+        type=A
+        value={{hostvars.compute01.ansible_ssh_host}}
+  - name: dns | set up dns for tw2-demos.threebean.net
+    route53: >
+        aws_access_key={{ aws_access_key }}
+        aws_secret_key={{ aws_secret_key }}
+        command=create
+        overwrite=yes
+        zone=threebean.net
+        record=tw2-demos.threebean.net
+        type=A
+        value={{hostvars.compute01.ansible_ssh_host}}
 
 - name: playbook | site | Set up security
   hosts: dynamic
@@ -22,14 +52,14 @@
   roles:
     - role: "{{ roles }}/security"
 
-  #tasks:
-  #- "{{ tasks }}/update-all-packages.yml"
-
 - name: playbook | site | Prepare for accelerate mode
   hosts: dynamic
   tasks:
   - name: Install package required for accelerate mode
-    yum: name=python-keyczar state=installed
+    yum: name={{ item }} state=installed
+    with_items:
+        - python-keyczar
+        - openssl-devel
   - name: Open the ansible accelerate port
     firewalld: >
         port=10319/tcp
@@ -58,6 +88,7 @@
   - "{{ private }}/vars.yml"
 
   roles:
+      - role: "{{ roles }}/nagios/nrpe/common"
       - role: "{{ roles }}/nagios/head"
 
 - name: playbook | site | Set up nrpe monitoring on all our nodes

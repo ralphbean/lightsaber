@@ -1,3 +1,4 @@
+- include: packages.yml
 - include: fail2ban.yml
 - include: rkhunter.yml
 - include: lynis.yml

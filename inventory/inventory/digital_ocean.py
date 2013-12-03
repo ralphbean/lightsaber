@@ -315,6 +315,7 @@ or environment variables (DO_CLIENT_ID and DO_API_KEY)'''
         self.index['image_to_name']   = self.build_index(self.data['images'], 'id', 'name')
         self.index['image_to_distro'] = self.build_index(self.data['images'], 'id', 'distribution')
         self.index['host_to_droplet'] = self.build_index(self.data['droplets'], 'ip_address', 'id', False)
+        self.index['host_to_droplet'].update(self.build_index(self.data['droplets'], 'name', 'id', False))
 
         self.build_inventory()
 
@@ -326,6 +327,7 @@ or environment variables (DO_CLIENT_ID and DO_API_KEY)'''
         manager  = DoManager(self.client_id, self.api_key)
         self.data['droplets'] = self.sanitize_list(manager.all_active_droplets())
         self.index['host_to_droplet'] = self.build_index(self.data['droplets'], 'ip_address', 'id', False)
+        self.index['host_to_droplet'].update(self.build_index(self.data['droplets'], 'name', 'id', False))
         self.build_inventory()
         self.write_to_cache()
 
@@ -345,10 +347,10 @@ or environment variables (DO_CLIENT_ID and DO_API_KEY)'''
 
         # add all droplets by id and name
         for droplet in self.data['droplets']:
-            dest = droplet['ip_address']
+            dest = droplet['name']
 
             self.inventory[droplet['id']] = [dest]
-            self.push(self.inventory, droplet['name'], dest)
+            #self.push(self.inventory, droplet['name'], dest)
             self.push(self.inventory, 'region_'+ droplet['region_id'], dest)
             self.push(self.inventory, 'image_' + droplet['image_id'], dest)
             self.push(self.inventory, 'size_' + droplet['size_id'], dest)
@@ -416,7 +418,7 @@ or environment variables (DO_CLIENT_ID and DO_API_KEY)'''
             info['do_image']  = self.index['image_to_name'].get(droplet['image_id'])
             info['do_distro'] = self.index['image_to_distro'].get(droplet['image_id'])
 
-        info['ansible_ssh_host'] = info['ip_address']
+        info['ansible_ssh_host'] = info['do_ip_address']
 
         return info
 
@@ -446,6 +448,8 @@ or environment variables (DO_CLIENT_ID and DO_API_KEY)'''
         self.data = data['data']
         self.inventory = data['inventory']
         self.index = data['index']
+        self.index['data'] = self.data
+        self.index['inventory'] = self.inventory
 
 
     def write_to_cache(self):

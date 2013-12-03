@@ -5,6 +5,8 @@
   yum: pkg={{ item }} state=installed
   with_items:
   - python-tahrir
+  - python-rdflib
+  - python-paste-script
 
 - name: copy tahrir app configuration
   template: >

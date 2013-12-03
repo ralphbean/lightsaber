@@ -11,6 +11,10 @@
   - git
   - python-virtualenvwrapper
   - bpython
+  - openssl-devel
+  - setools-console
+  - pkgwat
+  - python-pip
   tags:
   - packages
 
@@ -46,7 +50,7 @@
 - name: Common | zsh | Copy over the oh-my-zsh bundle
   synchronize: >
       src={{roles}}/common/files/oh-my-zsh/
-      dest=/usr/local/share/oh-my-zsh/
+      dest=/usr/local/share/.
       owner=false
 
 - name: Common | zsh | Copy over global zshrc
@@ -61,7 +65,10 @@
   with_items: "{{ all_users }}"
 
 - name: Common | vim | Get the spf13-vim3 installer
-  get_url: url=http://j.mp/spf13-vim3 dest=/usr/local/bin/install-spf13-vim3 mode=0755
+  get_url: >
+      url=https://raw.github.com/spf13/spf13-vim/3.0/bootstrap.sh
+      dest=/usr/local/bin/install-spf13-vim3
+      mode=0755
   tags:
   - vim
 

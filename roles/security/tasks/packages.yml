@@ -1,0 +1,12 @@
+- name: Enable the updates-testing repository
+  copy: >
+      src=fedora-updates-testing.repo
+      dest=/etc/yum.repos.d/fedora-updates-testing.repo
+
+- name: Common | update all packages
+  yum: state=latest name=*
+  register: update_result
+
+- name: Reboot to bring in new packages if necessary
+  include: "{{ tasks }}/reboot.yml"
+  when: update_result|changed

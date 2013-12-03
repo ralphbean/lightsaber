@@ -4,6 +4,7 @@
   - nagios
   - nagios-plugins-nrpe
   - perl-Text-ParseWords
+  - nrpe
   notify:
     - restart nagios
 

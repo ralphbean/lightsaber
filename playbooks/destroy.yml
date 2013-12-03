@@ -35,3 +35,5 @@
           api_key={{ do_api_key }}
           unique_name=true
         with_items: target
+
+# TODO -- scrub the old host from ~/.ssh/known_hosts

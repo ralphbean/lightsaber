@@ -11,6 +11,10 @@
   notify:
     - restart nrpe
 
+- name: nrpe | ensure the nagios hosts directory exists
+  file: dest=/etc/nagios/hosts/ state=directory
+  delegate_to: "{{ hostvars[groups['nagios'][0]]['ansible_default_ipv4']['address'] }}"
+
 - name: nrpe | copy host config to the nagios head
   template: >
     src=nrpe-nagios-side.cfg
