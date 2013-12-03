@@ -1,0 +1,37 @@
+# Requires a --extra-vars="target=compute01" option to be passed
+---
+- name: go to sleep, shhhhh...
+  hosts: "{{target}}"
+  gather_facts: false
+
+  # digital ocean creds are kept in the private repo
+  vars_files:
+  - vars/global.yml
+  - "{{ private }}/vars.yml"
+
+  tasks:
+      - name: shutdown the host from the inside
+        shell: sleep 3; /usr/sbin/shutdown now --no-wall
+        async: 45
+        poll: 0
+        ignore_errors: true
+
+- name: salt the earth
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  # digital ocean creds are kept in the private repo
+  vars_files:
+  - vars/global.yml
+  - "{{ private }}/vars.yml"
+
+  tasks:
+      - name: kill it with fire
+        digital_ocean: >
+          state=deleted
+          name={{ item }}
+          client_id={{ do_client_id }}
+          api_key={{ do_api_key }}
+          unique_name=true
+        with_items: target
