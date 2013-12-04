@@ -42,7 +42,7 @@
     owner=root group=root mode=0755
 
 - name: hotfix velruse so that stateless openid works (fml)
-  file: >
+  copy: >
     src={{item}}
     dest=/usr/lib/python2.7/site-packages/velruse/providers/{{item}}
   with_items:
