@@ -4,6 +4,8 @@
 - [ ] nagios openscap checks
 - [ ] nagios notifications to an IRC channel
 - [ ] suricata?  leaving this one to lmacken
+- [ ] keep private vars gpg encrypted in the main repo
+      http://ejohn.org/blog/keeping-passwords-in-source-control/
 
 local stuff
 
