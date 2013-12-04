@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+""" This is a CLI script for retrieving a person's id in the badges db given
+their FAS username.
+"""
+
+import __main__
+__main__.__requires__ = __requires__ = ["tahrir-api", "sqlalchemy>=0.7"];
+import pkg_resources
+pkg_resources.require(__requires__)
+
+import argparse
+import transaction
+import sys
+
+from tahrir_api.dbapi import TahrirDatabase
+
+import fedmsg
+import fedmsg.config
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(__doc__)
+    parser.add_argument('--user', default=None, help="A FAS username")
+    args = parser.parse_args()
+    if not args.user:
+        print "You must specify a FAS username."
+        sys.exit(1)
+    return args
+
+
+def initialize():
+    return TahrirDatabase('sqlite:////var/cache/tahrir/tahrir-db.sql')
+
+
+def main(tahrir, nickname):
+    person = tahrir.get_person(nickname=nickname)
+
+    if person:
+        print "Person already exists!  %r" % nickname
+        sys.exit(1)
+
+    try:
+        transaction.begin()
+        tahrir.add_person(nickname=nickname, email=nickname + "@fedoraproject.org")
+        transaction.commit()
+        person = tahrir.get_person(nickname=nickname)
+        print person.nickname, "has the id", person.id
+    except Exception as e:
+        transaction.abort()
+        print "Failure:", e
+
+
+if __name__ == '__main__':
+    args = parse_args()
+    tahrir = initialize()
+    main(tahrir, args.user)

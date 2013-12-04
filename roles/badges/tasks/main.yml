@@ -74,6 +74,16 @@
   with_fileglob:
     - threebean-pngs/*.png
 
+- name: copy over handy scripts
+  copy: >
+    src={{ item }}
+    dest=/usr/local/bin/{{ item }}
+    owner=root group=root mode=0755
+  with_items:
+      - award-badge
+      - get-badges-person-id
+      - add-badges-person
+
 - name: ensure /var/cache/tahrir exists
   file: >
       dest=/var/cache/tahrir/
