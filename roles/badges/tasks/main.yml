@@ -72,7 +72,7 @@
     dest=/usr/share/badges/pngs/
     owner=root group=root mode=0644
   with_fileglob:
-  - /srv/web/infra/badges/pngs/*.png
+    - threebean-pngs/*.png
 
 - name: ensure /var/cache/tahrir exists
   file: >
