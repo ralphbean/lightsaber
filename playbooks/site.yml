@@ -163,6 +163,10 @@
 
   roles:
       - role: "{{ roles }}/badges"
+      - role: "{{ roles }}/s3backup"
+        name: tahrir-db
+        target: /var/cache/tahrir/tahrir-db.sql
+        bucket: threebean-cloud-backup
       - role: "{{ roles }}/nagios/nrpe/site"
         site: badges.threebean.net
         target: Tahrir
