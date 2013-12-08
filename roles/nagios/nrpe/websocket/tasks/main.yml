@@ -1,3 +1,6 @@
+- name: nrpe | install deps for websocket plugin
+  yum: pkg=python-websocket-client state=present
+
 - name: nrpe | copy websocket plugin to the monitored node
   copy: >
       src=check_websocket.py
