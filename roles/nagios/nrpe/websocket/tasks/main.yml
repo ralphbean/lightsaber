@@ -1,0 +1,20 @@
+- name: nrpe | copy websocket plugin to the monitored node
+  copy: >
+      src=check_websocket.py
+      dest=/usr/lib64/nagios/plugins/check_websocket.py
+      mode=0755
+
+- name: nrpe | copy websocket config to the monitored node
+  template: >
+      src=nrpe-websocket.cfg
+      dest=/etc/nrpe.d/websocket-{{ name }}.cfg
+      mode=0644
+  notify: restart nrpe
+
+- name: nrpe | copy httpd/websocket config to the nagios head
+  template: >
+    src=nrpe-nagios-side-websocket.cfg
+    dest=/etc/nagios/hosts/{{ inventory_hostname }}.{{ name }}.cfg
+    mode=0644
+  delegate_to: "{{ hostvars[groups['nagios'][0]]['ansible_default_ipv4']['address'] }}"
+  notify: restart nagios

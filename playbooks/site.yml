@@ -115,6 +115,11 @@
     site: narcissus.rc.rit.edu
     target: narcissus
     path: /map/
+  - role: "{{ roles }}/nagios/nrpe/websocket"
+    name: narcissus
+    address: "ws://narcissus.rc.rit.edu:9000"
+    topic: http_geojson
+    timeout: 4
   - role: "{{ roles }}/nagios/nrpe/site"
     site: threebean.org
     target: widget
