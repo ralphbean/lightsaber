@@ -125,6 +125,10 @@
     target: widget
     path: /blog/
   - role: "{{ roles }}/nagios/nrpe/site"
+    site: toscawidgets.org
+    target: ZOMG
+    path: /
+  - role: "{{ roles }}/nagios/nrpe/site"
     site: tw2-demos.threebean.org
     target: widget
     path: /
