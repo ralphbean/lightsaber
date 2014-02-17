@@ -180,8 +180,3 @@
         site: badges.threebean.net
         target: Tahrir
         path: /
-      # TODO -- nuke this
-      - role: "{{ roles }}/ipython-worker"
-      - role: "{{ roles }}/nagios/nrpe/proc"
-        proc: ipython
-        user: ipynb
