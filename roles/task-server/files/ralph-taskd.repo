@@ -1,0 +1,6 @@
+[ralph-taskd]
+name=Copr repo for taskd owned by ralph
+baseurl=http://copr-be.cloud.fedoraproject.org/results/ralph/taskd/fedora-$releasever-$basearch/
+skip_if_unavailable=True
+gpgcheck=0
+enabled=1
