@@ -135,7 +135,7 @@
   - role: "{{ roles }}/nagios/nrpe/site"
     site: monroe-threebean.rhcloud.com
     target: foreclosures
-    path: /graph?from_date=01%2F01%2F2013&to_date=01%2F01%2F2013
+    path: /graph\?from_date=01%2F01%2F2013\&to_date=01%2F01%2F2013
 
 - name: playbook | site | Set up bouncer
   hosts: buttermilk
