@@ -5,6 +5,7 @@
   - nagios-plugins-nrpe
   - perl-Text-ParseWords
   - nrpe
+  - python-passlib
   notify:
     - restart nagios
 
@@ -17,7 +18,10 @@
   - windows.cfg
 
 - name: nagios | add our master nagios config
-  copy: src=nagios.cfg dest=/etc/nagios/nagios.cfg
+  copy: src={{ item }} dest=/etc/nagios/{{ item }}
+  with_items:
+  - nagios.cfg
+  - cgi.cfg
   notify:
     - restart nagios
 
@@ -31,6 +35,9 @@
 - name: nagios | ensure /etc/nagios/hosts is there
   file: dest=/etc/nagios/hosts state=directory
 
+# Ensure the default user is absent
+- htpasswd: path=/etc/nagios/passwd name=nagiosadmin state=absent
+
 # Add myself to the nagios admin list
 - htpasswd: >
     path=/etc/nagios/passwd
@@ -39,9 +46,6 @@
     owner=apache
     group=apache
     mode=0640
-
-# Ensure the default user is absent
-- htpasswd: path=/etc/nagios/passwd name=nagiosadmin state=absent
 
 - name: copy nagios httpd config
   copy: >
