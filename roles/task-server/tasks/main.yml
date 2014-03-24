@@ -1,5 +1,5 @@
 - name: copy a copr repo file into place
-  copy: src=ralph-taskd.repo /etc/yum.repos.d/ralph-taskd.repo
+  copy: src=ralph-taskd.repo dest=/etc/yum.repos.d/ralph-taskd.repo
 
 - name: task-server | install required packages
   yum: state=present name={{ item }}
@@ -10,6 +10,11 @@
   - taskd
   tags:
   - packages
+
+- name: task-server | copy config
+  copy: src=config dest=/var/lib/taskd/config owner=taskd group=taskd
+  notify:
+  - restart taskd
 
 # TODO -- run the generate script here but only if necessary.
 

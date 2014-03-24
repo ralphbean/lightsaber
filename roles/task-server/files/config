@@ -1,0 +1,17 @@
+confirmation=1
+extensions=/usr/libexec/taskd
+ip.log=on
+log=/var/log/taskd/taskd.log
+pid.file=/var/run/taskd.pid
+queue.size=10
+request.limit=0
+root=/var/lib/taskd
+server=localhost:6544
+client.allow=^task [2-9],^taskd,^libtaskd,^Mirakel [1-9]
+verbose=1
+
+# Generate these using /etc/pki/taskd/generate
+ca.cert=/etc/pki/taskd/ca.cert.pem
+server.cert=/etc/pki/taskd/server.cert.pem
+server.key=/etc/pki/taskd/server.key.pem
+server.crl=/etc/pki/taskd/server.crl.pem
