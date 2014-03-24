@@ -31,6 +31,18 @@
 - name: nagios | ensure /etc/nagios/hosts is there
   file: dest=/etc/nagios/hosts state=directory
 
+# Add myself to the nagios admin list
+- htpasswd: >
+    path=/etc/nagios/passwd
+    name=threebean
+    password={{ nagios_password }}
+    owner=apache
+    group=apache
+    mode=0640
+
+# Ensure the default user is absent
+- htpasswd: path=/etc/nagios/passwd name=nagiosadmin state=absent
+
 - name: copy nagios httpd config
   copy: >
     src=nagios.conf dest=/etc/httpd/conf.d/nagios.conf
