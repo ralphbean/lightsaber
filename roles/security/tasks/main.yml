@@ -1,4 +1,6 @@
 - include: packages.yml
+- yum: package=ntp state=present
+- service: name=ntpd state=started enabled=yes
 - include: fail2ban.yml
 - include: rkhunter.yml
 - include: lynis.yml
