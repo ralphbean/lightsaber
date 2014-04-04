@@ -10,7 +10,7 @@
   - "{{ private }}/vars.yml"
 
   tasks:
-  - debug: msg="talking to digital ocean""
+  - debug: msg="talking to digital ocean"
   - include: "{{ tasks }}/provision.yml"
   - name: dns | set up dns for fml.threebean.net
     route53: >
