@@ -1,13 +1,14 @@
-# Requires a --extra-vars="target=compute01" option to be passed
 ---
-- name: reboot them all
-  hosts: {{target}}
-  gather_facts: false
+- name: reboot that host
+  hosts: "{{ target }}"
+  user: root
 
-  # digital ocean creds are kept in the private repo
   vars_files:
   - vars/global.yml
-  - "{{ private }}/vars.yml"
 
   tasks:
-      - include: reboot
+  - name: reboot the cloud host
+    command: /sbin/reboot
+
+  - name: wait for host to come back - up to 6 minutes
+    local_action: wait_for host={{ target }} port=22 delay=120 timeout=420
