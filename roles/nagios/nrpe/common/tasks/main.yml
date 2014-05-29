@@ -2,6 +2,7 @@
   yum: state=latest pkg={{ item }}
   with_items:
   - nagios-plugins-all
+  - nagios-plugins-check-updates
   - nrpe
   notify:
     - restart nrpe
