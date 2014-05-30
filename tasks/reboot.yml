@@ -5,5 +5,5 @@
   ignore_errors: True
 
 - name: wait for ssh to become available again
-  local_action: wait_for host={{inventory_hostname}} port={{ ansible_ssh_port }} state=started
+  local_action: wait_for host={{inventory_hostname}} port=22 state=started
   sudo: false
