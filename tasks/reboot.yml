@@ -1,5 +1,5 @@
 - name: reboot
-  command: shutdown -r now "Ansible updates triggered"
+  command: shutdown -r now --no-wall
   async: 0
   poll: 0
   ignore_errors: True
