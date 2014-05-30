@@ -1,7 +1,5 @@
-# requires --extra-vars="target='host1;host2;group etc'
-
 - name: Find whatever is running on port 10319 and storm its figurative bastille.
-  hosts: "{{ target }}"
+  hosts: all
   user: root
 
   tasks:
