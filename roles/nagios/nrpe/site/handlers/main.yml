@@ -7,4 +7,5 @@
 # it would be sick if we could delegate to a group
 - name: restart nagios
   service: name=nagios state=restarted
-  delegate_to: "{{ hostvars[groups['nagios'][0]]['ansible_default_ipv4']['address'] }}"
+  delegate_to: "{{ item }}"
+  with_items: groups.nagios

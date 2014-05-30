@@ -10,5 +10,6 @@
     src=nrpe-nagios-side-proc.cfg
     dest=/etc/nagios/hosts/{{ inventory_hostname }}.proc.{{ proc }}.cfg
     mode=0644
-  delegate_to: "{{ hostvars[groups['nagios'][0]]['ansible_default_ipv4']['address'] }}"
   notify: restart nagios
+  delegate_to: "{{ item }}"
+  with_items: groups.nagios

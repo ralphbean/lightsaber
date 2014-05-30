@@ -8,6 +8,11 @@
   - python-passlib
   notify:
     - restart nagios
+  register: installation
+
+- name: remove the default htpasswd file
+  file: dest=/etc/nagios/passwd state=absent
+  when: installation.changed
 
 - name: nagios | remove some default files
   file: dest=/etc/nagios/objects/{{ item }} state=absent
