@@ -3,6 +3,9 @@
   with_items:
   - nagios-plugins-all
   - nagios-plugins-check-updates
+  - perl-Nagios-Plugin
+  - perl-Sort-Versions
+  - perl-Readonly
   - nrpe
   notify:
     - restart nrpe
