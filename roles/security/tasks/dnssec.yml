@@ -4,5 +4,5 @@
 - name: Security | dnssec | start dnssec-triggerd and friends
   service: name={{item}} enabled=yes state=started
   with_items:
-    - dnssec-trigger
+    - dnssec-triggerd
     - unbound
