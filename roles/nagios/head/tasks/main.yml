@@ -40,8 +40,17 @@
 - name: nagios | ensure /etc/nagios/hosts is there
   file: dest=/etc/nagios/hosts state=directory
 
+- name: Check if path exists
+  stat: path=/etc/nagios/passwd
+  register: passwd_path
+
+
 # Ensure the default user is absent
 - htpasswd: path=/etc/nagios/passwd name=nagiosadmin state=absent
+  when: passwd_path.stat.exists
+  notify:
+  - restart nagios
+  - restart httpd
 
 # Add myself to the nagios admin list
 - htpasswd: >
@@ -51,6 +60,11 @@
     owner=apache
     group=apache
     mode=0640
+  when: passwd_path.stat.exists
+  notify:
+  - restart nagios
+  - restart httpd
+
 
 - name: copy nagios httpd config
   copy: >
