@@ -1,0 +1,53 @@
+- name: Set standard keyboard shortcuts
+  gsettings: schema={{ item.schema }} key={{ item.key }} value={{ item.value }}
+  notify:
+  - restart gnome-shell
+  with_items: "{{ standard_shortcuts }}"
+
+- name: Make a dir for my shortcut scripts
+  file: dest=~/bin state=directory
+
+- name: Copy over my shortcut scripts there
+  copy: src={{item}} dest=~/bin/{{item}} mode=0755
+  with_items:
+  - dagdclip
+  - clip-to-firefox
+  - restart-gnome-shell
+
+- name: Setup custom keyboard shortcuts | just the names
+  gsettings: >
+    schema=org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
+    path=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/{{ item.index }}/
+    key=name
+    value={{ item.name }}
+  notify:
+  - restart gnome-shell
+  with_items: "{{ custom_shortcuts }}"
+
+- name: Setup custom keyboard shortcuts | just the commands
+  gsettings: >
+    schema=org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
+    path=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/{{ item.index }}/
+    key=command
+    value={{ item.command }}
+  notify:
+  - restart gnome-shell
+  with_items: "{{ custom_shortcuts }}"
+
+- name: Setup custom keyboard shortcuts | just the bindings
+  gsettings: >
+    schema=org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
+    path=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/{{ item.index }}/
+    key=binding
+    value={{ item.binding }}
+  notify:
+  - restart gnome-shell
+  with_items: "{{ custom_shortcuts }}"
+
+- name: Lastly, put in the full list of short indices
+  gsettings: >
+    schema=org.gnome.settings-daemon.plugins.media-keys
+    key=custom-keybindings
+    value={{ custom_shortcuts_list }}
+  notify:
+  - restart gnome-shell

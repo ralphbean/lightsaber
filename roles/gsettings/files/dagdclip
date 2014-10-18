@@ -1,0 +1,7 @@
+#!/bin/bash
+# URL shortener
+
+url=$(xclip -o)
+short=$(curl -G --data-urlencode "url=$url" http://da.gd/s)
+echo -n $short | xclip -i
+notify-send "da.gd" "$url -> $short"

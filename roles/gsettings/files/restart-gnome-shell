@@ -1,0 +1,3 @@
+#!/bin/bash
+
+yes | nohup gnome-shell --display :0 --replace &

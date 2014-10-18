@@ -1,0 +1,51 @@
+standard_shortcuts:
+  - key: screensaver
+    value: "[\\'<Primary>BackSpace\\']"
+    schema: org.gnome.settings-daemon.plugins.media-keys
+
+  - key: toggle-tiled-left
+    value: "[\\'<Alt>h\\']"
+    schema: org.gnome.mutter.keybindings
+
+  - key: toggle-tiled-right
+    value: "[\\'<Alt>l\\']"
+    schema: org.gnome.mutter.keybindings
+
+  - key: toggle-maximized
+    value: "[\\'<Alt>k\\']"
+    schema: org.gnome.desktop.wm.keybindings
+
+  - key: switch-to-workspace-down
+    value: "[\\'<Primary><Alt>j\\']"
+    schema: org.gnome.desktop.wm.keybindings
+
+  - key: switch-to-workspace-up
+    value: "[\\'<Primary><Alt>k\\']"
+    schema: org.gnome.desktop.wm.keybindings
+
+  - key: move-to-workspace-down
+    value: "[\\'<Primary><Shift>j\\']"
+    schema: org.gnome.desktop.wm.keybindings
+
+  - key: move-to-workspace-up
+    value: "[\\'<Primary><Shift>k\\']"
+    schema: org.gnome.desktop.wm.keybindings
+
+custom_shortcuts:
+- index: custom0
+  name: terminal
+  command: /usr/bin/gnome-terminal
+  binding: '<Control>Return'
+
+- index: custom1
+  name: clip-to-fox
+  command: ~/bin/clip-to-firefox
+  binding: '<Control>G'
+
+- index: custom2
+  name: dagd-clipboard
+  command: ~/bin/dagdclip
+  binding: '<Control>Space'
+
+# This is a painfully long list that I would love to be able to generate. Help.
+custom_shortcuts_list: "[\\'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/\\',\\'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/\\',\\'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/\\']"
