@@ -1,0 +1,26 @@
+---
+
+
+- name: some preliminaries (packages, etc..)
+  hosts: 192.168.1.13
+
+  vars_files:
+  - vars/global.yml
+
+  tasks:
+  - name: Some packages needed for custom shortcuts
+    yum: name={{ item }} state=present
+    with_items:
+    - xclip
+    - firefox
+
+- name: basics for the user (shortcuts, etc..)
+  hosts: 192.168.1.13
+  su: yes
+  su_user: threebean
+
+  vars_files:
+  - vars/global.yml
+
+  roles:
+  - "{{ roles }}/gsettings"
