@@ -1,0 +1,66 @@
+#------------------------------------------------------#
+# ~/.mutt/common
+
+set realname = "Ralph Bean"
+
+# Check for and beep when new mail shows up while mutt is open.
+#
+set check_new = yes
+set beep_new = yes
+unset beep
+
+set mail_check = 60             # Check for new mail in all mailboxes
+                                 # every minute
+set timeout = 30
+
+# To open html with mailcap, elinks.
+auto_view text/html
+alternative_order text/plain text/html
+
+
+# Sort by threads and last-date-received:
+# will be gmail's style of threading, if the threading
+# was shown in the main display.
+#
+set sort = 'threads'
+set sort_aux = 'reverse-last-date-received'
+
+# Only check the mailboxes that we have in the muttmailboxes file
+#
+#set imap_check_subscribed = yes
+
+# Not strictly necessary since we are using locally cached
+# email with offlineimap, but if we were having mutt fetch
+# the mail directly, this would help make it faster.
+#
+#set header_cache=~/.mutt/cache/headers
+#set message_cachedir=~/.mutt/cache/bodies
+#set certificate_file=~/.mutt/certificates
+
+# Don't move mail from the spool.
+#
+set move=no
+
+#======================================================#
+# which editor do you want to use? 
+# vim of course!
+set editor="vim -c 'set tw=70 et' -c 'set spell' '+/^$' +9999999" 
+set edit_headers          # See the headers when editing
+
+#======================================================#
+# Order of headers and what to show
+hdr_order Date: From: User-Agent: X-Mailer \
+          To: Cc: Reply-To: Subject:
+ignore *
+unignore Date: From: User-Agent: X-Mailer: X-PGP-Key:  \
+          To: Cc: Reply-To: Subject:
+
+#======================================================#
+# Odds and Ends
+set sort_alias=alias     # sort aliases in alpha order by alias name
+set markers          # mark wrapped lines of text in the pager with a +
+set smart_wrap       # Don't wrap mid-word
+set pager_context=6  # Retain 6 lines of previous page when scrolling.
+set status_on_top    # Status bar on top.
+push <show-version>  # Shows mutt version at startup
+

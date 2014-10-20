@@ -1,0 +1,73 @@
+- name: Include some packages
+  yum: name={{ item }} state=present
+  with_items:
+  - dnf
+  - dnf-plugins-core
+  tags:
+  - mail/client
+
+- name: Enable the mutt-kz copr
+  command: dnf copr enable -y fatka/mutt-kz
+  args:
+      creates: etc/yum.repos.d/_copr_fatka-mutt-kz.repo
+  tags:
+  - mail/client
+
+- name: And install it, of course.
+  yum: name=mutt-kz state=present
+  tags:
+  - mail/client
+
+- name: Also, we want msmtp for sending and isync for receipt
+  yum: name={{ item }} state=present
+  with_items:
+  - msmtp
+  - isync
+  tags:
+  - mail/client
+
+- name: Synchronize some mail-checkery scripts to /usr/local/bin
+  synchronize: src=bin/ dest=/usr/local/bin/
+  tags:
+  - mail/client
+
+- name: Ensure that maildirs are present in homedir.
+  file: >
+      dest=/home/{{user}}/.imap-mail/{{item}}
+      state=directory
+      owner={{user}}
+      group={{user}}
+      mode=0750
+  with_items:
+  - gmail
+  - redhat
+  - wrns
+  tags:
+  - mail/client
+
+- name: Copy top level configs except the mutt dir.
+  copy: >
+      src={{item}}
+      dest=/home/{{user}}/.{{item}}
+      owner={{user}}
+      group={{user}}
+      mode=0640
+  with_items:
+  - msmtprc
+  - mbsyncrc
+  - mbsync.redhat.crt
+  - mailcap
+  tags:
+  - mail/client
+
+- name: Sync over the .mutt/ dir.
+  synchronize: >
+      src=mutt/
+      dest=/home/{{user}}/.mutt
+  tags:
+  - mail/client
+
+- name: Lastly, symlink the main muttrc into place
+  file: src=/home/{{user}}/.mutt/mutt/muttrc dest=/home/{{user}}/.muttrc state=link
+  tags:
+  - mail/client

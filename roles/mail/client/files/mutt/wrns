@@ -1,0 +1,8 @@
+set spoolfile = +"wrns/INBOX"
+set mbox = +"wrns/[Gmail].All Mail"
+set postponed = +"wrns/[Gmail].Drafts"
+set from=webmaster@wintonroad.org
+set sendmail="/usr/bin/msmtp -a wrns"
+
+macro index,pager A <tag-subthread><tag-prefix-cond><save-message>+wrns/archive<enter><enter><tag-prefix-cond><quasi-delete><untag-pattern>.*
+macro index,pager a <tag-entry><tag-prefix-cond><save-message>+wrns/archive<enter><enter><tag-prefix-cond><quasi-delete><untag-pattern>.*

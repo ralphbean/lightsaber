@@ -1,0 +1,26 @@
+# from Justin R. Miller's
+# `Everything You Need To Know To Start Using GnuPG with Mutt'
+# http://codesorcery.net/old/mutt/mutt-gnupg-howto
+
+set pgp_decode_command="gpg %?p?--use-agent? --no-verbose --batch --output - %f"
+set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
+set pgp_decrypt_command="gpg --use-agent --no-verbose --batch --output - %f"
+set pgp_sign_command="gpg --no-verbose --batch --output - --use-agent --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_clearsign_command="gpg --no-verbose --batch --output - --use-agent --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_encrypt_only_command="/usr/local/bin/pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
+set pgp_encrypt_sign_command="/usr/local/bin/pgpewrap gpg --use-agent --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
+set pgp_import_command="gpg --no-verbose --import -v %f"
+set pgp_export_command="gpg --no-verbose --export --armor %r"
+set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r" 
+set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r" 
+
+# If you want all of your email to be autosigned, use this.
+# I only sign email sent from my school address, not gmail, so
+# this is found in my school configuration file.
+#
+set pgp_autosign=yes
+set pgp_sign_as=94504C3AE11DD197920058ABA90ED7DE971095FF
+set pgp_replyencrypt=yes
+set pgp_timeout=1800
+set pgp_good_sign="^gpg: Good signature from"

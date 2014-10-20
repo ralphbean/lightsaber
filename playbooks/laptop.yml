@@ -12,9 +12,11 @@
   - security
   - gnome/system
   - flash
-  - task/client
   - jumpoff
   - development
+  - task/client
+  - role: mail/client
+    user: threebean
 
 - name: basics for the gnome user (shortcuts, etc..)
   hosts: geier

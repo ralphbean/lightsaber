@@ -1,0 +1,23 @@
+# mailcap - MIME configuration file
+
+text/html;                      elinks %s; nametemplate=%s.html
+text/html;                      elinks -dump %s; nametemplate=%s.html; copiousoutput 
+
+text/*;                         cat; copiousoutput; edit=$VISUAL %s
+message/rfc822;                 cat; copiousoutput; edit=$VISUAL %s
+
+application/msword;             mutt_bgrun libreoffice %s
+application/vnd.msword;         mutt_bgrun libreoffice %s
+application/excel;              mutt_bgrun libreoffice %s
+application/msexcel;            mutt_bgrun libreoffice %s
+application/vnd.ms-excel;       mutt_bgrun libreoffice %s
+application/x-excel;            mutt_bgrun libreoffice %s
+application/x-msexcel;          mutt_bgrun libreoffice %s
+application/ms-Excel;           mutt_bgrun libreoffice %s
+application/vnd.ms-powerpoint;  mutt_bgrun libreoffice %s
+application/x-mspowerpoint;     mutt_bgrun libreoffice %s
+application/ppt;                mutt_bgrun libreoffice %s
+
+application/pdf;                mutt_bgrun evince %s
+application/postscript;         mutt_bgrun evince %s
+image/*;                        mutt_bgrun eog %s

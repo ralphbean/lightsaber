@@ -1,0 +1,43 @@
+# 'black' turns out grey is my terminal
+#
+# color object foreground background
+color attachment magenta default
+color error white red  # errors yell at you in red
+color hdrdefault green default   # headers
+color indicator cyan default # currently selected message
+color markers cyan default  # the + for wrapped pager lines
+color message cyan default  # informational messages, not mail
+color normal white default    # plain text
+color quoted green default  # quoted text
+color search green default # hilite search patterns in the pager
+color signature red default    # signature (after "-- ") is red 
+color status blue default # status bar is yellow *on blue*   
+color tilde blue default  # ~'s after message body
+color tree red default    # thread tree in index menu is magenta
+color signature red default
+color underline yellow default
+color header cyan default ^(From|Subject): # Important headers
+color body magenta default "(ftp|http)://[^ ]+"  # picks up URLs
+color body magenta default [-a-z_0-9.]+@[-a-z_0-9.]+ 
+
+#  Coloring quoted text - coloring the first 7 levels:
+color quoted    cyan black
+color quoted1   yellow black
+color quoted2   red black
+color quoted3   green black
+color quoted4   cyan black
+color quoted5   yellow black
+color quoted6   red black
+color quoted7   green black
+
+#  Colorize smileys:  :-)  ;-)  :-/  :-(
+color body  yellow default "[;:]-[)/(|]"
+color body  yellow default "[;:][)/(|]"
+color body  green default "[[:alpha:]]\+://[^ ]*"
+
+color index green default ~N      # New
+color index yellow default ~O              # Old
+color index magenta default ~P		# From me
+color index cyan default ~F		# Flagged
+color index blue default ~T	# Tagged
+color index red default ~D		# Deleted
