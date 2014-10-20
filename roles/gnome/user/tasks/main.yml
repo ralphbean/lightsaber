@@ -3,9 +3,15 @@
   notify:
   - restart gnome-shell
   with_items: "{{ standard_gsettings }}"
+  tags:
+  - gnome/user
+  - gnome
 
 - name: Make a dir for my shortcut scripts
   file: dest=~/bin state=directory
+  tags:
+  - gnome/user
+  - gnome
 
 - name: Copy over my shortcut scripts there
   copy: src={{item}} dest=~/bin/{{item}} mode=0755
@@ -14,6 +20,9 @@
   - clip-to-firefox
   - restart-gnome-shell
   - pw-lookup.sh
+  tags:
+  - gnome/user
+  - gnome
 
 - name: Setup custom keyboard shortcuts | just the names
   gsettings: >
@@ -24,6 +33,9 @@
   notify:
   - restart gnome-shell
   with_items: "{{ custom_shortcuts }}"
+  tags:
+  - gnome/user
+  - gnome
 
 - name: Setup custom keyboard shortcuts | just the commands
   gsettings: >
@@ -34,6 +46,9 @@
   notify:
   - restart gnome-shell
   with_items: "{{ custom_shortcuts }}"
+  tags:
+  - gnome/user
+  - gnome
 
 - name: Setup custom keyboard shortcuts | just the bindings
   gsettings: >
@@ -44,6 +59,9 @@
   notify:
   - restart gnome-shell
   with_items: "{{ custom_shortcuts }}"
+  tags:
+  - gnome/user
+  - gnome
 
 - name: Lastly, put in the full list of short indices
   gsettings: >
@@ -52,6 +70,12 @@
     value={{ custom_shortcuts_list }}
   notify:
   - restart gnome-shell
+  tags:
+  - gnome/user
+  - gnome
 
 - name: Copy over xmodmap settings for my kinesis
   copy: src=xmodmap dest=~/.xmodmap
+  tags:
+  - gnome/user
+  - gnome
