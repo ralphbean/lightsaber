@@ -4,3 +4,7 @@
   - xclip
   - xsel
   - gvim
+  - gnome-tweak-tool
+  tags:
+  - gnome
+  - gnome/system
