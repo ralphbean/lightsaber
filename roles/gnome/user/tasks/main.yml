@@ -13,6 +13,7 @@
   - dagdclip
   - clip-to-firefox
   - restart-gnome-shell
+  - pw-lookup.sh
 
 - name: Setup custom keyboard shortcuts | just the names
   gsettings: >

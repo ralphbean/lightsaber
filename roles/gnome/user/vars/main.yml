@@ -47,5 +47,15 @@ custom_shortcuts:
   command: ~/bin/dagdclip
   binding: '<Control>Space'
 
+- index: custom3
+  name: password
+  command: ~/bin/pw-lookup.sh
+  binding: '<Control>1'
+
+- index: custom4
+  name: fas
+  command: ~/bin/pw-lookup.sh sys/fas
+  binding: '<Control>2'
+
 # This is a painfully long list that I would love to be able to generate. Help.
 custom_shortcuts_list: "[\\'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/\\',\\'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/\\',\\'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/\\']"
