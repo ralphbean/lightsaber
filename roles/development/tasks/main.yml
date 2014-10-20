@@ -6,6 +6,7 @@
   - python-virtualenvwrapper
   - pkgwat
   - python-pip
+  - gcc
   tags:
   - development
 
