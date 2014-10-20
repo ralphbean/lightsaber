@@ -2,7 +2,7 @@
 
 
 - name: system configuration (packages, etc...)
-  hosts: laptop
+  hosts: geier
 
   vars_files:
   - vars/global.yml
@@ -14,7 +14,7 @@
   - flash
 
 - name: basics for the gnome user (shortcuts, etc..)
-  hosts: laptop
+  hosts: geier
   su: yes
   su_user: threebean
 

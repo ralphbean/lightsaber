@@ -1,5 +1,5 @@
 [local]
-laptop      ansible_ssh_host=192.168.1.13
+geier       ansible_ssh_host=192.168.1.13
 
 [dynamic]
 buttermilk  ansible_ssh_host=104.131.95.186
