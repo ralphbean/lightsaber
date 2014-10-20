@@ -2,16 +2,16 @@
 
 
 - name: some preliminaries (packages, etc..)
-  hosts: 192.168.1.13
+  hosts: laptop
 
   vars_files:
   - vars/global.yml
 
   roles:
-  - "{{ roles }}/gnome/system"
+  - gnome/system
 
 - name: basics for the user (shortcuts, etc..)
-  hosts: 192.168.1.13
+  hosts: laptop
   su: yes
   su_user: threebean
 
@@ -19,4 +19,4 @@
   - vars/global.yml
 
   roles:
-  - "{{ roles }}/gnome/user"
+  - gnome/user
