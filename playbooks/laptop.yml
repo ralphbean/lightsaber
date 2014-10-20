@@ -1,16 +1,19 @@
 ---
 
 
-- name: some preliminaries (packages, etc..)
+- name: system configuration (packages, etc...)
   hosts: laptop
 
   vars_files:
   - vars/global.yml
 
   roles:
+  - common
+  - security
   - gnome/system
+  - flash
 
-- name: basics for the user (shortcuts, etc..)
+- name: basics for the gnome user (shortcuts, etc..)
   hosts: laptop
   su: yes
   su_user: threebean
@@ -20,3 +23,7 @@
 
   roles:
   - gnome/user
+
+# TODO -- two things not covered:
+# - ssh config, including the list of proxy commands
+# - gpg config, which doesn't really have anything in it anyways

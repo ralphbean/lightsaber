@@ -1,3 +1,2 @@
-roles: /home/threebean/devel/snackpack/roles
-templates: /home/threebean/devel/snackpack/templates
-tasks: /home/threebean/devel/snackpack/tasks
+templates: /home/threebean/devel/lightsaber/templates
+tasks: /home/threebean/devel/lightsaber/tasks

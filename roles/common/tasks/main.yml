@@ -15,6 +15,7 @@
   - setools-console
   - pkgwat
   - python-pip
+  - gpg
   tags:
   - packages
 
@@ -49,7 +50,7 @@
 
 - name: Common | zsh | Copy over the oh-my-zsh bundle
   synchronize: >
-      src={{roles}}/common/files/oh-my-zsh/
+      src=oh-my-zsh/
       dest=/usr/local/share/.
       owner=false
 
