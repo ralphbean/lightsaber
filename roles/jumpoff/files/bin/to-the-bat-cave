@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ssh lockbox -t "tmux attach" || ssh lockbox -t "tmux"

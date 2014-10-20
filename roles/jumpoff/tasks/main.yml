@@ -1,0 +1,11 @@
+- name: Include some packages
+  yum: name={{ item }} state=present
+  with_items:
+  - mosh
+  tags:
+  - jumpoff
+
+- name: Synchronize some scripts to /usr/local/bin
+  synchronize: src=bin/ dest=/usr/local/bin/
+  tags:
+  - jumpoff

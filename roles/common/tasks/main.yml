@@ -8,14 +8,11 @@
   - ccze
   - htop
   - ftop
-  - git
-  - python-virtualenvwrapper
   - bpython
   - openssl-devel
   - setools-console
-  - pkgwat
-  - python-pip
   - gpg
+  - pass
   tags:
   - packages
 

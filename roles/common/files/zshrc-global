@@ -4,7 +4,7 @@ ZSH=/usr/local/share/oh-my-zsh
 # Set name of the theme to load.
 # Look in /usr/local/share/oh-my-zsh/themes/
 ZSH_THEME="dst"
-if [ $HOSTNAME = "radek" ]; then
+if [ $HOSTNAME = "geier" ]; then
     ZSH_THEME="nicoulaj"
 else
     ZSH_THEME="dst"

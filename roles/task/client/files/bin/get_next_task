@@ -1,0 +1,8 @@
+#!/bin/bash
+
+NEXT=$(
+    task proj.isnt:house limit:1 |
+    perl -pe 's/\e\[?.*?[\@-~]//g' |
+    sed -n '3p' |
+    awk '{ print $1 }')
+echo $NEXT

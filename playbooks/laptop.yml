@@ -12,6 +12,9 @@
   - security
   - gnome/system
   - flash
+  - task/client
+  - jumpoff
+  - development
 
 - name: basics for the gnome user (shortcuts, etc..)
   hosts: geier

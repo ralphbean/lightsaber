@@ -1,0 +1,6 @@
+#!/bin/bash
+
+NEXT=$(/usr/local/bin/get_next_task)
+task $NEXT mod wait:5minutes
+
+next

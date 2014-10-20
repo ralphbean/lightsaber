@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cd $VIRTUAL_ENV/lib/python*/site-packages/

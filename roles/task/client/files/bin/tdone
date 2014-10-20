@@ -1,0 +1,7 @@
+#!/bin/bash
+
+NEXT=$(/usr/local/bin/get_next_task)
+
+task $NEXT done
+
+/usr/local/bin/next
