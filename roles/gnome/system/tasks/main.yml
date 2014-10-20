@@ -3,3 +3,4 @@
   with_items:
   - xclip
   - xsel
+  - gvim
