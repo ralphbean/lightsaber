@@ -52,3 +52,6 @@
     value={{ custom_shortcuts_list }}
   notify:
   - restart gnome-shell
+
+- name: Copy over xmodmap settings for my kinesis
+  copy: src=xmodmap dest=~/.xmodmap

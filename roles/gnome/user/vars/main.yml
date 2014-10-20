@@ -57,5 +57,10 @@ custom_shortcuts:
   command: ~/bin/pw-lookup.sh sys/fas
   binding: '<Control>2'
 
+- index: custom5
+  name: unfuck-kinesis
+  command: /usr/bin/xmodmap ~/.xmodmap
+  binding: '<Control>F1'
+
 # This is a painfully long list that I would love to be able to generate. Help.
 custom_shortcuts_list: "[\\'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/\\',\\'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/\\',\\'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/\\']"

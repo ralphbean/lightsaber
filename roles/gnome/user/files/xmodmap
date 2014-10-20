@@ -1,0 +1,3 @@
+! keycode 134 = Super_L
+keysym Alt_L = Super_L
+! keysym Super_R = Super_L
