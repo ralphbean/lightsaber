@@ -3,6 +3,10 @@ standard_gsettings:
     value: 'true'
     schema: org.gnome.desktop.interface
 
+  - key: clock-format
+    value: '12h'
+    schema: org.gnome.desktop.interface
+
   - key: screensaver
     value: "[\\'<Primary>BackSpace\\']"
     schema: org.gnome.settings-daemon.plugins.media-keys
