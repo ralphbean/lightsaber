@@ -1,14 +1,83 @@
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+if [ $HOSTNAME = "geier" ]; then
+    ZSH_THEME="nicoulaj"
+else
+    ZSH_THEME="dst"
+fi
+
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Set to this to use case-sensitive completion
+CASE_SENSITIVE="false"
+
+# Comment this out to disable weekly auto-update checks
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment following line if you want to disable colors in ls
+# DISABLE_LS_COLORS="true"
+
+# Uncomment following line if you want to disable autosetting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+COMPLETION_WAITING_DOTS="true"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(battery git git-flow github mercurial pip python taskwarrior yum)
+
+export EDITOR=vim
+
+# virtualenv stuff (put here by the moksha fabric bootstrap process)
+export WORKON_HOME=/home/threebean/.virtualenvs;
+source /usr/bin/virtualenvwrapper.sh;
+
+# go lang stuff
+export GOPATH="$HOME/remotes"
+
+# Customize to your needs...
+export BATTERY=1
+export MAILCHECK=0
+
+export HGMERGE=/usr/bin/meld
+alias fdate="date '+%F'"
+alias gthumb="eog"
+alias sup="mutt"
+alias git="hub"
+alias teleport='pushd $VIRTUAL_ENV/lib/python*/site-packages/'
+
 alias task="task proj.isnt:house"
+alias iso="task proj:iso"
 
 export BODHI_USER="ralph"
 
-# Virtualenv stuff
-export WORKON_HOME=/home/threebean/.virtualenvs;
-source /usr/bin/virtualenvwrapper.sh;
+bindkey '^[[1;5D' emacs-backward-word
+bindkey '^[[1;5C' emacs-forward-word
 
 PATH=/home/threebean/bin:$PATH
 PATH=$PATH:/home/threebean/local/bin
 
+
 # Git stuff
 source ~/.githelpers
 alias glog="pretty_git_log"
+
+export GPG_INFO_FILE=~/.gpg-agent-info
+touch $GPG_INFO_FILE
+if [ "$(cat $GPG_INFO_FILE)" != "$GPG_AGENT_INFO" ]; then
+    if [ "$GPG_AGENT_INFO" != "" ]; then
+        echo $GPG_AGENT_INFO > $GPG_INFO_FILE
+        chmod 600 $GPG_INFO_FILE
+    else
+        export GPG_AGENT_INFO=$(cat $GPG_INFO_FILE)
+    fi
+fi
