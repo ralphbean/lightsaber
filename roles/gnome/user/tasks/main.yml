@@ -2,7 +2,7 @@
   gsettings: schema={{ item.schema }} key={{ item.key }} value={{ item.value }}
   notify:
   - restart gnome-shell
-  with_items: "{{ standard_shortcuts }}"
+  with_items: "{{ standard_gsettings }}"
 
 - name: Make a dir for my shortcut scripts
   file: dest=~/bin state=directory

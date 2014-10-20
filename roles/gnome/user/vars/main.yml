@@ -1,4 +1,8 @@
-standard_shortcuts:
+standard_gsettings:
+  - key: clock-show-date
+    value: 'true'
+    schema: org.gnome.desktop.interface
+
   - key: screensaver
     value: "[\\'<Primary>BackSpace\\']"
     schema: org.gnome.settings-daemon.plugins.media-keys
