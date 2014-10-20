@@ -7,12 +7,8 @@
   vars_files:
   - vars/global.yml
 
-  tasks:
-  - name: Some packages needed for custom shortcuts
-    yum: name={{ item }} state=present
-    with_items:
-    - xclip
-    - firefox
+  roles:
+  - "{{ roles }}/gnome/system"
 
 - name: basics for the user (shortcuts, etc..)
   hosts: 192.168.1.13
@@ -23,4 +19,4 @@
   - vars/global.yml
 
   roles:
-  - "{{ roles }}/gsettings"
+  - "{{ roles }}/gnome/user"
