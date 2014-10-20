@@ -57,6 +57,7 @@
   - mbsyncrc
   - mbsync.redhat.crt
   - mailcap
+  - notmuch-config
   tags:
   - mail/client
 
