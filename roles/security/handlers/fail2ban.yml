@@ -1,4 +1,0 @@
-# file: roles/firewall/handlers/ferm.yml
-
-- name: restart fail2ban
-  action: service name=fail2ban state=restarted
