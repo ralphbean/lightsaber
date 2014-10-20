@@ -1,0 +1,9 @@
+[local]
+laptop      ansible_ssh_host=192.168.1.13
+
+[dynamic]
+buttermilk  ansible_ssh_host=104.131.95.186
+compute01   ansible_ssh_host=104.131.96.144
+
+[nagios]
+compute01   ansible_ssh_host=104.131.96.144
