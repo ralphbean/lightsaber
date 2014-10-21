@@ -3,6 +3,7 @@
   with_items:
   - mosh
   - NetworkManager-vpnc
+  - rubygem-rhc
   tags:
   - jumpoff
 
