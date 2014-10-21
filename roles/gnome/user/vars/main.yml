@@ -8,7 +8,7 @@ standard_gsettings:
     schema: org.gnome.desktop.interface
 
   - key: screensaver
-    value: "[\\'<Primary>BackSpace\\']"
+    value: "<Primary>BackSpace"
     schema: org.gnome.settings-daemon.plugins.media-keys
 
   - key: toggle-tiled-left
