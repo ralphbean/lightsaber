@@ -1,5 +1,8 @@
-- name: Install taskwarrior
-  yum: name=task state=present
+- name: Install taskwarrior and others
+  yum: name={{item}} state=present
+  with_items:
+  - task
+  - python-ansi2html
   tags:
   - task/client
 
