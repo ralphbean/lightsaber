@@ -51,7 +51,7 @@
       dest=/home/{{user}}/.{{item}}
       owner={{user}}
       group={{user}}
-      mode=0640
+      mode=0600
   with_items:
   - msmtprc
   - mbsyncrc
