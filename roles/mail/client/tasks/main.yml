@@ -9,7 +9,7 @@
 - name: Enable the mutt-kz copr
   command: dnf copr enable -y fatka/mutt-kz
   args:
-      creates: etc/yum.repos.d/_copr_fatka-mutt-kz.repo
+      creates: /etc/yum.repos.d/_copr_fatka-mutt-kz.repo
   tags:
   - mail/client
 
