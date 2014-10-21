@@ -9,6 +9,7 @@
   - gcc
   - gcc-c++
   - libcurl-devel
+  - hovercraft
   tags:
   - development
 
