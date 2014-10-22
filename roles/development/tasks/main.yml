@@ -4,6 +4,7 @@
   - git
   - gitflow
   - hub
+  - python-sh
   - python-virtualenvwrapper
   - python-pip
   - gcc
