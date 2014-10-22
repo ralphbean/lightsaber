@@ -10,6 +10,7 @@
   - gcc-c++
   - libcurl-devel
   - hovercraft
+  - libffi-devel
   tags:
   - development
 
