@@ -81,3 +81,13 @@
   with_items: "{{ all_users }}"
   tags:
   - vim
+
+- name: Common | zsh | Copy over user-specific vimrc.local
+  copy: >
+      src=vimrc.local-{{item.user}}
+      dest={{item.homedir}}/.vimrc.local
+      owner={{item.user}}
+      group={{item.user}}
+  with_items: "{{ all_users }}"
+  tags:
+  - vim
