@@ -11,6 +11,7 @@
   - libcurl-devel
   - hovercraft
   - libffi-devel
+  - zeromq-devel
   tags:
   - development
 
