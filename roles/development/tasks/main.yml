@@ -5,7 +5,6 @@
   - gitflow
   - hub
   - python-virtualenvwrapper
-  - pkgwat
   - python-pip
   - gcc
   - gcc-c++
@@ -13,6 +12,9 @@
   - hovercraft
   - libffi-devel
   - zeromq-devel
+  - pkgwat
+  - fedpkg
+  - fedora-packager
   tags:
   - development
 
