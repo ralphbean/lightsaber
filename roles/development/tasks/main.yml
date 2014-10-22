@@ -15,6 +15,7 @@
   - pkgwat
   - fedpkg
   - fedora-packager
+  - redhat-rpm-config
   tags:
   - development
 
