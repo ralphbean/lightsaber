@@ -25,6 +25,7 @@ mailboxes = +"gmail/ISO"
 mailboxes = +"gmail/tbtl"
 
 mailboxes = +"redhat/redhat"
+mailboxes = +"redhat/fedora-eng"
 mailboxes = +"redhat/fedmsg-errors"
 
 # All bz emails
@@ -72,6 +73,7 @@ mailboxes = +"redhat/fedora-cloud"
 mailboxes = +"redhat/kde"
 mailboxes = +"redhat/lxde"
 mailboxes = +"redhat/xfce"
+mailboxes = +"redhat/legal"
 
 # I'm not checking these anymore
 #mailboxes = +"redhat/root"
