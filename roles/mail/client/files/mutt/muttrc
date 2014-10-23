@@ -69,6 +69,9 @@ mailboxes = +"redhat/opw"
 mailboxes = +"redhat/design-team"
 mailboxes = +"redhat/epel-devel"
 mailboxes = +"redhat/fedora-cloud"
+mailboxes = +"redhat/kde"
+mailboxes = +"redhat/lxde"
+mailboxes = +"redhat/xfce"
 
 # I'm not checking these anymore
 #mailboxes = +"redhat/root"
