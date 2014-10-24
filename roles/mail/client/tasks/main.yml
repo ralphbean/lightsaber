@@ -3,6 +3,7 @@
   with_items:
   - dnf
   - dnf-plugins-core
+  - elinks
   tags:
   - mail/client
 
@@ -69,6 +70,6 @@
   - mail/client
 
 - name: Lastly, symlink the main muttrc into place
-  file: src=/home/{{user}}/.mutt/mutt/muttrc dest=/home/{{user}}/.muttrc state=link
+  file: src=/home/{{user}}/.mutt/muttrc dest=/home/{{user}}/.muttrc state=link
   tags:
   - mail/client
