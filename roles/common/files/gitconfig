@@ -34,3 +34,5 @@
 	main-window-view = HistoryView
 [push]
 	default = tracking
+[sendemail]
+	smtpserver = /usr/bin/msmtp
