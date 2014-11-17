@@ -1,4 +1,8 @@
 #!/bin/bash
 
-NEXT=$(/usr/local/bin/get_next_task)
-task $NEXT
+# This is nicer for task-2.3
+#NEXT=$(/usr/local/bin/get_next_task)
+#task $NEXT
+
+# This is nicer for task-2.4
+task next limit:1
