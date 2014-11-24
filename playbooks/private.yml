@@ -13,3 +13,6 @@
 
 - pass: sys/aws/threebean/secret
   register: aws_secret_key
+
+- pass: sys/threebean/fml
+  register: nagios_password

@@ -56,7 +56,7 @@
 - htpasswd: >
     path=/etc/nagios/passwd
     name=threebean
-    password={{ nagios_password }}
+    password={{ nagios_password.secret }}
     owner=apache
     group=apache
     mode=0640
