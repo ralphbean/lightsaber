@@ -4,10 +4,8 @@
   connection: local
   gather_facts: false
 
-  # digital ocean creds are kept in the private repo
   vars_files:
   - vars/global.yml
-  - "{{ private }}/vars.yml"
 
   tasks:
   - debug: msg="talking to digital ocean"
@@ -48,7 +46,6 @@
 
   vars_files:
   - vars/global.yml
-  - "{{ private }}/vars.yml"
 
   roles:
     - role: security
@@ -74,7 +71,6 @@
 
   vars_files:
   - vars/global.yml
-  - "{{ private }}/vars.yml"
 
   roles:
       - role: common
@@ -86,7 +82,6 @@
 
   vars_files:
   - vars/global.yml
-  - "{{ private }}/vars.yml"
 
   roles:
       - role: nagios/nrpe/common
@@ -98,7 +93,6 @@
 
   vars_files:
   - vars/global.yml
-  - "{{ private }}/vars.yml"
 
   roles:
       - role: nagios/nrpe/common
@@ -109,7 +103,6 @@
 
   vars_files:
   - vars/global.yml
-  - "{{ private }}/vars.yml"
 
   roles:
   - role: nagios/nrpe/site
@@ -148,7 +141,6 @@
 
   vars_files:
   - vars/global.yml
-  - "{{ private }}/vars.yml"
 
   roles:
       - role: irc-bouncer
@@ -159,7 +151,6 @@
 
   vars_files:
       - vars/global.yml
-      - "{{ private }}/vars.yml"
 
   roles:
       - role: badges
