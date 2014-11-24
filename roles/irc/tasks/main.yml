@@ -4,11 +4,16 @@
   - weechat
   tags:
   - packages
+  - irc
 
 - name: IRC-Bouncer | weechat | Copy weechat config with rsync
   synchronize: >
       src={{roles}}/irc-bouncer/files/weechat/
       dest=/home/{{username}}/.weechat/
+  tags:
+  - irc
 
 - name: IRC-Bouncer | weechat | Copy weechat config template directly
   template: src=irc.conf dest=/home/{{ username }}/.weechat/irc.conf owner={{ username }}
+  tags:
+  - irc
