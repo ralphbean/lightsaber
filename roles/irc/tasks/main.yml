@@ -1,4 +1,4 @@
-- name: IRC-Bouncer | install common packages
+- name: install common packages
   yum: state=present name={{ item }}
   with_items:
   - weechat
@@ -6,14 +6,14 @@
   - packages
   - irc
 
-- name: IRC-Bouncer | weechat | Copy weechat config with rsync
+- name: Copy weechat config with rsync
   synchronize: >
-      src={{roles}}/irc-bouncer/files/weechat/
+      src=weechat/
       dest=/home/{{username}}/.weechat/
   tags:
   - irc
 
-- name: IRC-Bouncer | weechat | Copy weechat config template directly
+- name: Copy weechat config template directly
   template: src=irc.conf dest=/home/{{ username }}/.weechat/irc.conf owner={{ username }}
   tags:
   - irc
