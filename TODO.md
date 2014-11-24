@@ -1,10 +1,10 @@
 general
-- [ ] abolish private repo in favor of ‘pass’ integration.
+- [x] abolish private repo in favor of ‘pass’ integration.
 
 local stuff
 
-- [ ] mutt-kz+mbsync+notmuch
-- [ ] ~/bin/
+- [x] mutt-kz+mbsync+notmuch
+- [x] ~/bin/
 
 server stuff
 - [ ] backups and restore from backup for tahrir db - duplicity or bakthat from git

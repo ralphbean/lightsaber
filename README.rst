@@ -4,5 +4,5 @@ My Ansible Setup
 This is an ansible setup I use to manage my own machine(s).
 
 I've tried to make it generic enough that you can clone it and use it too.
-You'll need to set up one private vars file that has your credentials and
-stuff.  Give it a try!
+
+I use 'pass' to manage private credentials.  See the ``playbooks/private.yml`` for more info.
