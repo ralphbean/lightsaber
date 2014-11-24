@@ -58,8 +58,8 @@ alias sup="mutt"
 alias git="hub"
 alias teleport='pushd $VIRTUAL_ENV/lib/python*/site-packages/'
 
-alias task="task proj.isnt:house"
-alias iso="task proj:iso"
+#alias task="task proj.isnt:house"
+#alias iso="task proj:iso"
 
 export BODHI_USER="ralph"
 
