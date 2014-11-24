@@ -1,0 +1,15 @@
+# Load lots of private creds from a 'pass' database, locally.
+- pass: sys/freenode
+  register: freenode_password
+
+- pass: sys/do/client_key
+  register: do_client_id
+
+- pass: sys/do/api_key
+  register: do_api_key
+
+- pass: sys/aws/threebean/access
+  register: aws_access_key
+
+- pass: sys/aws/threebean/secret
+  register: aws_secret_key

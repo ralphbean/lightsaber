@@ -1,0 +1,45 @@
+#!/usr/bin/python
+
+# TODO finish docs
+DOCUMENTATION = '''
+---
+module: pass
+short_description: Query a local 'pass' database
+# ... snip ...
+'''
+
+import json
+import shlex
+import subprocess as sp
+import sys
+
+# read the argument string from the arguments file
+args_file = sys.argv[1]
+args_data = file(args_file).read()
+
+args_lookup = {}
+arguments = shlex.split(args_data)
+
+if len(arguments) != 1:
+    print json.dumps({
+        "failed": True,
+        "msg": "Expected 1 argument but got %r" % arguments,
+    })
+    sys.exit(1)
+
+name = arguments[0]
+
+proc = sp.Popen(['pass', name], stdout=sp.PIPE, stderr=sp.PIPE)
+stdout, stderr = proc.communicate()
+if proc.returncode != 0:
+    print json.dumps({
+        "failed": True,
+        "msg": "Failed stdout: %r, stderr: %r" % (stdout, stderr),
+    })
+    sys.exit(1)
+
+# Report that we are happy.
+print json.dumps({
+    "changed" : True,
+    "secret": stdout.strip(),
+})

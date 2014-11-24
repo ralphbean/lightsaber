@@ -4,6 +4,9 @@
   - mosh
   - NetworkManager-vpnc
   - rubygem-rhc
+  - ansible
+  - python-dopy
+  - python-boto
   tags:
   - jumpoff
 

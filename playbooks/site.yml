@@ -8,12 +8,12 @@
   - vars/global.yml
 
   tasks:
-  - debug: msg="talking to digital ocean"
+  - include: private.yml
   - include: "{{ tasks }}/provision.yml"
   - name: dns | set up dns for fml.threebean.net
     route53: >
-        aws_access_key={{ aws_access_key }}
-        aws_secret_key={{ aws_secret_key }}
+        aws_access_key={{ aws_access_key.secret }}
+        aws_secret_key={{ aws_secret_key.secret }}
         command=create
         overwrite=yes
         zone=threebean.net
@@ -22,8 +22,8 @@
         value={{hostvars.compute01.ansible_ssh_host}}
   - name: dns | set up dns for badges.threebean.net
     route53: >
-        aws_access_key={{ aws_access_key }}
-        aws_secret_key={{ aws_secret_key }}
+        aws_access_key={{ aws_access_key.secret }}
+        aws_secret_key={{ aws_secret_key.secret }}
         command=create
         overwrite=yes
         zone=threebean.net
@@ -32,8 +32,8 @@
         value={{hostvars.compute01.ansible_ssh_host}}
   - name: dns | set up dns for tw2-demos.threebean.net
     route53: >
-        aws_access_key={{ aws_access_key }}
-        aws_secret_key={{ aws_secret_key }}
+        aws_access_key={{ aws_access_key.secret }}
+        aws_secret_key={{ aws_secret_key.secret }}
         command=create
         overwrite=yes
         zone=threebean.net
