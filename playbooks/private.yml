@@ -14,5 +14,23 @@
 - pass: sys/aws/threebean/secret
   register: aws_secret_key
 
+- pass: sys/aws/s3/access
+  register: aws_backup_access_key
+
+- pass: sys/aws/s3/secret
+  register: aws_backup_secret_key
+
 - pass: sys/threebean/fml
   register: nagios_password
+
+- pass: sys/threebean/tahrir/user
+  register: tahrir_db_user
+
+- pass: sys/threebean/tahrir/password
+  register: tahrir_db_password
+
+- pass: sys/threebean/tahrir/session
+  register: tahrir_session_secret
+
+- pass: sys/threebean/tahrir/authn
+  register: tahrir_authn_secret
