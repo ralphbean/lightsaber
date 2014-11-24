@@ -3,11 +3,3 @@
 
 - name: Security | firewalld | Start the firewalld service
   service: name=firewalld enabled=yes state=started
-
-# TODO -- it would be nice to pull the accelerate port from the config file.
-- name: Open the ansible accelerate port
-  firewalld: >
-    port=10319/tcp
-    state=enabled
-    zone=public
-    permanent=true

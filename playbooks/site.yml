@@ -50,24 +50,8 @@
   roles:
     - role: security
 
-- name: playbook | site | Prepare for accelerate mode
-  hosts: dynamic
-  tasks:
-  - name: Install package required for accelerate mode
-    yum: name={{ item }} state=installed
-    with_items:
-        - python-keyczar
-        - openssl-devel
-  - name: Open the ansible accelerate port
-    firewalld: >
-        port=10319/tcp
-        state=enabled
-        zone=public
-        permanent=true
-
 - name: playbook | site | Set up basic server config
   hosts: dynamic
-  accelerate: true
 
   vars_files:
   - vars/global.yml
@@ -78,7 +62,6 @@
 
 - name: playbook | site | Set up nagios head
   hosts: nagios
-  accelerate: true
 
   vars_files:
   - vars/global.yml
@@ -89,7 +72,6 @@
 
 - name: playbook | site | Set up nrpe monitoring on all our nodes
   hosts: dynamic
-  accelerate: true
 
   vars_files:
   - vars/global.yml
@@ -99,7 +81,6 @@
 
 - name: playbook | site | Set up nrpe website monitoring.
   hosts: nagios
-  accelerate: true
 
   vars_files:
   - vars/global.yml
@@ -137,7 +118,6 @@
 
 - name: playbook | site | Set up bouncer
   hosts: buttermilk
-  accelerate: true
 
   vars_files:
   - vars/global.yml
@@ -147,8 +127,6 @@
 
 - name: playbook | site | Set up compute01 content
   hosts: compute01
-  accelerate: true
-
   vars_files:
       - vars/global.yml
 
