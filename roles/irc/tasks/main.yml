@@ -2,6 +2,7 @@
   yum: state=present name={{ item }}
   with_items:
   - weechat
+  - bitlbee
   tags:
   - packages
   - irc
@@ -15,5 +16,10 @@
 
 - name: Copy weechat config template directly
   template: src=irc.conf dest=/home/{{ username }}/.weechat/irc.conf owner={{ username }}
+  tags:
+  - irc
+
+- name: Set bitlbee to start
+  service: name=bitlbee state=started
   tags:
   - irc

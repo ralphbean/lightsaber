@@ -4,6 +4,11 @@
   tags:
   - irc
 
+- local_action: pass sys/bitlbee
+  register: bitlbee
+  tags:
+  - irc
+
 - local_action: pass sys/do/client_key
   register: do_client_id
 
