@@ -50,7 +50,7 @@
   - vars/global.yml
   - "{{ private }}/vars.yml"
 
-roles:
+  roles:
     - role: security
 
 - name: playbook | site | Prepare for accelerate mode
