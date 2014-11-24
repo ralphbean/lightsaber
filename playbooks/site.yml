@@ -50,8 +50,8 @@
   - vars/global.yml
   - "{{ private }}/vars.yml"
 
-  roles:
-    - role: "{{ roles }}/security"
+roles:
+    - role: security
 
 - name: playbook | site | Prepare for accelerate mode
   hosts: dynamic
@@ -77,8 +77,8 @@
   - "{{ private }}/vars.yml"
 
   roles:
-      - role: "{{ roles }}/common"
-      - role: "{{ roles }}/server"
+      - role: common
+      - role: server
 
 - name: playbook | site | Set up nagios head
   hosts: nagios
@@ -89,8 +89,8 @@
   - "{{ private }}/vars.yml"
 
   roles:
-      - role: "{{ roles }}/nagios/nrpe/common"
-      - role: "{{ roles }}/nagios/head"
+      - role: nagios/nrpe/common
+      - role: nagios/head
 
 - name: playbook | site | Set up nrpe monitoring on all our nodes
   hosts: dynamic
@@ -101,7 +101,7 @@
   - "{{ private }}/vars.yml"
 
   roles:
-      - role: "{{ roles }}/nagios/nrpe/common"
+      - role: nagios/nrpe/common
 
 - name: playbook | site | Set up nrpe website monitoring.
   hosts: nagios
@@ -112,32 +112,32 @@
   - "{{ private }}/vars.yml"
 
   roles:
-  - role: "{{ roles }}/nagios/nrpe/site"
+  - role: nagios/nrpe/site
     site: narcissus.rc.rit.edu
     target: narcissus
     path: /map/
-  - role: "{{ roles }}/nagios/nrpe/websocket"
+  - role: nagios/nrpe/websocket
     name: narcissus
     address: "ws://narcissus.rc.rit.edu:9000"
     topic: http_geojson
     timeout: 4
-  - role: "{{ roles }}/nagios/nrpe/site"
+  - role: nagios/nrpe/site
     site: threebean.org
     target: widget
     path: /blog/
-  - role: "{{ roles }}/nagios/nrpe/site"
+  - role: nagios/nrpe/site
     site: toscawidgets.org
     target: ZOMG
     path: /
-  - role: "{{ roles }}/nagios/nrpe/site"
+  - role: nagios/nrpe/site
     site: tw2-demos.threebean.org
     target: widget
     path: /
-  - role: "{{ roles }}/nagios/nrpe/site"
+  - role: nagios/nrpe/site
     site: monroe-threebean.rhcloud.com
     target: foreclosures
     path: /graph\?from_date=01%2F01%2F2013\&to_date=01%2F01%2F2013
-  - role: "{{ roles }}/nagios/nrpe/site"
+  - role: nagios/nrpe/site
     site: www.wintonroad.org
     target: experienced
     path: /
@@ -151,7 +151,7 @@
   - "{{ private }}/vars.yml"
 
   roles:
-      - role: "{{ roles }}/irc-bouncer"
+      - role: irc-bouncer
 
 - name: playbook | site | Set up compute01 content
   hosts: compute01
@@ -162,12 +162,12 @@
       - "{{ private }}/vars.yml"
 
   roles:
-      - role: "{{ roles }}/badges"
-      - role: "{{ roles }}/s3backup"
+      - role: badges
+      - role: s3backup
         name: tahrir-db
         target: /var/cache/tahrir/tahrir-db.sql
         bucket: threebean-cloud-backup
-      - role: "{{ roles }}/nagios/nrpe/site"
+      - role: nagios/nrpe/site
         site: badges.threebean.net
         target: Tahrir
         path: /
