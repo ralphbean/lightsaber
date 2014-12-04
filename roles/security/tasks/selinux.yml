@@ -9,5 +9,5 @@
   register: selinux_result
 
 - name: Reboot to enable selinux if necessary
-  include: reboot.yml
+  include: "{{ tasks }}/reboot.yml"
   when: selinux_result|changed

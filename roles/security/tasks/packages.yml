@@ -8,5 +8,5 @@
   register: update_result
 
 - name: Reboot to bring in new packages if necessary
-  include: reboot.yml
+  include: "{{ tasks }}/reboot.yml"
   when: update_result|changed
