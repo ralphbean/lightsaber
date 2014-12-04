@@ -3,8 +3,8 @@
 	email = rbean@redhat.com
 [color]
     ui = auto
-#[branch]
-#    autosetuprebase = always
+[branch]
+    autosetuprebase = always
 [alias]
     l = "!source ~/.githelpers && pretty_git_log"
     amend = commit --amend
