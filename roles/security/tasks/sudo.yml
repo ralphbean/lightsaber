@@ -1,0 +1,11 @@
+- name: sudo | ensure that we are a member of the wheel group
+  user: name={{ username }} groups=wheel append=yes
+  tags:
+  - security
+  - sudo
+
+- name: sudo | allow wheel with a password
+  lineinfile: dest=/etc/sudoers state=present regexp='^%wheel' line='%wheel ALL=(ALL) ALL'
+  tags:
+  - security
+  - sudo
