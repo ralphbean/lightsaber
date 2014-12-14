@@ -7,3 +7,4 @@
 - include: firewalld.yml
 - include: dnssec.yml
 - include: yum.yml
+- include: sshd.yml
