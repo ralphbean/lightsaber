@@ -7,4 +7,7 @@
 - include: firewalld.yml
 - include: dnssec.yml
 - include: yum.yml
+- include: sudo.yml
 - include: sshd.yml
+- include: fprintd.yml
+- include: suricata.yml

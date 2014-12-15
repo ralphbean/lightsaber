@@ -1,1 +1,3 @@
 roles/irc/files/weechat/weechat.log
+*.sw*
+*.py*
