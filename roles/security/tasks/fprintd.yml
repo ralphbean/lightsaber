@@ -1,0 +1,14 @@
+- name: fprintd | Remove the fingerprint reader service
+  yum: name=libfprint state=absent
+  tags:
+  - security
+  - auth
+  - fingerprint
+
+- name: fprintd | Update the pam system-auth configuration
+  command: /usr/sbin/authconfig --disablefingerprint --update
+  changed_when: False
+  tags:
+  - security
+  - auth
+  - fingerprint
