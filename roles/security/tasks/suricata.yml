@@ -1,0 +1,96 @@
+- name: suricata | Install the suricata intrusion detection system
+  yum: pkg=suricata state=latest
+  tags:
+  - security
+  - ids
+
+- name: suricata | nmcli | Determine the primary ethernet device
+  shell: nmcli -t -f device device | head -n1
+  register: iface
+  changed_when: False
+  tags:
+  - security
+  - ids
+
+- name: suricata | Downloading the latest ETOpen Ruleset https://emergingthreats.net/open-source/etopen-ruleset
+  get_url:
+    url=https://rules.emergingthreats.net/open/suricata/emerging.rules.tar.gz
+    dest=/var/tmp/emerging.rules.tar.gz
+    force=yes
+
+- name: suricata | Extracting ruleset
+  unarchive:
+    src=/var/tmp/emerging.rules.tar.gz
+    dest=/etc/suricata
+    force=yes
+  tags:
+  - security
+  - ids
+
+- name: suricata | Downloading the latest ETOpen configs
+  get_url:
+    url="https://rules.emergingthreats.net/open/suricata/{{ item }}"
+    dest="/etc/suricata/{{ item }}"
+    force=yes
+  with_items:
+    - reference.config
+    - classification.config
+  tags:
+  - security
+  - ids
+
+- name: suricata | Update the configuration with our device name
+  replace:
+    dest=/etc/sysconfig/suricata
+    regexp="eth0"
+    replace="{{ iface.stdout }}"
+  tags:
+  - security
+  - ids
+
+- name: suricata | Optimize the configuration
+  replace: dest=/etc/suricata/suricata.yaml regexp="{{ item.regexp }}" replace="{{ item.line }}"
+  with_items:
+  - { regexp: '(syslog\s+- syslog:\s+enabled:) no', line: '\1 yes' }
+  - { regexp: '(compiled in.\s+enabled:) yes', line: '\1 no' }
+  - { regexp: '(- fast:\s+enabled:) yes', line: '\1 no' }
+  - { regexp: '(- unified2-alert:\s+enabled:) yes', line: '\1 no' }
+  - { regexp: '(- http-log:\s+enabled:) yes', line: '\1 no' }
+  - { regexp: '(- stats:\s+enabled:) yes', line: '\1 no' }
+  tags:
+  - security
+  - ids
+
+- name: suricata | Disable certain IDS rules
+  lineinfile:
+    dest=/etc/suricata/suricata.yaml
+    regexp='^( - {{ item }}.rules)'
+    line='#\1'
+    backrefs=yes
+    backup=yes
+  with_items:
+  - decoder-events
+  - stream-events
+  - emerging-activex
+  - emerging-inappropriate
+  - emerging-imap
+  - emerging-voip
+  tags:
+  - security
+  - ids
+
+- name: suricata | ethtool | Disable generic receive offloading and tx/rx checksumming
+  command: /usr/sbin/ethtool --offload {{ iface.stdout }} {{ item }} off
+  with_items:
+    - gro
+    - tx
+    - rx
+  tags:
+  - security
+  - ids
+
+- name: suricata | Start the suricata service
+  service: name=suricata state=restarted enabled=yes
+  tags:
+  - security
+  - ids
