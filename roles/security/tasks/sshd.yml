@@ -1,0 +1,20 @@
+- name: sshd | Lock down sshd
+  lineinfile: dest=/etc/ssh/sshd_config regexp="{{ item.regexp }}" line="{{ item.line }}" backup=yes
+  with_items:
+  - { regexp: '^PermitRootLogin', line: 'PermitRootLogin no' }
+  - { regexp: '^PasswordAuthentication', line: 'PasswordAuthentication no' }
+  - { regexp: '^PermitEmptyPasswords', line: 'PermitEmptyPasswords no' }
+  - { regexp: '^ClientAliveInterval', line: 'ClientAliveInterval 300' }
+  - { regexp: '^ClientAliveCountMax', line: 'ClientAliveCountMax 0' }
+  notify:
+  - restart sshd
+  tags:
+  - config
+  - security
+  - ssh
+
+- name: sshd | enable the ssh port through firewalld
+  firewalld: port=22/tcp permanent=true state=enabled
+  tags:
+  - security
+  - ssh
