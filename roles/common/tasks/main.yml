@@ -15,10 +15,13 @@
   - pass
   tags:
   - packages
+  - common
 
 - name: Server | users | setup some users
   user: name={{item.user}} shell=/usr/bin/zsh
   with_items: "{{ all_users }}"
+  tags:
+  - common
 
 - name: Common | Ensure that those users own their homedir
   file: >
@@ -27,16 +30,24 @@
       group={{item.user}}
       state=directory
   with_items: "{{ all_users }}"
+  tags:
+  - common
 
 - name: Common | Ensure the all users have a bin dir
   file: dest={{item.homedir}}/bin/ state=directory
   with_items: "{{ all_users }}"
+  tags:
+  - common
 
 - name: Common | Copy over custom bashrc prompt
   copy: src=bashrc-gitprompt dest=/etc/profile.d/bashrc-gitprompt.sh
+  tags:
+  - common
 
 - name: Common | tmux | Copy over tmux config
   copy: src=tmux.conf dest=/etc/tmux.conf
+  tags:
+  - common
 
 # TODO -- do this one just like the custom zshrc config so we can drop 'username'
 - name: Common | git | Copy over git config
@@ -44,6 +55,7 @@
   with_items:
   - gitconfig
   - githelpers
+  - common
 
 - name: Common | zsh | Copy over the oh-my-zsh bundle
   synchronize: >
@@ -52,11 +64,13 @@
       owner=false
   tags:
   - zsh
+  - common
 
 - name: Common | zsh | Copy over global zshrc
   copy: src=zshrc-global dest=/etc/zshrc
   tags:
   - zsh
+  - common
 
 - name: Common | zsh | Copy over user-specific zshrc
   copy: >
@@ -67,6 +81,7 @@
   with_items: "{{ all_users }}"
   tags:
   - zsh
+  - common
 
 - name: Common | vim | Get the spf13-vim3 installer
   get_url: >
@@ -75,12 +90,14 @@
       mode=0755
   tags:
   - vim
+  - common
 
 - name: Common | vim | Run the spf13-vim3 installer
   command: su - {{item.user}} /usr/local/bin/install-spf13-vim3 creates={{item.homedir}}/.vimrc
   with_items: "{{ all_users }}"
   tags:
   - vim
+  - common
 
 - name: Common | zsh | Copy over user-specific vimrc.local
   copy: >
@@ -91,3 +108,4 @@
   with_items: "{{ all_users }}"
   tags:
   - vim
+  - common
