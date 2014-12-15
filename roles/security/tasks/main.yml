@@ -6,3 +6,4 @@
 - include: selinux.yml
 - include: firewalld.yml
 - include: dnssec.yml
+- include: yum.yml
