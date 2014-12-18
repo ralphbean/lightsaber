@@ -17,12 +17,6 @@
     url=https://rules.emergingthreats.net/open/suricata/emerging.rules.tar.gz
     dest=/var/tmp/emerging.rules.tar.gz
     force=yes
-
-- name: suricata | Extracting ruleset
-  unarchive:
-    src=/var/tmp/emerging.rules.tar.gz
-    dest=/etc/suricata
-    force=yes
   tags:
   - security
   - ids
@@ -35,6 +29,15 @@
   with_items:
     - reference.config
     - classification.config
+  tags:
+  - security
+  - ids
+
+- name: suricata | Extracting ruleset
+  unarchive:
+    src=/var/tmp/emerging.rules.tar.gz
+    dest=/etc/suricata
+    force=yes
   tags:
   - security
   - ids
