@@ -38,6 +38,7 @@
     src=/var/tmp/emerging.rules.tar.gz
     dest=/etc/suricata
     force=yes
+    copy=no
   tags:
   - security
   - ids
