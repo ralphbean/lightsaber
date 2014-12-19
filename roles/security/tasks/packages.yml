@@ -5,7 +5,6 @@
 
 - name: Common | update all packages
   yum: state=latest name=*
-  register: update_result
 
 - name: See if any updated packages need restarting
   command: /usr/bin/needs-restarting
