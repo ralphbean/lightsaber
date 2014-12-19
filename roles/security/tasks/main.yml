@@ -11,3 +11,4 @@
 - include: sshd.yml
 - include: fprintd.yml
 - include: suricata.yml
+- include: firefox.yml

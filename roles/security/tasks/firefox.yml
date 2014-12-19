@@ -1,0 +1,19 @@
+
+- name: Check if Firefox is installed
+  stat: path=/usr/bin/firefox
+  register: firefox
+  tags:
+    - security
+    - firefox
+
+
+- name: Install Firefox security extensions
+  yum: name={{ item }} state=present
+  with_items:
+      - mozilla-noscript
+      - mozilla-https-everywhere
+      - mozilla-adblockplus
+  when: firefox.stat.exists
+  tags:
+    - security
+    - firefox
