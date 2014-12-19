@@ -43,49 +43,39 @@
 
 - name: playbook | site | Set up security
   hosts: dynamic
-
   vars_files:
   - vars/global.yml
-
   roles:
-    - role: security
+  - role: security
 
 - name: playbook | site | Set up basic server config
   hosts: dynamic
-
   vars_files:
   - vars/global.yml
-
   roles:
-      - role: common
-      - role: server
+  - role: common
+  - role: server
 
 - name: playbook | site | Set up nagios head
   hosts: nagios
-
   vars_files:
   - vars/global.yml
-
   roles:
-      - role: nagios/nrpe/common
-      - role: nagios/head
-        nagios_password:        "{{ nagios_password.secret }}"
+  - role: nagios/nrpe/common
+  - role: nagios/head
+    nagios_password:        "{{ nagios_password.secret }}"
 
 - name: playbook | site | Set up nrpe monitoring on all our nodes
   hosts: dynamic
-
   vars_files:
   - vars/global.yml
-
   roles:
       - role: nagios/nrpe/common
 
 - name: playbook | site | Set up nrpe website monitoring.
   hosts: nagios
-
   vars_files:
   - vars/global.yml
-
   roles:
   - role: nagios/nrpe/site
     site: narcissus.rc.rit.edu
@@ -119,13 +109,10 @@
 
 - name: playbook | site | Set up bouncer
   hosts: buttermilk
-
   vars_files:
   - vars/global.yml
-
   pre_tasks:
   - include: private.yml
-
   roles:
   - role: irc
     freenode_password:          "{{ freenode.secret }}"
@@ -134,24 +121,22 @@
 - name: playbook | site | Set up compute01 content
   hosts: compute01
   vars_files:
-      - vars/global.yml
-
+  - vars/global.yml
   pre_tasks:
   - include: private.yml
-
   roles:
-      - role: badges
-        tahrir_db_user:         "{{ tahrir_db_user.secret }}"
-        tahrir_db_password:     "{{ tahrir_db_password.secret }}"
-        tahrir_session_secret:  "{{ tahrir_session_secret.secret }}"
-        tahrir_authn_secret:    "{{ tahrir_authn_secret.secret }}"
-      - role: s3backup
-        name: tahrir-db
-        target: /var/cache/tahrir/tahrir-db.sql
-        bucket: threebean-cloud-backup
-        aws_backup_access_key:  "{{ aws_backup_access_key.secret }}"
-        aws_backup_secret_key:  "{{ aws_backup_secret_key.secret }}"
-      - role: nagios/nrpe/site
-        site: badges.threebean.net
-        target: Tahrir
-        path: /
+  - role: badges
+    tahrir_db_user:         "{{ tahrir_db_user.secret }}"
+    tahrir_db_password:     "{{ tahrir_db_password.secret }}"
+    tahrir_session_secret:  "{{ tahrir_session_secret.secret }}"
+    tahrir_authn_secret:    "{{ tahrir_authn_secret.secret }}"
+  - role: s3backup
+    name: tahrir-db
+    target: /var/cache/tahrir/tahrir-db.sql
+    bucket: threebean-cloud-backup
+    aws_backup_access_key:  "{{ aws_backup_access_key.secret }}"
+    aws_backup_secret_key:  "{{ aws_backup_secret_key.secret }}"
+  - role: nagios/nrpe/site
+    site: badges.threebean.net
+    target: Tahrir
+    path: /
