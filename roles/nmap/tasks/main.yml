@@ -48,6 +48,7 @@
 
 - command: /usr/bin/git commit -am "Updated by lightsaber" chdir=~/.lightsaber/nmap_scans
   when: nmap_init.stat.exists
+  ignore_errors: yes
   tags:
     - security
     - nmap
