@@ -55,6 +55,8 @@
   with_items:
   - gitconfig
   - githelpers
+  tags:
+  - git
   - common
 
 - name: Common | zsh | Copy over the oh-my-zsh bundle
