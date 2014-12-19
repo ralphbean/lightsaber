@@ -1,0 +1,14 @@
+# Nmap port monitoring ansible role.
+# This role is for the master node, which will run nmap port scans against all
+# hosts, and commit the output to ~/.lightsaber/nmap_scans/$hostname
+# If any open port changes, the playbook will prompt the user.
+
+- name: playbook | nmap | Initiate git-backed port scanner
+  hosts: 127.0.0.1
+  sudo: no
+
+  vars_files:
+    - vars/global.yml
+
+  roles:
+    - nmap

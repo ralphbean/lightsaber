@@ -1,0 +1,66 @@
+- yum: name=nmap state=installed
+  tags:
+    - security
+    - nmap
+
+- stat: path=/home/{{ username }}/.lightsaber/nmap_scans
+  register: nmap_init
+  tags:
+    - security
+    - nmap
+
+- command: /usr/bin/mkdir -p /home/{{ username }}/.lightsaber/nmap_scans
+  when: not nmap_init.stat.exists
+  tags:
+    - security
+    - nmap
+
+- shell: /usr/bin/nmap -Pn -p 1-65535 -sS -T4 {{ item  }} | awk '/PORT/,/done/' | head -n-2 > /home/{{ username }}/.lightsaber/nmap_scans/{{ item }}
+  sudo: yes
+  with_items: groups['all']
+  tags:
+    - security
+    - nmap
+
+- command: /usr/bin/git init chdir=~/.lightsaber/nmap_scans
+  when: not nmap_init.stat.exists
+  tags:
+    - security
+    - nmap
+
+- command: /usr/bin/git add . chdir=~/.lightsaber/nmap_scans
+  when: not nmap_init.stat.exists
+  tags:
+    - security
+    - nmap
+
+- command: /usr/bin/git commit -am "Initial scan" chdir=~/.lightsaber/nmap_scans
+  when: not nmap_init.stat.exists
+  tags:
+    - security
+    - nmap
+
+- command: /usr/bin/git diff chdir=~/.lightsaber/nmap_scans
+  register: nmap_diff
+  tags:
+    - security
+    - nmap
+
+- command: /usr/bin/git commit -am "Updated by lightsaber" chdir=~/.lightsaber/nmap_scans
+  when: nmap_init.stat.exists
+  tags:
+    - security
+    - nmap
+
+
+- debug: msg="{{ nmap_diff.stdout }}"
+  when: nmap_diff.stdout != ''
+  tags:
+    - security
+    - nmap
+
+- pause: prompt="The port scanner has detected a change in open ports"
+  when: nmap_diff.stdout != ''
+  tags:
+    - security
+    - nmap
