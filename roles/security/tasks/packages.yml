@@ -7,6 +7,14 @@
   yum: state=latest name=*
   register: update_result
 
-- name: Reboot to bring in new packages if necessary
+- name: See if any updated packages need restarting
+  command: /usr/bin/needs-restarting
+  register: needs_restarting
+
+- name: Pause before rebooting
+  pause: prompt="We need to restart for the updates to take effect"
+  when: needs_restarting.stdout
+
+- name: Reboot for updated packages
   include: "{{ tasks }}/reboot.yml"
-  when: update_result|changed
+  when: needs_restarting.stdout
