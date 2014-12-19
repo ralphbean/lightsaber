@@ -18,6 +18,7 @@
 - shell: /usr/bin/nmap -Pn -p 1-65535 -sS -T4 {{ item  }} | awk '/PORT/,/done/' | head -n-2 > /home/{{ username }}/.lightsaber/nmap_scans/{{ item }}
   sudo: yes
   with_items: groups['all']
+  changed_when: False
   tags:
     - security
     - nmap
@@ -42,12 +43,14 @@
 
 - command: /usr/bin/git diff chdir=~/.lightsaber/nmap_scans
   register: nmap_diff
+  changed_when: False
   tags:
     - security
     - nmap
 
 - command: /usr/bin/git commit -am "Updated by lightsaber" chdir=~/.lightsaber/nmap_scans
   when: nmap_init.stat.exists
+  ignore_errors: yes
   tags:
     - security
     - nmap
