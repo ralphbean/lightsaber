@@ -4,9 +4,13 @@
   yum: name=firewalld state=present
 
 # On Pidora the firewalld unit is masked
+- file: path=/etc/systemd/system/firewalld.service follow=yes
+  register: firewalld_unit
+  failed_when: False
+
 - name: Security | firewalld | Ensure the service is unmasked
   command: /usr/bin/systemctl unmask firewalld
-  changed_when: False
+  when: firewalld_unit.state != 'absent' and firewalld_unit.src == '/dev/null'
 
 - name: Security | firewalld | Start the firewalld service
   service: name=firewalld enabled=yes state=started
