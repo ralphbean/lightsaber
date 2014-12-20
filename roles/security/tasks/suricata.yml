@@ -4,14 +4,6 @@
   - security
   - ids
 
-- name: suricata | nmcli | Determine the primary ethernet device
-  shell: nmcli -t -f device device | head -n1
-  register: iface
-  changed_when: False
-  tags:
-  - security
-  - ids
-
 - name: suricata | Downloading the latest ETOpen Ruleset https://emergingthreats.net/open-source/etopen-ruleset
   get_url:
     url=https://rules.emergingthreats.net/open/suricata/emerging.rules.tar.gz
@@ -47,7 +39,7 @@
   replace:
     dest=/etc/sysconfig/suricata
     regexp="eth0"
-    replace="{{ iface.stdout }}"
+    replace="{{ hostvars[inventory_hostname].ansible_default_ipv4.interface }}"
   tags:
   - security
   - ids
@@ -84,7 +76,7 @@
   - ids
 
 - name: suricata | ethtool | Disable generic receive offloading and tx/rx checksumming
-  command: /usr/sbin/ethtool --offload {{ iface.stdout }} {{ item }} off
+  command: /usr/sbin/ethtool --offload {{ hostvars[inventory_hostname].ansible_default_ipv4.interface }} {{ item }} off
   with_items:
     - gro
     - tx
