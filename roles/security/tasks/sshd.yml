@@ -13,8 +13,16 @@
   - security
   - ssh
 
+
 - name: sshd | enable the ssh port through firewalld
   firewalld: port=22/tcp permanent=true state=enabled
+  tags:
+  - security
+  - ssh
+
+
+- name: sshd | Enable sshd and ensure it's started
+  service: name=sshd state=started enabled=yes
   tags:
   - security
   - ssh
