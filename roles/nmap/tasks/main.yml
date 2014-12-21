@@ -19,7 +19,7 @@
     - nmap
 
 - name: Run the nmap port scanner
-  shell: /usr/bin/nmap -Pn -p 1-65535 -sS -T4 {{ item  }} | awk '/PORT/,/done/' | head -n-2 > /home/{{ username }}/.lightsaber/nmap_scans/{{ item }}
+  shell: "/usr/bin/nmap -Pn -p 1-65535 -sS -T4 {{ item  }} | awk '/PORT/,/done/' | head -n-2 | tr -s ' ' ' ' > /home/{{ username }}/.lightsaber/nmap_scans/{{ item }}"
   sudo: yes
   with_items: groups['all']
   changed_when: False
