@@ -83,6 +83,7 @@
     - rx
   # We can't always disable these in every environment...
   ignore_errors: True
+  changed_when: False
   tags:
   - security
   - ids
