@@ -146,4 +146,11 @@ echo "------------"
 letter=$(echo $project | cut -b 1)
 url=https://pypi.python.org/packages/source/$letter/$project/$project-$new_vers.tar.gz
 echo "To start along with .spec packaging, you'll want to run:"
+echo "$ cd \$FEDPKG_DIR"
+echo "$ freshness"
 echo "$ wget $url"
+echo "$ fedpkg new-sources $project-$new_vers.tar.gz"
+echo "$ rpmdev-bumpspec -n $new_vers *.spec"
+echo "$ git commit -a -m '$new_vers'"
+echo "$ fedpkg push && fedpkg build --nowait"
+
