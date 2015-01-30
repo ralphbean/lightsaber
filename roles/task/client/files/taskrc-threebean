@@ -28,6 +28,9 @@ report.work_report.labels=priority,project,description,completed,entered on,age
 report.work_report.sort=project+,end-
 report.work_report.filter=status:completed
 
+report.next.columns=id,entry.age,due.remaining,priority,project,description,urgency
+report.next.labels=id,age,due,,project,description,urg
+
 #dateformat=M/D
 
 # Files
@@ -42,7 +45,7 @@ data.location=/home/threebean/.task
 #include /usr/share/doc/task/rc/dark-green-256.theme
 #include /usr/share/doc/task/rc/dark-blue-256.theme
 #include /usr/share/doc/task/rc/dark-violets-256.theme
-#include /usr/share/doc/task/rc/dark-yellow-green.theme
+include /usr/share/doc/task/rc/dark-yellow-green.theme
 #include /usr/share/doc/task/rc/dark-gray-256.theme
 
 # Bugwarrior UDAs
