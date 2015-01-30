@@ -4,8 +4,16 @@
   - security
   - sudo
 
+
 - name: sudo | allow wheel with a password
   lineinfile: dest=/etc/sudoers state=present regexp='^%wheel' line='%wheel ALL=(ALL) ALL'
+  tags:
+  - security
+  - sudo
+
+
+- name: sudo | disable the need for a tty to enable ansible ssh pipelining
+  lineinfile: dest=/etc/sudoers state=present regexp='^Defaults:{{ username }}' line='Defaults:{{ username }} !requiretty'
   tags:
   - security
   - sudo

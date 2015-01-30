@@ -1,0 +1,80 @@
+- name: Ensure nmap is installed
+  yum: name=nmap state=installed
+  tags:
+    - security
+    - nmap
+
+- name: Check if ~/.lightsaber/nmap_scans exists
+  stat: path=/home/{{ username }}/.lightsaber/nmap_scans
+  register: nmap_init
+  tags:
+    - security
+    - nmap
+
+- name: Create ~/.lightsaber/nmap_scans
+  command: /usr/bin/mkdir -p /home/{{ username }}/.lightsaber/nmap_scans
+  when: not nmap_init.stat.exists
+  tags:
+    - security
+    - nmap
+
+- name: Run the nmap port scanner
+  shell: /usr/bin/nmap -Pn -p 1-65535 -sS -T4 {{ item  }} | awk '/PORT/,/done/' | head -n-2 > /home/{{ username }}/.lightsaber/nmap_scans/{{ item }}
+  sudo: yes
+  with_items: groups['all']
+  changed_when: False
+  tags:
+    - security
+    - nmap
+
+- name: Initialize the nmap_scans git repo
+  command: /usr/bin/git init chdir=~/.lightsaber/nmap_scans
+  when: not nmap_init.stat.exists
+  tags:
+    - security
+    - nmap
+
+- name: Add the scan results to the git repo
+  command: /usr/bin/git add . chdir=~/.lightsaber/nmap_scans
+  when: not nmap_init.stat.exists
+  tags:
+    - security
+    - nmap
+
+- name: Commit the initial scan results
+  command: /usr/bin/git commit -am "Initial scan" chdir=~/.lightsaber/nmap_scans
+  when: not nmap_init.stat.exists
+  tags:
+    - security
+    - nmap
+
+- name: See if any ports changed
+  command: /usr/bin/git diff chdir=~/.lightsaber/nmap_scans
+  register: nmap_diff
+  changed_when: False
+  tags:
+    - security
+    - nmap
+
+- name: Commit the latest scan results
+  command: /usr/bin/git commit -am "Updated by lightsaber" chdir=~/.lightsaber/nmap_scans
+  when: nmap_init.stat.exists
+  ignore_errors: yes
+  tags:
+    - security
+    - nmap
+
+
+- name: Output the port changes
+  debug: msg="{{ nmap_diff.stdout }}"
+  when: nmap_diff.stdout != ''
+  tags:
+    - security
+    - nmap
+
+- name: Host ports have changed!
+  pause: prompt="The port scanner has detected a change in open ports"
+  when: nmap_diff.stdout != ''
+  tags:
+    - security
+    - nmap

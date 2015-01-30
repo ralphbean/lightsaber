@@ -12,3 +12,4 @@
 - include: fprintd.yml
 - include: suricata.yml
 - include: firefox.yml
+- include: ipv6.yml
