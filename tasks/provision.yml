@@ -6,8 +6,8 @@
     name=buttermilk
     ssh_key_ids=36649
     size_id=66
-    region_id=4
-    image_id=6370882
+    region_id=8
+    image_id=9640922
     wait_timeout=500
     client_id={{ do_client_id.secret }}
     api_key={{ do_api_key.secret }}
@@ -19,8 +19,8 @@
     name=computer01
     ssh_key_ids=36649
     size_id=66
-    region_id=4
-    image_id=6370882
+    region_id=8
+    image_id=9640922
     wait_timeout=500
     client_id={{ do_client_id.secret }}
     api_key={{ do_api_key.secret }}
