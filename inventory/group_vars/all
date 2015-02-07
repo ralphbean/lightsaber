@@ -12,3 +12,5 @@ all_users:
   homedir: /root
 
 ansible_ssh_user: root
+
+permit_root_login: false
