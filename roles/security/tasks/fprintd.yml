@@ -5,6 +5,13 @@
   - auth
   - fingerprint
 
+- name: fprintd | Install authconfig
+  yum: name=authconfig state=present
+  tags:
+  - security
+  - auth
+  - fingerprint
+
 - name: fprintd | Update the pam system-auth configuration
   command: /usr/sbin/authconfig --disablefingerprint --update
   changed_when: False
