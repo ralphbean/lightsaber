@@ -12,4 +12,7 @@
 - include: fprintd.yml
 - include: suricata.yml
 - include: firefox.yml
+
+# Lock down ipv6 when ipv6 is available
 - include: ipv6.yml
+  when: "ansible_default_ipv6 != {}"

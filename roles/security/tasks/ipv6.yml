@@ -2,7 +2,7 @@
 - name: ipv6 | Enable Privacy Extensions (RFC 4941)
   sysctl: name="net.ipv6.conf.{{ item }}.use_tempaddr" value=2 sysctl_set=yes state=present reload=yes
   with_items:
-    - "{{ hostvars[inventory_hostname].ansible_default_ipv6.interface }}"
+    - "{{ ansible_default_ipv6.interface }}"
     - default
     - all
   tags:
