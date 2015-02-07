@@ -19,7 +19,7 @@
         zone=threebean.net
         record=fml.threebean.net
         type=A
-        value={{hostvars.compute01.ansible_ssh_host}}
+        value={{hostvars.computer01.ansible_ssh_host}}
   - name: dns | set up dns for badges.threebean.net
     route53: >
         aws_access_key={{ aws_access_key.secret }}
@@ -29,7 +29,7 @@
         zone=threebean.net
         record=badges.threebean.net
         type=A
-        value={{hostvars.compute01.ansible_ssh_host}}
+        value={{hostvars.computer01.ansible_ssh_host}}
   - name: dns | set up dns for tw2-demos.threebean.net
     route53: >
         aws_access_key={{ aws_access_key.secret }}
@@ -39,7 +39,7 @@
         zone=threebean.net
         record=tw2-demos.threebean.net
         type=A
-        value={{hostvars.compute01.ansible_ssh_host}}
+        value={{hostvars.computer01.ansible_ssh_host}}
 
 - name: playbook | site | Set up security
   hosts: dynamic
@@ -118,8 +118,8 @@
     freenode_password:          "{{ freenode.secret }}"
     bitlbee_password:           "{{ bitlbee.secret }}"
 
-- name: playbook | site | Set up compute01 content
-  hosts: compute01
+- name: playbook | site | Set up computer01 content
+  hosts: computer01
   vars_files:
   - vars/global.yml
   pre_tasks:

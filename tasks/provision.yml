@@ -13,10 +13,10 @@
     api_key={{ do_api_key.secret }}
     unique_name=true
 
-- name: playbook | provision | Provision compute01 if necessary
+- name: playbook | provision | Provision computer01 if necessary
   digital_ocean: >
     state=active
-    name=compute01
+    name=computer01
     ssh_key_ids=36649
     size_id=66
     region_id=4

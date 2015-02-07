@@ -3,7 +3,7 @@ geier       ansible_ssh_host=localhost
 
 [dynamic]
 buttermilk  ansible_ssh_host=104.131.95.186
-compute01   ansible_ssh_host=104.131.96.144
+computer01   ansible_ssh_host=104.131.96.144
 
 [nagios]
-compute01   ansible_ssh_host=104.131.96.144
+computer01   ansible_ssh_host=104.131.96.144

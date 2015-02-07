@@ -1,4 +1,4 @@
-# Requires a --extra-vars="target=compute01" option to be passed
+# Requires a --extra-vars="target=computer01" option to be passed
 ---
 - name: go to sleep, shhhhh...
   hosts: "{{target}}"
