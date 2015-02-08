@@ -63,7 +63,7 @@
   roles:
   - role: nagios/nrpe/common
   - role: nagios/head
-    nagios_password:        "{{ nagios_password.secret }}"
+    nagios_password:        "{{ nagios.secret }}"
 
 - name: playbook | site | Set up nrpe monitoring on all our nodes
   hosts: dynamic
@@ -126,10 +126,10 @@
   - include: private.yml
   roles:
   - role: badges
-    tahrir_db_user:         "{{ tahrir_db_user.secret }}"
-    tahrir_db_password:     "{{ tahrir_db_password.secret }}"
-    tahrir_session_secret:  "{{ tahrir_session_secret.secret }}"
-    tahrir_authn_secret:    "{{ tahrir_authn_secret.secret }}"
+    db_user:         "{{ tahrir_db_user.secret }}"
+    db_password:     "{{ tahrir_db_password.secret }}"
+    session_secret:  "{{ tahrir_session_secret.secret }}"
+    authn_secret:    "{{ tahrir_authn_secret.secret }}"
   - role: s3backup
     name: tahrir-db
     target: /var/cache/tahrir/tahrir-db.sql

@@ -28,7 +28,7 @@
   register: aws_backup_secret_key
 
 - local_action: pass sys/threebean/fml
-  register: nagios_password
+  register: nagios
 
 - local_action: pass sys/threebean/tahrir/user
   register: tahrir_db_user
