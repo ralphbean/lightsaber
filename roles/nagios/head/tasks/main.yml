@@ -9,6 +9,8 @@
   notify:
     - restart nagios
   register: installation
+  tags:
+  - nagios
 
 - name: remove the default htpasswd file
   file: dest=/etc/nagios/passwd state=absent
@@ -21,6 +23,8 @@
   - printer.cfg
   - switch.cfg
   - windows.cfg
+  tags:
+  - nagios
 
 - name: nagios | add our master nagios config
   copy: src={{ item }} dest=/etc/nagios/{{ item }}
@@ -29,6 +33,8 @@
   - cgi.cfg
   notify:
     - restart nagios
+  tags:
+  - nagios
 
 - name: nagios | copy over the supporting config
   copy: src={{ item }} dest=/etc/nagios/objects/{{ item }}
@@ -36,13 +42,26 @@
       - commands.cfg
   notify:
       - restart nagios
+  tags:
+  - nagios
 
 - name: nagios | ensure /etc/nagios/hosts is there
   file: dest=/etc/nagios/hosts state=directory
+  tags:
+  - nagios
+
+- name: copy host configs to the nagios head
+  template: src=host.cfg dest="/etc/nagios/hosts/{{ item }}.cfg" mode=0644
+  with_items: "{{ groups.monitored }}"
+  notify: restart nagios
+  tags:
+  - nagios
 
 - name: Check if path exists
   stat: path=/etc/nagios/passwd
   register: passwd_path
+  tags:
+  - nagios
 
 
 # Ensure the default user is absent
@@ -51,6 +70,8 @@
   notify:
   - restart nagios
   - restart httpd
+  tags:
+  - nagios
 
 # Add myself to the nagios admin list
 - htpasswd: >
@@ -64,6 +85,8 @@
   notify:
   - restart nagios
   - restart httpd
+  tags:
+  - nagios
 
 
 - name: copy nagios httpd config
@@ -72,14 +95,20 @@
     owner=apache group=apache mode=0644
   notify:
   - restart httpd
+  tags:
+  - nagios
 
 - name: nagios | start httpd
   service: name=httpd enabled=yes state=started
+  tags:
+  - nagios
 
 - name: nagios | start nagios
   service: name=nagios enabled=yes state=started
+  tags:
+  - nagios
 
-- name: nrpe | open a port
+- name: nagios | open a port
   firewalld: >
       port={{ item }}/tcp
       state=enabled
@@ -89,3 +118,5 @@
     - 80
   notify:
     - restart firewalld
+  tags:
+    - nagios

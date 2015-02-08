@@ -21,20 +21,6 @@
   notify:
     - restart nrpe
 
-- name: nrpe | ensure the nagios hosts directory exists
-  file: dest=/etc/nagios/hosts/ state=directory
-  delegate_to: "{{ item }}"
-  with_items: groups.nagios
-
-- name: nrpe | copy host config to the nagios head
-  template: >
-    src=nrpe-nagios-side.cfg
-    dest="/etc/nagios/hosts/{{ inventory_hostname }}.cfg"
-    mode=0644
-  notify: restart nagios
-  delegate_to: "{{ item }}"
-  with_items: groups.nagios
-
 - name: nrpe | make sure nrpe can ping (sticky bit)
   file: dest=/usr/bin/ping mode=4755
 

@@ -7,3 +7,7 @@ computer01   ansible_ssh_host=104.131.96.144
 
 [nagios]
 computer01   ansible_ssh_host=104.131.96.144
+
+# This is a meta group just so nagios knows who to monitor
+[monitored:children]
+dynamic
