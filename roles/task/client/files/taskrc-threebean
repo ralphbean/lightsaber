@@ -11,7 +11,7 @@
 # Use the command 'task show' to see all defaults and overrides
 
 #defaultwidth=175
-#_forcecolor=yes
+_forcecolor=yes
 
 default.project=unsorted
 default.priority=H
