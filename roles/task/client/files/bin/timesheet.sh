@@ -7,7 +7,7 @@ fmt="%Y-%m-%d"
 start=$(date +$fmt -d $phrase)
 end=$(date +$fmt)
 filter="project.isnt:apply project.isnt:family project.isnt:xmas project.isnt:cersc project.isnt:iso project.isnt:monroe project.isnt:house project.isnt:misc project.isnt:rit project.isnt:tos-rit-projects-seminar project.isnt:music project.isnt:hfoss project.isnt:wrns"
-config="rc.defaultwidth=190 rc.defaultheight=75 rc._forcecolor=yes"
+config="rc.defaultwidth=180 rc.defaultheight=75 rc._forcecolor=yes"
 
 echo "    (generated at $(date))"
 echo
