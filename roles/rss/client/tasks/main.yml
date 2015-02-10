@@ -1,0 +1,35 @@
+- name: Install newsbeuter
+  yum: name={{item}} state=present
+  with_items:
+  - newsbeuter
+  tags:
+  - rss/client
+
+- name: Make directories
+  file: >
+      dest={{item.homedir}}/.newsbeuter/ state=directory 
+      owner={{item.user}}
+      group={{item.user}}
+  with_items: "{{ all_users }}"
+  tags:
+  - rss/client
+
+- name: Copy over configs
+  copy: >
+      src=config
+      dest={{item.homedir}}/.newsbeuter/config
+      owner={{item.user}}
+      group={{item.user}}
+  with_items: "{{ all_users }}"
+  tags:
+  - rss/client
+
+- name: Copy over urls
+  copy: >
+      src=urls
+      dest={{item.homedir}}/.newsbeuter/urls
+      owner={{item.user}}
+      group={{item.user}}
+  with_items: "{{ all_users }}"
+  tags:
+  - rss/client

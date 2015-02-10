@@ -15,6 +15,7 @@
   - jumpoff
   - development
   - task/client
+  - rss/client
   - role: mail/client
     user: threebean
 
