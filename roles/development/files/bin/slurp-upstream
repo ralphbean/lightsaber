@@ -11,8 +11,9 @@ freshness
 
 rpmdev-bumpspec -n $VERSION *.spec
 spectool -g *.spec
-cp *$VERSION* ~/rpmbuild/SOURCES/.
-cp *.patch ~/rpmbuild/SOURCES/. || echo "No patches to copy."
+
+cp * ~/rpmbuild/SOURCES/.
+
 srpm=$(rpmbuild -bs *.spec | awk ' { print $2 } ')
 echo $srpm
 koji build --scratch rawhide $srpm && \
