@@ -7,6 +7,8 @@ if [ -z "$var" ]; then
     exit 1
 fi
 
+freshness
+
 rpmdev-bumpspec -n $VERSION *.spec
 spectool -g *.spec
 cp *$VERSION* ~/rpmbuild/SOURCES/.
