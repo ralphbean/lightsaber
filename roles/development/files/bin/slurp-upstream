@@ -1,0 +1,20 @@
+#!/bin/bash -xv
+
+VERSION=$1
+
+if [ -z "$var" ]; then
+    echo "Must pass a VERSION";
+    exit 1
+fi
+
+rpmdev-bumpspec -n $VERSION *.spec
+spectool -g *.spec
+cp *$VERSION* ~/rpmbuild/SOURCES/.
+cp *.patch ~/rpmbuild/SOURCES/. || echo "No patches to copy."
+srpm=$(rpmbuild -bs *.spec | awk ' { print $2 } ')
+echo $srpm
+koji build --scratch rawhide $srpm && \
+    fedpkg new-sources *$VERSION && \
+    bonk && \
+    git commit -a -m "$VERSION" && \
+    fedpkg push && fedpkg build --nowait
