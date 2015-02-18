@@ -16,7 +16,7 @@ cp *.patch ~/rpmbuild/SOURCES/. || echo "No patches to copy."
 srpm=$(rpmbuild -bs *.spec | awk ' { print $2 } ')
 echo $srpm
 koji build --scratch rawhide $srpm && \
-    fedpkg new-sources *$VERSION && \
+    fedpkg new-sources *$VERSION* && \
     bonk && \
     git commit -a -m "$VERSION" && \
-    fedpkg push && fedpkg build --nowait
+    fedpkg push && fedpkg build && echo "check for the hotness msg"
