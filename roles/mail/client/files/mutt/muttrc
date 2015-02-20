@@ -62,6 +62,7 @@ mailboxes = +"redhat/phab"
 mailboxes = +"redhat/fedora-devel"
 mailboxes = +"redhat/python-devel"
 mailboxes = +"redhat/fedora-python"
+mailboxes = +"redhat/nodejs"
 mailboxes = +"redhat/packaging"
 mailboxes = +"redhat/bugzilla-development-list"
 mailboxes = +"redhat/copr-devel
