@@ -1,5 +1,5 @@
 - name: suricata | Install the suricata intrusion detection system
-  yum: pkg=suricata state=latest
+  yum: pkg=suricata state=present
   tags:
   - security
   - ids
