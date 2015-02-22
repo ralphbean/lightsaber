@@ -36,9 +36,8 @@
 
 - name: suricata | Update the configuration with our device name
   replace:
-    dest=/etc/sysconfig/suricata
-    regexp="eth0"
-    replace="{{ hostvars[inventory_hostname].ansible_default_ipv4.interface }}"
+    dest=/etc/sysconfig/suricata regexp='^OPTIONS="\-i .*"$'
+    replace="OPTIONS=\"-i {{ hostvars[inventory_hostname].ansible_default_ipv4.interface }}\""
   tags:
   - security
   - ids
