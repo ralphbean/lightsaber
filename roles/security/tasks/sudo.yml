@@ -22,7 +22,10 @@
     - sudo
 
 - name: sudo | disable the need for a tty to enable ansible ssh pipelining
-  lineinfile: dest=/etc/sudoers state=present regexp='^Defaults:{{ username }}' line='Defaults:{{ username }} !requiretty'
+  copy: content='Defaults !requiretty\n'
+        dest='/etc/sudoers.d/norequiretty'
+        validate='visudo -cf %s'
+        owner=root group=root mode=0440
   tags:
   - security
   - sudo
