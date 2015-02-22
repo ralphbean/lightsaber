@@ -1,1 +1,1 @@
-0 0 * * * root /usr/bin/s3cmd sync {{target}} s3://{{bucket}}/{{name}}/ >> /var/log/s3cron.log 2>&1
+0 0 * * * root /usr/bin/s3cmd sync "{{target}}" s3://{{bucket}}/{{name}}/ >> /var/log/s3cron.log 2>&1
