@@ -107,7 +107,14 @@
   - ids
 
 - name: suricata | Start the suricata service
-  service: name=suricata state=restarted enabled=yes
+  service: name=suricata state=running enabled=yes
+  tags:
+  - security
+  - ids
+
+- name: suricata | Restart suricata
+  service: name=suricata state=restarted
+  when: ruleset|changed or suri_cfg|changed or rulealerts|changed
   tags:
   - security
   - ids
