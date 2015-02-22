@@ -69,9 +69,29 @@
   - emerging-inappropriate
   - emerging-imap
   - emerging-voip
+  - tor
+  - emerging-p2p
+  - emerging-web_specific_apps
+  - emerging-activex
+  - emerging-web_server
+  register: suri_cfg
   tags:
   - security
   - ids
+
+- name: suricata | Disable specific IDS alerts
+  lineinfile: dest=/etc/suricata/rules/{{ item.rules }}.rules
+              regexp='^(alert .*{{ item.alert }}.*)$'
+              line='#\1'
+              backrefs=yes
+              backup=yes
+  with_items:
+    - { rules: 'emerging-policy', alert: 'YUM User-Agent' }
+  register: rulealerts
+  tags:
+  - security
+  - ids
+
 
 - name: suricata | ethtool | Disable generic receive offloading and tx/rx checksumming
   command: /usr/sbin/ethtool --offload {{ hostvars[inventory_hostname].ansible_default_ipv4.interface }} {{ item }} off
