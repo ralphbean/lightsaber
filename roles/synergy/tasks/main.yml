@@ -4,6 +4,22 @@
   tags:
   - synergy
 
+- name: See if synergys is running
+  shell: "/bin/ps -ef | grep synergys | grep -v grep"
+  register: synergys
+  when: "not {{ hostvars[inventory_hostname].group_names | intersect(['synergyc']) }}"
+  ignore_errors: True
+  changed_when: False
+  tags:
+  - synergy
+
+- name: Run synergys if it isn't running
+  when: "synergys|failed and not {{ hostvars[inventory_hostname].group_names | intersect(['synergyc']) }}"
+  command: /usr/bin/synergys
+  sudo: no
+  tags:
+  - synergy
+
 - name: See if the synergy ssh tunnel is running
   shell: "/bin/ps -ef | grep 24800 | grep -v grep"
   register: synergy_tunnel
