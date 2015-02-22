@@ -12,6 +12,15 @@
   - sudo
 
 
+- name: Copy /etc/sudoers.d/ssh_auth_sock into place
+  copy: content='Defaults env_keep += "SSH_AUTH_SOCK"\n'
+        dest='/etc/sudoers.d/ssh_auth_sock'
+        validate='visudo -cf %s'
+        owner=root group=root mode=0440
+  tags:
+    - security
+    - sudo
+
 - name: sudo | disable the need for a tty to enable ansible ssh pipelining
   lineinfile: dest=/etc/sudoers state=present regexp='^Defaults:{{ username }}' line='Defaults:{{ username }} !requiretty'
   tags:
