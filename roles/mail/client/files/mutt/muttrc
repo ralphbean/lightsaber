@@ -137,8 +137,7 @@ macro index,pager <f2> <change-folder>+"gmail/Inbox"<enter>
 macro index,pager <f3> <change-folder>+"wrns/Inbox"<enter>
 macro index,pager <f4> <change-folder>+"redhat/Inbox"<enter>
 macro index,pager <f5> <change-folder>+"gmail/ISO"<enter>
-macro index,pager <f6> <change-folder>+"gmail/github"<enter>
-macro index,pager <f7> <change-folder>+"redhat/fedora-devel"<enter>
+macro index,pager <f6> <change-folder>+"redhat/buildsys"<enter>
 macro index,pager <f8> <change-folder>
 #+"redhat/root"<enter>
 
