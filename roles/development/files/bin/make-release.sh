@@ -139,6 +139,10 @@ if yesno "Do you want to push the release back to github?"; then
     flow-finish.sh
 fi
 
+if yesno "Do you want to force a version check with anitya?"; then
+    check-anitya.py $project
+fi
+
 echo
 echo "Fedora Stuff"
 echo "------------"
