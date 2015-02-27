@@ -62,7 +62,7 @@
 - name: Common | zsh | Copy over the oh-my-zsh bundle
   synchronize: >
       src=oh-my-zsh/
-      dest=/usr/local/share/.
+      dest=/usr/local/share/oh-my-zsh
       owner=false
   tags:
   - zsh
