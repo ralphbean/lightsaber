@@ -13,6 +13,7 @@
   - setools-console
   - gpg
   - pass
+  - python-virtualenvwrapper
   tags:
   - packages
   - common
