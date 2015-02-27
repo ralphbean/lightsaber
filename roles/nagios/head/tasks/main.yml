@@ -63,7 +63,6 @@
   tags:
   - nagios
 
-
 # Ensure the default user is absent
 - htpasswd: path=/etc/nagios/passwd name=nagiosadmin state=absent
   when: passwd_path.stat.exists
