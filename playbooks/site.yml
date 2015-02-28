@@ -60,6 +60,8 @@
   hosts: nagios
   vars_files:
   - vars/global.yml
+  pre_tasks:
+  - include: private.yml
   roles:
   - role: nagios/nrpe/common
   - role: nagios/head

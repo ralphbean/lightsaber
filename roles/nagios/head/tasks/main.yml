@@ -57,21 +57,6 @@
   tags:
   - nagios
 
-- name: Check if path exists
-  stat: path=/etc/nagios/passwd
-  register: passwd_path
-  tags:
-  - nagios
-
-# Ensure the default user is absent
-- htpasswd: path=/etc/nagios/passwd name=nagiosadmin state=absent
-  when: passwd_path.stat.exists
-  notify:
-  - restart nagios
-  - restart httpd
-  tags:
-  - nagios
-
 # Add myself to the nagios admin list
 - htpasswd: >
     path=/etc/nagios/passwd
@@ -80,13 +65,19 @@
     owner=apache
     group=apache
     mode=0640
-  when: passwd_path.stat.exists
   notify:
   - restart nagios
   - restart httpd
   tags:
   - nagios
 
+# Ensure the default user is absent
+- htpasswd: path=/etc/nagios/passwd name=nagiosadmin state=absent
+  notify:
+  - restart nagios
+  - restart httpd
+  tags:
+  - nagios
 
 - name: copy nagios httpd config
   copy: >
