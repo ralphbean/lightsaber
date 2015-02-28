@@ -10,12 +10,6 @@
   notify:
     - restart nrpe
 
-- name: copy memory plugin in
-  copy: >
-      src=check_memory.pl
-      dest=/usr/lib64/nagios/plugins/check_memory.pl
-      mode=0755
-
 - name: nrpe | copy over basic nrpe tasks
   template: src=nrpe.cfg dest=/etc/nagios/nrpe.cfg
   notify:
