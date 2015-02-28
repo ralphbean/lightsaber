@@ -134,8 +134,8 @@
     name: tahrir-db
     target: /var/cache/tahrir/tahrir-db.sql
     bucket: threebean-cloud-backup
-    aws_backup_access_key:  "{{ aws_backup_access_key.secret }}"
-    aws_backup_secret_key:  "{{ aws_backup_secret_key.secret }}"
+    s3_aws_backup_access_key:  "{{ aws_backup_access_key.secret }}"
+    s3_aws_backup_secret_key:  "{{ aws_backup_secret_key.secret }}"
   - role: nagios/nrpe/site
     site: badges.threebean.net
     target: Tahrir

@@ -1,5 +1,5 @@
 [default]
-access_key = {{ aws_backup_access_key }}
+access_key = {{ s3_aws_backup_access_key }}
 access_token = 
 add_encoding_exts = 
 add_headers = 
@@ -40,7 +40,7 @@ proxy_port = 0
 recursive = False
 recv_chunk = 4096
 reduced_redundancy = False
-secret_key = {{ aws_backup_secret_key }}
+secret_key = {{ s3_aws_backup_secret_key }}
 send_chunk = 4096
 simpledb_host = sdb.amazonaws.com
 skip_existing = False
