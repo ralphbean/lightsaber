@@ -12,8 +12,8 @@
 
 - name: copy memory plugin in
   copy: >
-      src=check_memory.pl
-      dest=/usr/lib64/nagios/plugins/check_memory.pl
+      src=check_memory.py
+      dest=/usr/lib64/nagios/plugins/check_memory.py
       mode=0755
 
 - name: nrpe | copy over basic nrpe tasks
