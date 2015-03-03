@@ -55,20 +55,16 @@ io = dict(
 
 branches = [
     {
+        'short': 'f22',
+        'long': 'fc22',
+    },
+    {
         'short': 'f21',
         'long': 'fc21',
     },
     {
         'short': 'f20',
         'long': 'fc20',
-    },
-    {
-        'short': 'f19',
-        'long': 'fc19',
-    },
-    {
-        'short': 'f18',
-        'long': 'fc18',
     },
     {
         'short': 'epel7',
