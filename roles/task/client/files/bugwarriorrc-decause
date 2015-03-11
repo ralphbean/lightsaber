@@ -5,7 +5,7 @@
 # section below determining their properties, how to query them, etc.  The name
 # is just a symbol, and doesn't have any functional importance.
 [general]
-targets = github, fossrit, hhroc, osw, rocpy, rocpythonistas, magic, capcamp, posserit, civx, roccivicappchallenge, bz.redhat, council, fossco
+targets = github, fossrit, hhroc, osw, rocpy, rocpythonistas, magic, capcamp, posserit, civx, roccivicappchallenge, bz.redhat, council, fosco
 
 shorten = True
 inline_links = False
