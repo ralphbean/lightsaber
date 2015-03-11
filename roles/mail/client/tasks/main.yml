@@ -56,7 +56,6 @@
   with_items:
   - mbsync.redhat.crt
   - mailcap
-  - notmuch-config
   tags:
   - mail/client
 
@@ -70,6 +69,7 @@
   with_items:
   - msmtprc
   - mbsyncrc
+  - notmuch-config
   tags:
   - mail/client
 

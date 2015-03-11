@@ -20,6 +20,7 @@ set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secr
 # this is found in my school configuration file.
 #
 set pgp_autosign=yes
+# TODO -- change this key fingerprint for decause
 set pgp_sign_as=94504C3AE11DD197920058ABA90ED7DE971095FF
 set pgp_replyencrypt=yes
 set pgp_timeout=1800

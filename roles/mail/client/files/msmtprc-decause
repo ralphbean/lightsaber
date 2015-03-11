@@ -5,7 +5,7 @@ tls_starttls on
 tls_certcheck off
 logfile ~/.msmtp.log
 auto_from on
-maildomain threebean.org
+maildomain civx.us
 
 # Gmail
 account gmail

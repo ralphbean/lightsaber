@@ -38,7 +38,7 @@ UseIMAPS yes
 # We use a self-signed cert for our imaps server.  You need to get the CA cert
 # with:  $ openssl s_client -showcerts -connect mail.corp.redhat.com:993
 # It is the second certificate listed (the first is the server cert).
-CertificateFile /home/threebean/.mbsync.redhat.crt
+CertificateFile /home/decause/.mbsync.redhat.crt
 
 IMAPStore redhat-remote
 Account redhat
