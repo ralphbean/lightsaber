@@ -8,7 +8,7 @@
   - gnome
 
 - name: Make a dir for my shortcut scripts
-  file: dest=~/bin state=directory
+  file: dest=~/bin state=directory owner={{username}} group={{username}}
   tags:
   - gnome/user
   - gnome
