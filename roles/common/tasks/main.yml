@@ -17,28 +17,20 @@
   - packages
   - common
 
-- name: Common | install common packages
+- name: Common | install zsh if you want
   yum: state=present name={{ item }}
   with_items:
   - zsh
   tags:
   - packages
   - common
-  when: "{{shell}} == /usr/bin/zsh"
+  when: shell == "/usr/bin/zsh"
 
 - name: Server | users | setup some users
-  user: name={{item.user}} shell=/usr/bin/bash
+  user: name={{item.user}} shell={{shell}}
   with_items: "{{ all_users }}"
   tags:
   - common
-  when: "{{shell}} != /usr/bin/zsh"
-
-- name: Server | users | setup some users
-  user: name={{item.user}} shell=/usr/bin/zsh
-  with_items: "{{ all_users }}"
-  tags:
-  - common
-  when: "{{shell}} == /usr/bin/zsh"
 
 - name: Common | Ensure that those users own their homedir
   file: >
@@ -84,14 +76,14 @@
   tags:
   - zsh
   - common
-  when: "{{shell}} == /usr/bin/zsh"
+  when: shell == "/usr/bin/zsh"
 
 - name: Common | zsh | Copy over global zshrc
   copy: src=zshrc-global dest=/etc/zshrc
   tags:
   - zsh
   - common
-  when: "{{shell}} == /usr/bin/zsh"
+  when: shell == "/usr/bin/zsh"
 
 - name: Common | zsh | Copy over user-specific zshrc
   copy: >
@@ -103,7 +95,7 @@
   tags:
   - zsh
   - common
-  when: "{{shell}} == /usr/bin/zsh"
+  when: shell == "/usr/bin/zsh"
 
 - name: Common | vim | Get the spf13-vim3 installer
   get_url: >
