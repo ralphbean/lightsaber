@@ -2,7 +2,7 @@
 
 
 - name: system configuration (packages, etc...)
-  hosts: chapeauxrogue
+  hosts: chapeauxrouge
 
   vars_files:
   - vars/global.yml
@@ -21,7 +21,7 @@
     user: decause
 
 - name: basics for the gnome user (shortcuts, etc..)
-  hosts: chapeauxrogue
+  hosts: chapeauxrouge
   su: yes
   su_user: decause
 
