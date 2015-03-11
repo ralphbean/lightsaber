@@ -1,0 +1,76 @@
+# [Created by task 2.0.0 5/10/2012 18:42:02]
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-faq',
+# 'man task-tutorial', 'man task-color', 'man task-sync' or 'man taskrc'
+
+# Here is an example of entries that use the default, override and blank values
+#   variable=foo   -- By specifying a value, this overrides the default
+#   variable=      -- By specifying no value, this means no default
+#   #variable=foo  -- By commenting out the line, or deleting it, this uses the default
+
+# Use the command 'task show' to see all defaults and overrides
+
+#defaultwidth=175
+_forcecolor=yes
+
+default.project=unsorted
+default.priority=H
+
+#taskd.certificate=/home/decause/.task/client.cert.pem
+#taskd.key=/home/decause/.task/client.key.pem
+#taskd.trust=yes
+#taskd.server=taskwarrior.inthe.am:53589
+#taskd.credentials=inthe_am/webmaster/80ea189c-ffe1-490b-bf36-0474b84228c1
+
+report.work_report.description=now
+report.work_report.columns=priority,project,description,end,entry,entry.age
+report.work_report.labels=priority,project,description,completed,entered on,age
+report.work_report.sort=project+,end-
+report.work_report.filter=status:completed
+
+report.next.columns=id,entry.age,due.remaining,priority,project,description,urgency
+report.next.labels=id,age,due,,project,description,urg
+
+#dateformat=M/D
+
+# Files
+data.location=/home/decause/.task
+
+# Color theme (uncomment one to use)
+#include /usr/share/doc/task/rc/light-16.theme
+#include /usr/share/doc/task/rc/light-256.theme
+#include /usr/share/doc/task/rc/dark-16.theme
+#include /usr/share/doc/task/rc/dark-256.theme
+#include /usr/share/doc/task/rc/dark-red-256.theme
+#include /usr/share/doc/task/rc/dark-green-256.theme
+#include /usr/share/doc/task/rc/dark-blue-256.theme
+#include /usr/share/doc/task/rc/dark-violets-256.theme
+include /usr/share/doc/task/rc/dark-yellow-green.theme
+#include /usr/share/doc/task/rc/dark-gray-256.theme
+#include /usr/share/doc/task/rc/solarized-dark-256.theme
+
+# Bugwarrior UDAs
+uda.bitbucketid.label=Bitbucket Issue ID
+uda.bitbucketid.type=string
+uda.bitbuckettitle.label=Bitbucket Title
+uda.bitbuckettitle.type=string
+uda.bitbucketurl.label=Bitbucket URL
+uda.bitbucketurl.type=string
+uda.bugzillasummary.label=Bugzilla Summary
+uda.bugzillasummary.type=string
+uda.bugzillaurl.label=Bugzilla URL
+uda.bugzillaurl.type=string
+uda.githubnumber.label=Github Issue/PR \#
+uda.githubnumber.type=numeric
+uda.githubtitle.label=Github Title
+uda.githubtitle.type=string
+uda.githubtype.label=Github Type
+uda.githubtype.type=string
+uda.githuburl.label=Github URL
+uda.githuburl.type=string
+uda.tracnumber.label=Trac Number
+uda.tracnumber.type=numeric
+uda.tracsummary.label=Trac Summary
+uda.tracsummary.type=string
+uda.tracurl.label=Trac URL
+uda.tracurl.type=string

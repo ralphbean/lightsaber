@@ -1,0 +1,113 @@
+# ~/.bugwarriorrc
+#
+
+# Here you define a comma separated list of targets.  Each of them must have a
+# section below determining their properties, how to query them, etc.  The name
+# is just a symbol, and doesn't have any functional importance.
+[general]
+targets = github, fossrit, hhroc, osw, rocpy, rocpythonistas, magic, capcamp, posserit, civx, roccivicappchallenge, bz.redhat, council, fossco
+
+shorten = True
+inline_links = False
+annotation_links = True
+
+log.level = DEBUG
+log.file = /home/decause/bugwarrior.log
+
+multiprocessing = True
+legacy_matching = False
+
+[github]
+service = github
+github.username = decause
+github.default_priority = H
+github.login = decause
+github.password = @oracle:eval:pass sites/github
+
+[fossrit]
+service = github
+github.username = FOSSRIT
+github.default_priority = L
+github.login = decause
+github.password = @oracle:eval:pass sites/github
+
+[hhroc]
+service = github
+github.username = hhroc
+github.default_priority = M
+github.login = decause
+github.password = @oracle:eval:pass sites/github
+
+[osw]
+service = github
+github.username = opensourceway
+github.default_priority = H
+github.login = decause
+github.password = @oracle:eval:pass sites/github
+
+[rocpy]
+service = github
+github.username = RP
+github.default_priority = M
+github.login = decause
+github.password = @oracle:eval:pass sites/github
+
+[rocpythonistas]
+service = github
+github.username = Rochester-Pythonistas
+github.default_priority = M
+github.login = decause
+github.password = @oracle:eval:pass sites/github
+
+[magic]
+service = github
+github.username = RIT-MAGIC
+github.default_priority = L
+github.login = decause
+github.password = @oracle:eval:pass sites/github
+
+[capcamp]
+service = github
+github.username = nycapitolcamp
+github.default_priority = L
+github.login = decause
+github.password = @oracle:eval:pass sites/github
+
+[posserit]
+service = github
+github.username = POSSE@RIT
+github.default_priority = M
+github.login = decause
+github.password = @oracle:eval:pass sites/github
+
+[civx]
+service = github
+github.username = civx
+github.default_priority = M
+github.login = decause
+github.password = @oracle:eval:pass sites/github
+
+[roccivicappchallenge]
+service = github
+github.username = rochestercivicappchallenge
+github.default_priority = M
+github.login = decause
+github.password = @oracle:eval:pass sites/github
+
+[council]
+service = trac
+trac.base_uri = fedorahosted.org/council
+trac.username = decause
+trac.password = @oracle:eval:pass sys/fas
+
+[fosco]
+service = trac
+trac.base_uri = fedorahosted.org/fosco
+trac.username = decause
+trac.password = @oracle:eval:pass sys/fas
+
+[bz.redhat]
+service = bugzilla
+bugzilla.base_uri = bugzilla.redhat.com
+bugzilla.username = decause@redhat.com
+bugzilla.password = @oracle:eval:pass sites/rhbz

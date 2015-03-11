@@ -1,0 +1,19 @@
+username: threebean
+
+# This could conceivably go in the irc-bouncer role, but I'm going to try
+# keeping all my vars in one place.
+ircnick: threebean
+twitternick: ralphbean
+
+# A dict of all users we want to provide stuff for.
+all_users:
+- user: threebean
+  homedir: /home/threebean
+- user: root
+  homedir: /root
+
+ansible_ssh_user: root
+
+permit_root_login: false
+
+shell=/usr/bin/zsh

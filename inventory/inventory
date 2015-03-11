@@ -1,5 +1,8 @@
-[local]
+[threebean-local]
 geier           ansible_ssh_host=localhost
+
+[decause-local]
+chapeauxrouge   ansible_ssh_host=localhost
 
 [dynamic]
 buttermilk      ansible_ssh_host=104.131.95.186
@@ -11,3 +14,10 @@ computer01      ansible_ssh_host=104.131.96.144
 # This is a meta group just so nagios knows who to monitor
 [monitored:children]
 dynamic
+
+[threebean:children]
+threebean-local
+dynamic
+
+[decause:children]
+decause-local

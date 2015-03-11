@@ -1,0 +1,38 @@
+- name: JustDecauseThings | install common packages
+  yum: state=present name={{ item }}
+  with_items:
+  - nethack
+  - wesnoth
+  - inkscape
+  - xournal
+  - tex
+  - audacity
+  - gnome-tweak-tool
+  - fedmsg-notify
+  - ipython
+  - fpaste
+  - pronterface
+  - nethogs
+  - libreoffice
+  - gimp
+  - pianobooster
+  - steghide
+  - strace
+  - fedpkg
+  - cura
+  - pronsole
+  - libcaca
+  - xcalc
+  - liberation-serif-fonts
+  - liberation-sans-fonts
+  - hydrogen
+  - libtheora
+  - wireshark
+  - gcc-c++
+  - python-pip
+  - aircrack-ng
+  - qrencode
+  - gnuchess
+  tags:
+  - packages
+  - justdecausethings

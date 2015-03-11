@@ -1,0 +1,36 @@
+---
+
+
+- name: system configuration (packages, etc...)
+  hosts: chapeauxrogue
+
+  vars_files:
+  - vars/global.yml
+
+  roles:
+  - common
+  - security
+  - gnome/system
+  - flash
+  - jumpoff
+  - justdecausethings
+  - development
+  - task/client
+  - rss/client
+  - role: mail/client
+    user: decause
+
+- name: basics for the gnome user (shortcuts, etc..)
+  hosts: chapeauxrogue
+  su: yes
+  su_user: decause
+
+  vars_files:
+  - vars/global.yml
+
+  roles:
+  - gnome/user
+
+# TODO -- two things not covered:
+# - ssh config, including the list of proxy commands
+# - gpg config, which doesn't really have anything in it anyways
