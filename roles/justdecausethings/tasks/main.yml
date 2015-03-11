@@ -45,6 +45,7 @@
   - blender
   - slic3r
   - joystick-support
+  - liveusb-creator
   tags:
   - packages
   - justdecausethings
