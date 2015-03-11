@@ -87,6 +87,9 @@
               backup=yes
   with_items:
     - { rules: 'emerging-policy', alert: 'YUM User-Agent' }
+    - { rules: 'emerging-policy', alert: 'W32/BitCoinMiner.MultiThreat' }
+    - { rules: 'emerging-policy', alert: 'TLS possible TOR SSL traffic' }
+    - { rules: 'emerging-policy', alert: 'CINS Active Threat Intelligence Poor Reputation IP' }
   register: rulealerts
   tags:
   - security
