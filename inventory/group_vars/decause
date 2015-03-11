@@ -15,4 +15,4 @@ all_users:
 ansible_ssh_user: root
 
 permit_root_login: false
-shell=/usr/bin/bash
+shell: /usr/bin/bash

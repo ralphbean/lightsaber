@@ -16,4 +16,4 @@ ansible_ssh_user: root
 
 permit_root_login: false
 
-shell=/usr/bin/zsh
+shell: /usr/bin/zsh
