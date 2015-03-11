@@ -46,7 +46,7 @@
   tags:
   - mail/client
 
-- name: Copy top level configs except the mutt dir.
+- name: Copy top level generic configs
   copy: >
       src={{item}}
       dest=/home/{{user}}/.{{item}}
@@ -54,17 +54,28 @@
       group={{user}}
       mode=0600
   with_items:
-  - msmtprc
-  - mbsyncrc
   - mbsync.redhat.crt
   - mailcap
   - notmuch-config
   tags:
   - mail/client
 
+- name: Copy top level user-specific configs
+  copy: >
+      src={{item}}-{{username}}
+      dest=/home/{{user}}/.{{item}}
+      owner={{user}}
+      group={{user}}
+      mode=0600
+  with_items:
+  - msmtprc
+  - mbsyncrc
+  tags:
+  - mail/client
+
 - name: Sync over the .mutt/ dir.
   synchronize: >
-      src=mutt/
+      src=mutt-{{username}}/
       dest=/home/{{user}}/.mutt
   tags:
   - mail/client

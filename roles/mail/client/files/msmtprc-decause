@@ -1,0 +1,27 @@
+# Set default values for all following accounts.
+defaults
+tls on
+tls_starttls on
+tls_certcheck off
+logfile ~/.msmtp.log
+auto_from on
+maildomain threebean.org
+
+# Gmail
+account gmail
+host smtp.gmail.com
+port 587
+auth on
+user decause@gmail.com
+passwordeval "pass mail/gmail/mbsync"
+
+# red hat
+account redhat
+host smtp.corp.redhat.com
+port 25
+#auth on
+user rdecause@redhat.com
+passwordeval "pass mail/redhat/krb5"
+
+# Set a default account
+account default : redhat

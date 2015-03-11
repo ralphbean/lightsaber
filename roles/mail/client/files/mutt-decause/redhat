@@ -1,0 +1,9 @@
+set spoolfile = +"redhat/INBOX"
+set mbox = +"redhat/Trash"
+set postponed = +"redhat/Drafts"
+set from=decause@redhat.com
+set sendmail="/usr/bin/msmtp -a redhat"
+
+#macro index,pager a <save-message>+redhat/archive<enter><quasi-delete>
+macro index,pager A <tag-subthread><tag-prefix-cond><save-message>+redhat/archive<enter><enter><tag-prefix-cond><quasi-delete><untag-pattern>.*
+macro index,pager a <tag-entry><tag-prefix-cond><save-message>+redhat/archive<enter><enter><tag-prefix-cond><quasi-delete><untag-pattern>.*

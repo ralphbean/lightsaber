@@ -1,0 +1,166 @@
+#------------------------------------------------------#
+# ~/.mutt/muttrc
+# Main configuration based on
+# http://www.physics.drexel.edu/liki/index.php/Mutt
+#
+
+# This is where your local mail directory is located.
+# Other mail directories (ie, +"school/inbox") are
+# relative to this.
+#
+set folder = ~/.imap-mail
+
+# This is the list of mailboxes created by offlineimap.  We want to
+# check these for new mail.
+#
+#source ~/.mutt/muttmailboxes
+#
+#inboxes
+mailboxes = +"gmail/gmail"
+
+mailboxes = +"redhat/redhat"
+#mailboxes = +"redhat/fedora-eng"
+#mailboxes = +"redhat/fedmsg-errors"
+#
+## All bz emails
+#mailboxes = +"redhat/phab"
+#mailboxes = +"gmail/github"
+#mailboxes = +"redhat/bugzilla"
+#mailboxes = +"redhat/scm-commits"
+#
+##lists
+#mailboxes = +"redhat/lugor-discuss"
+#mailboxes = +"redhat/women-outreach"
+#mailboxes = +"redhat/fedora-infra"
+#mailboxes = +"redhat/buildsys"
+#mailboxes = +"redhat/rel-eng"
+#mailboxes = +"redhat/qa-devel"
+#mailboxes = +"redhat/badges"
+#mailboxes = +"redhat/badges-ideas"
+#mailboxes = +"redhat/messaging-sig"
+#mailboxes = +"redhat/messaging-interest"
+#mailboxes = +"redhat/debian-qa"
+#mailboxes = +"redhat/debian-services-admin"
+#mailboxes = +"redhat/debian-devel"
+#mailboxes = +"redhat/memo-list"
+#mailboxes = +"redhat/osas"
+#mailboxes = +"redhat/sysadmin-logs"
+#
+#mailboxes = +"gmail/announce-list"
+#mailboxes = +"gmail/RAW"
+#mailboxes = +"redhat/code-quality"
+#mailboxes = +"redhat/toscawidgets"
+##mailboxes = +"gmail/turbogears"
+##mailboxes = +"gmail/tg-trunk"
+#mailboxes = +"redhat/phab"
+#mailboxes = +"redhat/fedora-devel"
+#mailboxes = +"redhat/python-devel"
+#mailboxes = +"redhat/fedora-python"
+#mailboxes = +"redhat/nodejs"
+#mailboxes = +"redhat/packaging"
+#mailboxes = +"redhat/bugzilla-development-list"
+#mailboxes = +"redhat/copr-devel
+#mailboxes = +"redhat/secure-development"
+#mailboxes = +"redhat/opw"
+##mailboxes = +"redhat/koji"
+#mailboxes = +"redhat/design-team"
+#mailboxes = +"redhat/epel-devel"
+#mailboxes = +"redhat/fedora-cloud"
+#mailboxes = +"redhat/kde"
+#mailboxes = +"redhat/lxde"
+#mailboxes = +"redhat/xfce"
+#mailboxes = +"redhat/legal"
+
+# I'm not checking these anymore
+#mailboxes = +"redhat/root"
+
+# when you start mutt, this is the inbox that will open by default
+#
+set spoolfile = +"gmail/Inbox"
+set mbox = +"gmail/archive"
+set mbox_type = Maildir
+set postponed = +"gmail/[Gmail].Drafts"
+
+# Other global configuration files to include.
+#
+source ~/.mutt/common
+source ~/.mutt/colors
+source ~/.mutt/pgp
+
+# A file which will hold you address book
+#
+set alias_file=~/.mutt/aliases
+source $alias_file
+
+# If we are in any directory starting with the following, pull
+# specific settings for that account.
+#
+folder-hook +gmail/.* "source ~/.mutt/gmail"
+folder-hook +redhat/.* "source ~/.mutt/redhat"
+#folder-hook . "push \eV"
+
+# These are the addresses that you mutt to think are you.  You can have them be
+# for any 
+alternates decause@gmail.com rdecause@redhat.com
+set sendmail="/usr/bin/msmtp -a gmail"
+
+# notmuch config -- only compatible with mutt-kz
+set nm_default_uri = "notmuch:///home/threebean/.imap-mail"
+
+# crazy gmail style labels.  mutt-kz only.
+set index_format = "%4C %Z %{%b %d} %-15.15L %?g?(%g)? (%?l?%4l&%4c?) %s"
+
+# Sidebar basics.
+set sidebar_width=25
+set sidebar_visible=yes
+set sidebar_delim='|'
+
+# color of folders with new mail
+#color sidebar_new  red default
+
+# ctrl-n, ctrl-p to navigate to the next/previous mailbox with unread mail.
+# ctrl-o to open the selected folder.
+bind index,pager \Cp sidebar-prev
+bind index,pager \Cn sidebar-next
+
+macro index,pager x <sidebar-toggle>
+
+# Some keybinds that I use.
+macro index,pager <f2> <change-folder>+"gmail/Inbox"<enter>
+macro index,pager <f3> <change-folder>+"wrns/Inbox"<enter>
+macro index,pager <f4> <change-folder>+"redhat/Inbox"<enter>
+macro index,pager <f5> <change-folder>+"gmail/ISO"<enter>
+macro index,pager <f6> <change-folder>+"redhat/buildsys"<enter>
+macro index,pager <f8> <change-folder>
+#+"redhat/root"<enter>
+
+macro index,pager A <tag-subthread><tag-prefix-cond><save-message>+redhat/archive<enter><enter><tag-prefix-cond><quasi-delete><untag-pattern>.*
+macro index,pager a <tag-entry><tag-prefix-cond><save-message>+redhat/archive<enter><enter><tag-prefix-cond><quasi-delete><untag-pattern>.*
+
+macro index,pager t <tag-subthread>
+macro index,pager P <sync-mailbox>
+macro index,pager F <vfolder-from-query>
+
+
+# no-op hack.  :/
+macro index x <end-cond>
+
+#macro index x "push \e"
+
+
+macro index k <previous-entry>
+macro index j <next-entry>
+macro pager K <previous-entry>
+macro pager J <next-entry>
+
+macro generic	\c<Space>	":source ~/.mutt/muttrc\n" "Reload mutt's configuration file"
+macro index	\cn		<next-unread-mailbox>
+macro pager	j		<next-line>
+macro pager	k		<previous-line>
+macro pager	<PageUp> 	<previous-undeleted>
+macro pager	<PageDown>	<next-undeleted>
+macro pager	\cb 		<pipe-entry>'w3m'<enter> 'Follow links in w3m'
+
+# Some global booleans for awesome
+  set forward_decode
+  set forward_format="Fwd: %s"

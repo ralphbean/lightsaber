@@ -1,0 +1,8 @@
+set spoolfile = +"gmail/INBOX"
+set mbox = +"gmail/[Gmail].All Mail"
+set postponed = +"gmail/[Gmail].Drafts"
+set from=decause@gmail.com
+set sendmail="/usr/bin/msmtp -a gmail"
+
+macro index,pager A <tag-subthread><tag-prefix-cond><save-message>+gmail/archive<enter><enter><tag-prefix-cond><quasi-delete><untag-pattern>.*
+macro index,pager a <tag-entry><tag-prefix-cond><save-message>+gmail/archive<enter><enter><tag-prefix-cond><quasi-delete><untag-pattern>.*
