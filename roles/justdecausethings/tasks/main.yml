@@ -3,6 +3,7 @@
   with_items:
   - nethack
   - wesnoth
+  - wesnoth-server
   - inkscape
   - xournal
   - tex
@@ -33,6 +34,17 @@
   - aircrack-ng
   - qrencode
   - gnuchess
+  - python-flake8
+  - mercurial
+  - bsd-games
+  - screen
+  - openscad
+  - caca-utils
+  - lucidlife
+  - dos2unix
+  - blender
+  - slic3r
+  - joystick-support
   tags:
   - packages
   - justdecausethings
