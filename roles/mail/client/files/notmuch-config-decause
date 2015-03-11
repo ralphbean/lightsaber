@@ -29,7 +29,7 @@ path=/home/decause/.imap-mail
 # address to which the original email was addressed.
 #
 [user]
-name=Remy Decausemaker
+name=Remy DeCausemaker
 primary_email=decause@gmail.com
 other_email=rdecause@redhat.com;decause@redhat.com;
 

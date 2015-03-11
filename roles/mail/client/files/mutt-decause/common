@@ -1,7 +1,7 @@
 #------------------------------------------------------#
 # ~/.mutt/common
 
-set realname = "Ralph Bean"
+set realname = "Remy DeCausemaker"
 
 # Check for and beep when new mail shows up while mutt is open.
 #

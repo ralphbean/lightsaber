@@ -60,7 +60,7 @@
 
 # TODO -- do this one just like the custom zshrc config so we can drop 'username'
 - name: Common | git | Copy over git config
-  copy: src={{ item }} dest=/home/{{ username }}/.{{ item }}
+  copy: src={{ item }}-{{ username }} dest=/home/{{ username }}/.{{ item }}
   with_items:
   - gitconfig
   - githelpers
