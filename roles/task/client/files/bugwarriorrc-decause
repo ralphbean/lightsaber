@@ -5,7 +5,7 @@
 # section below determining their properties, how to query them, etc.  The name
 # is just a symbol, and doesn't have any functional importance.
 [general]
-targets = github, fossrit, hhroc, osw, rocpy, rocpythonistas, magic, capcamp, posserit, civx, roccivicappchallenge, bz.redhat, council, fosco
+targets = github, fossrit, hhroc, osw, rocpy, rocpythonistas, posserit, civx, roccivicappchallenge, bz.redhat, council, fosco
 
 shorten = True
 inline_links = False
@@ -38,6 +38,8 @@ github.default_priority = M
 github.login = decause
 github.password = @oracle:eval:pass sites/github
 
+github.include_repos = traffairious
+
 [osw]
 service = github
 github.username = opensourceway
@@ -56,20 +58,6 @@ github.password = @oracle:eval:pass sites/github
 service = github
 github.username = Rochester-Pythonistas
 github.default_priority = M
-github.login = decause
-github.password = @oracle:eval:pass sites/github
-
-[magic]
-service = github
-github.username = RIT-MAGIC
-github.default_priority = L
-github.login = decause
-github.password = @oracle:eval:pass sites/github
-
-[capcamp]
-service = github
-github.username = nycapitolcamp
-github.default_priority = L
 github.login = decause
 github.password = @oracle:eval:pass sites/github
 
