@@ -75,7 +75,7 @@ github.password = @oracle:eval:pass sites/github
 
 [posserit]
 service = github
-github.username = POSSE@RIT
+github.username = POSSEatRIT
 github.default_priority = M
 github.login = decause
 github.password = @oracle:eval:pass sites/github
