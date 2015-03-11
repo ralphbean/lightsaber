@@ -19,9 +19,9 @@ Channel gmail
 Master :gmail-remote:
 Slave :gmail-local:
 # Exclude certain things
-Patterns * !@* !howard-eagle ![Gmail]*
+#Patterns * !@* !howard-eagle ![Gmail]*
 # Or include everything
-#Patterns *
+Patterns *
 # Automatically create missing mailboxes, both locally and on the server
 Create Both
 # Save the synchronization state files in the relevant directory
