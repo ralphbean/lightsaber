@@ -1,3 +1,19 @@
+- name: Make gnome caching of gpg keys timeout at some point..
+  gsettings: schema=org.gnome.crypto.cache key=gpg-cache-method value=timeout
+  notify:
+  - restart gnome-shell
+  tags:
+  - gnome/user
+  - gnome
+
+- name: Set the gpg-cache timeout value to 5 minutes..
+  gsettings: schema=org.gnome.crypto.cache key=gpg-cache-ttl value=300
+  notify:
+  - restart gnome-shell
+  tags:
+  - gnome/user
+  - gnome
+
 - name: Set standard keyboard shortcuts
   gsettings: schema={{ item.schema }} key={{ item.key }} value={{ item.value }}
   notify:
