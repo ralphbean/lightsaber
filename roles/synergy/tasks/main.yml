@@ -1,0 +1,53 @@
+---
+- name: Install synergy
+  yum: name=synergy state=present
+  tags:
+  - synergy
+
+- name: See if synergys is running
+  shell: "/bin/ps -ef | grep synergys | grep -v grep"
+  register: synergys
+  when: "not {{ hostvars[inventory_hostname].group_names | intersect(['synergyc']) }}"
+  ignore_errors: True
+  changed_when: False
+  tags:
+  - synergy
+
+- name: Run synergys if it isn't running
+  when: "synergys|failed and not {{ hostvars[inventory_hostname].group_names | intersect(['synergyc']) }}"
+  command: /usr/bin/synergys
+  sudo: no
+  tags:
+  - synergy
+
+- name: See if the synergy ssh tunnel is running
+  shell: "/bin/ps -ef | grep 24800 | grep -v grep"
+  register: synergy_tunnel
+  when: "not {{ hostvars[inventory_hostname].group_names | intersect(['synergys']) }}"
+  ignore_errors: True
+  changed_when: False
+  tags:
+      - synergy
+
+- name: Run the ssh tunnel if it isn't running
+  shell: ssh -f -N -n -L localhost:24800:{{ ip }}:24800 {{ ip }}
+  when: "synergy_tunnel|failed and not {{ hostvars[inventory_hostname].group_names | intersect(['synergys']) }}"
+  sudo: no
+  tags:
+  - synergy
+
+- name: See if synergyc is running
+  shell: "/bin/ps -ef | grep synergyc | grep -v grep"
+  register: synergyc
+  when: "not {{ hostvars[inventory_hostname].group_names | intersect(['synergys']) }}"
+  ignore_errors: True
+  changed_when: False
+  tags:
+  - synergy
+
+- name: Run synergyc if it isn't running
+  when: "synergyc|failed and not {{ hostvars[inventory_hostname].group_names | intersect(['synergys']) }}"
+  command: /usr/bin/synergyc localhost
+  sudo: no
+  tags:
+  - synergy

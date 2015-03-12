@@ -4,7 +4,7 @@
 # If any open port changes, the playbook will prompt the user.
 
 - name: playbook | nmap | Initiate git-backed port scanner
-  hosts: 127.0.0.1
+  hosts: nmap_scanner
   sudo: no
 
   vars_files:
