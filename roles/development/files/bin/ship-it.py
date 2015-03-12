@@ -67,14 +67,6 @@ branches = [
         'long': 'fc20',
     },
     {
-        'short': 'f19',
-        'long': 'fc19',
-    },
-    {
-        'short': 'f18',
-        'long': 'fc18',
-    },
-    {
         'short': 'epel7',
         'long': 'el7',
     },

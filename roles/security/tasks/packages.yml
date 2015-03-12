@@ -8,6 +8,7 @@
 
 - name: See if any updated packages need restarting
   command: /usr/bin/needs-restarting
+  changed_when: False
   register: needs_restarting
 
 - name: Pause before rebooting

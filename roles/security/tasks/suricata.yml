@@ -1,23 +1,22 @@
 - name: suricata | Install the suricata intrusion detection system
-  yum: pkg=suricata state=latest
+  yum: pkg=suricata state=present
   tags:
   - security
   - ids
 
 - name: suricata | Downloading the latest ETOpen Ruleset https://emergingthreats.net/open-source/etopen-ruleset
-  get_url:
-    url=https://rules.emergingthreats.net/open/suricata/emerging.rules.tar.gz
-    dest=/var/tmp/emerging.rules.tar.gz
-    force=yes
+  get_url: url=https://rules.emergingthreats.net/open/suricata/emerging.rules.tar.gz
+           dest=/var/tmp/emerging.rules.tar.gz
+           force=yes
+  register: ruleset
   tags:
   - security
   - ids
 
 - name: suricata | Downloading the latest ETOpen configs
-  get_url:
-    url="https://rules.emergingthreats.net/open/suricata/{{ item }}"
-    dest="/etc/suricata/{{ item }}"
-    force=yes
+  get_url: url="https://rules.emergingthreats.net/open/suricata/{{ item }}"
+           dest="/etc/suricata/{{ item }}"
+           force=yes
   with_items:
     - reference.config
     - classification.config
@@ -26,20 +25,19 @@
   - ids
 
 - name: suricata | Extracting ruleset
-  unarchive:
-    src=/var/tmp/emerging.rules.tar.gz
-    dest=/etc/suricata
-    force=yes
-    copy=no
+  unarchive: src=/var/tmp/emerging.rules.tar.gz
+             dest=/etc/suricata
+             force=yes
+             copy=no
+  when: ruleset|changed
   tags:
   - security
   - ids
 
 - name: suricata | Update the configuration with our device name
   replace:
-    dest=/etc/sysconfig/suricata
-    regexp="eth0"
-    replace="{{ hostvars[inventory_hostname].ansible_default_ipv4.interface }}"
+    dest=/etc/sysconfig/suricata regexp='^OPTIONS="\-i .*"$'
+    replace="OPTIONS=\"-i {{ hostvars[inventory_hostname].ansible_default_ipv4.interface }}\""
   tags:
   - security
   - ids
@@ -71,9 +69,32 @@
   - emerging-inappropriate
   - emerging-imap
   - emerging-voip
+  - tor
+  - emerging-p2p
+  - emerging-web_specific_apps
+  - emerging-activex
+  - emerging-web_server
+  register: suri_cfg
   tags:
   - security
   - ids
+
+- name: suricata | Disable specific IDS alerts
+  lineinfile: dest=/etc/suricata/rules/{{ item.rules }}.rules
+              regexp='^(alert .*{{ item.alert }}.*)$'
+              line='#\1'
+              backrefs=yes
+              backup=yes
+  with_items:
+    - { rules: 'emerging-policy', alert: 'YUM User-Agent' }
+    - { rules: 'emerging-policy', alert: 'W32/BitCoinMiner.MultiThreat' }
+    - { rules: 'emerging-policy', alert: 'TLS possible TOR SSL traffic' }
+    - { rules: 'emerging-policy', alert: 'CINS Active Threat Intelligence Poor Reputation IP' }
+  register: rulealerts
+  tags:
+  - security
+  - ids
+
 
 - name: suricata | ethtool | Disable generic receive offloading and tx/rx checksumming
   command: /usr/sbin/ethtool --offload {{ hostvars[inventory_hostname].ansible_default_ipv4.interface }} {{ item }} off
@@ -83,12 +104,20 @@
     - rx
   # We can't always disable these in every environment...
   ignore_errors: True
+  changed_when: False
   tags:
   - security
   - ids
 
 - name: suricata | Start the suricata service
-  service: name=suricata state=restarted enabled=yes
+  service: name=suricata state=running enabled=yes
+  tags:
+  - security
+  - ids
+
+- name: suricata | Restart suricata
+  service: name=suricata state=restarted
+  when: ruleset|changed or suri_cfg|changed or rulealerts|changed
   tags:
   - security
   - ids
