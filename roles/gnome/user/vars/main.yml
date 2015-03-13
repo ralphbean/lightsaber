@@ -1,4 +1,13 @@
-standard_gsettings:
+gpg_gsettings:
+  - key: gpg-cache-method
+    value: 'timeout'
+    schema: org.gnome.crypto.cache
+
+  - key: gpg-cache-ttl
+    value: 300
+    schema: org.gnome.crypto.cache
+
+standard_keyboard_gsettings:
   - key: clock-show-date
     value: 'true'
     schema: org.gnome.desktop.interface
@@ -47,27 +56,27 @@ custom_shortcuts:
 
 - index: custom1
   name: clip-to-fox
-  command: ~/bin/clip-to-firefox
+  command: '/home/{{username}}/bin/clip-to-firefox'
   binding: '<Primary>G'
 
 - index: custom2
   name: dagd-clipboard
-  command: ~/bin/dagdclip
+  command: '/home/{{username}}/bin/dagdclip'
   binding: '<Primary>Space'
 
 - index: custom3
   name: password
-  command: ~/bin/pw-lookup.sh
+  command: '/home/{{username}}/bin/pw-lookup.sh'
   binding: '<Primary>1'
 
 - index: custom4
   name: fas
-  command: "'~/bin/pw-lookup.sh sys/fas'"
+  command: "'/home/{{username}}/bin/pw-lookup.sh sys/fas'"
   binding: '<Primary>2'
 
 - index: custom5
   name: unfuck-kinesis
-  command: "'/usr/bin/xmodmap ~/.xmodmap'"
+  command: "'/usr/bin/xmodmap /home/{{username}}/.xmodmap'"
   binding: '<Primary>F1'
 
 # This is a painfully long list that I would love to be able to generate. Help.

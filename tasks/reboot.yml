@@ -1,9 +1,13 @@
-- name: reboot
-  command: shutdown -r now --no-wall
+- name: reboot the host one minute from now.
+  command: shutdown -r +1 "Ansible restarting this beast"
   async: 0
   poll: 0
   ignore_errors: True
 
-- name: wait for ssh to become available again
+- name: wait for the host to go down
+  local_action: wait_for host={{inventory_hostname}} port=22 state=stopped
+  sudo: false
+
+- name: wait for the host to come back up
   local_action: wait_for host={{inventory_hostname}} port=22 state=started
   sudo: false

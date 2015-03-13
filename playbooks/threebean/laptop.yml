@@ -28,7 +28,17 @@
   - vars/global.yml
 
   roles:
-  - gnome/user
+  - role: gnome/user
+    # Override the gpg settings for me with a longer timeout
+    gpg_gsettings:
+    - key: gpg-cache-method
+      value: 'timeout'
+      schema: org.gnome.crypto.cache
+    - key: gpg-cache-ttl
+      # 2100 seconds is 35 minutes
+      value: 2100
+      schema: org.gnome.crypto.cache
+
 
 # TODO -- two things not covered:
 # - ssh config, including the list of proxy commands
