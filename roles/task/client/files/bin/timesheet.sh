@@ -6,7 +6,7 @@ phrase="1-weeks-ago"
 fmt="%Y-%m-%d"
 start=$(date +$fmt -d $phrase)
 end=$(date +$fmt)
-filter="project.isnt:apply project.isnt:family project.isnt:xmas project.isnt:cersc project.isnt:iso project.isnt:monroe project.isnt:house project.isnt:misc project.isnt:rit project.isnt:tos-rit-projects-seminar project.isnt:music project.isnt:hfoss project.isnt:wrns"
+filter="project.isnt:apply project.isnt:family project.isnt:xmas project.isnt:cersc project.isnt:iso project.isnt:monroe project.isnt:house project.isnt:misc project.isnt:rit project.isnt:tos-rit-projects-seminar project.isnt:music project.isnt:hfoss project.isnt:wrns project.isnt:wupotus project.isnt:council-private"
 config="rc.defaultwidth=180 rc.defaultheight=75 rc._forcecolor=yes"
 
 echo "    (generated at $(date))"
