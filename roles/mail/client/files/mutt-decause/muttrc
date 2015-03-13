@@ -9,6 +9,7 @@
 # relative to this.
 #
 set folder = ~/.imap-mail
+set signature = ~/.mutt/sig
 
 # This is the list of mailboxes created by offlineimap.  We want to
 # check these for new mail.
@@ -18,7 +19,34 @@ set folder = ~/.imap-mail
 #inboxes
 mailboxes = +"gmail/gmail"
 
+## Red Hat
 mailboxes = +"redhat/redhat"
+mailboxes = +"redhat/osas-staff"
+mailboxes = +"redhat/osas-public"
+mailboxes = +"redhat/marketing"
+mailboxes = +"redhat/fedora-eng"
+mailboxes = +"redhat/announce-list"
+mailboxes = +"redhat/cfp"
+mailboxes = +"redhat/usa"
+mailboxes = +"redhat/media-monitor"
+mailboxes = +"redhat/memo-list"
+mailboxes = +"redhat/friday"
+mailboxes = +"redhat/bugzilla"
+mailboxes = +"redhat/fedora-infrastructure"
+mailboxes = +"redhat/github"
+mailboxes = +"redhat/IoT"
+mailboxes = +"redhat/mojo"
+mailboxes = +"redhat/os-devel-list"
+mailboxes = +"redhat/prod-dept"
+mailboxes = +"redhat/python"
+mailboxes = +"redhat/android-users"
+
+
+
+
+## Fedora
+#mailboxes = +"redhat/fedora-badges"
+
 #mailboxes = +"redhat/fedora-eng"
 #mailboxes = +"redhat/fedmsg-errors"
 #
