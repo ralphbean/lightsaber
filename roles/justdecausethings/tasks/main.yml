@@ -46,6 +46,7 @@
   - slic3r
   - joystick-support
   - liveusb-creator
+  - xchat
   tags:
   - packages
   - justdecausethings
