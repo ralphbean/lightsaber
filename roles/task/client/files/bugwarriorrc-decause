@@ -5,7 +5,7 @@
 # section below determining their properties, how to query them, etc.  The name
 # is just a symbol, and doesn't have any functional importance.
 [general]
-targets = github, fossrit, hhroc, osw, rocpy, rocpythonistas, posserit, civx, roccivicappchallenge, bz.redhat, council, fosco
+targets = github, hhroc, osw, rocpy, rocpythonistas, posserit, roccivicappchallenge, bz.redhat, council, council-private, fosco
 
 shorten = True
 inline_links = False
@@ -23,6 +23,7 @@ github.username = decause
 github.default_priority = H
 github.login = decause
 github.password = @oracle:eval:pass sites/github
+github.exclude_repos = mmodoku,pep808bot
 
 [fossrit]
 service = github
@@ -81,6 +82,12 @@ github.username = rochestercivicappchallenge
 github.default_priority = M
 github.login = decause
 github.password = @oracle:eval:pass sites/github
+
+[council-private]
+service = trac
+trac.base_uri = fedorahosted.org/council-private
+trac.username = decause
+trac.password = @oracle:eval:pass sys/fas
 
 [council]
 service = trac
