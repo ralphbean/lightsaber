@@ -1,0 +1,21 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# Uncomment the following line if you don't like systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
+
+# User specific aliases and functions
+export GPG_INFO_FILE=~/.gpg-agent-info
+touch $GPG_INFO_FILE
+if [ "$(cat $GPG_INFO_FILE)" != "$GPG_AGENT_INFO" ]; then
+    if [ "$GPG_AGENT_INFO" != "" ]; then
+        echo $GPG_AGENT_INFO > $GPG_INFO_FILE
+        chmod 600 $GPG_INFO_FILE
+    else
+        export GPG_AGENT_INFO=$(cat $GPG_INFO_FILE)
+    fi
+fi
