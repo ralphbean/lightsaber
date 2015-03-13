@@ -1,4 +1,13 @@
-standard_gsettings:
+gpg_gsettings:
+  - key: gpg-cache-method
+    value: 'timeout'
+    schema: org.gnome.crypto.cache
+
+  - key: gpg-cache-ttl
+    value: 300
+    schema: org.gnome.crypto.cache
+
+standard_keyboard_gsettings:
   - key: clock-show-date
     value: 'true'
     schema: org.gnome.desktop.interface
