@@ -22,6 +22,13 @@ default.priority=H
 #taskd.server=taskwarrior.inthe.am:53589
 #taskd.credentials=inthe_am/webmaster/80ea189c-ffe1-490b-bf36-0474b84228c1
 
+taskd.certificate=/home/decause/.task/private.certificate.pem
+taskd.key=/home/decause/.task/private.key.pem
+taskd.ca=/home/decause/.task/ca.cert.pem
+taskd.server=taskwarrior.inthe.am:53589
+taskd.credentials=inthe_am/decause/2b76828d-8e5b-4819-a765-dcac9a213a5e
+taskd.trust=ignore hostname
+
 report.work_report.description=now
 report.work_report.columns=priority,project,description,end,entry,entry.age
 report.work_report.labels=priority,project,description,completed,entered on,age
