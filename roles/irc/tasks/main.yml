@@ -8,16 +8,12 @@
   - irc
 
 - name: Copy weechat config with rsync
-  synchronize: >
-      src=weechat/
-      dest=/home/{{username}}/.weechat/
-  tags:
-  - irc
+  synchronize: src=weechat/ dest=/home/{{username}}/.weechat/
+  tags: irc
 
 - name: Copy weechat config template directly
   template: src=irc.conf dest=/home/{{ username }}/.weechat/irc.conf owner={{ username }}
-  tags:
-  - irc
+  tags: irc
 
 - name: Set bitlbee to start
   service: name=bitlbee state=started
