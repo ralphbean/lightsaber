@@ -9,8 +9,8 @@
     region_id=8
     image_id=9640922
     wait_timeout=500
-    client_id={{ do_client_id.secret }}
-    api_key={{ do_api_key.secret }}
+    client_id={{ do_client_id }}
+    api_key={{ do_api_key }}
     unique_name=true
 
 - name: playbook | provision | Provision computer01 if necessary
@@ -22,6 +22,6 @@
     region_id=8
     image_id=9640922
     wait_timeout=500
-    client_id={{ do_client_id.secret }}
-    api_key={{ do_api_key.secret }}
+    client_id={{ do_client_id }}
+    api_key={{ do_api_key }}
     unique_name=true

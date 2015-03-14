@@ -21,12 +21,11 @@
   hosts: nagios
   vars_files:
   - vars/global.yml
-  pre_tasks:
-  - include: private.yml
+  - vars/private.yml
   roles:
   - role: nagios/nrpe/common
   - role: nagios/head
-    nagios_password:        "{{ nagios.secret }}"
+    nagios_password:        "{{ nagios }}"
 
 - name: playbook | site | Set up nrpe monitoring on all our nodes
   hosts: dynamic
@@ -74,31 +73,29 @@
   hosts: buttermilk
   vars_files:
   - vars/global.yml
-  pre_tasks:
-  - include: private.yml
+  - vars/private.yml
   roles:
   - role: irc
-    freenode_password:          "{{ freenode.secret }}"
-    bitlbee_password:           "{{ bitlbee.secret }}"
+    freenode_password:          "{{ freenode }}"
+    bitlbee_password:           "{{ bitlbee }}"
 
 - name: playbook | site | Set up computer01 content
   hosts: computer01
   vars_files:
   - vars/global.yml
-  pre_tasks:
-  - include: private.yml
+  - vars/private.yml
   roles:
   - role: badges
-    db_user:         "{{ tahrir_db_user.secret }}"
-    db_password:     "{{ tahrir_db_password.secret }}"
-    session_secret:  "{{ tahrir_session_secret.secret }}"
-    authn_secret:    "{{ tahrir_authn_secret.secret }}"
+    db_user:         "{{ tahrir_db_user }}"
+    db_password:     "{{ tahrir_db_password }}"
+    session_secret:  "{{ tahrir_session_secret }}"
+    authn_secret:    "{{ tahrir_authn_secret }}"
   - role: s3backup
     name: tahrir-db
     target: /var/cache/tahrir/tahrir-db.sql
     bucket: threebean-cloud-backup
-    s3_aws_backup_access_key:  "{{ aws_backup_access_key.secret }}"
-    s3_aws_backup_secret_key:  "{{ aws_backup_secret_key.secret }}"
+    s3_aws_backup_access_key:  "{{ aws_backup_access_key }}"
+    s3_aws_backup_secret_key:  "{{ aws_backup_secret_key }}"
   - role: nagios/nrpe/site
     site: badges.threebean.net
     target: Tahrir

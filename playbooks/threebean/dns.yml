@@ -5,13 +5,13 @@
 
   vars_files:
   - vars/global.yml
+  - vars/private.yml
 
   tasks:
-  - include: private.yml
   - name: set up dns for fml.threebean.net
     route53: >
-        aws_access_key={{ aws_access_key.secret }}
-        aws_secret_key={{ aws_secret_key.secret }}
+        aws_access_key={{ aws_access_key }}
+        aws_secret_key={{ aws_secret_key }}
         command=create
         overwrite=yes
         zone=threebean.net
@@ -20,8 +20,8 @@
         value={{hostvars.computer01.ansible_ssh_host}}
   - name: set up dns for badges.threebean.net
     route53: >
-        aws_access_key={{ aws_access_key.secret }}
-        aws_secret_key={{ aws_secret_key.secret }}
+        aws_access_key={{ aws_access_key }}
+        aws_secret_key={{ aws_secret_key }}
         command=create
         overwrite=yes
         zone=threebean.net
@@ -30,8 +30,8 @@
         value={{hostvars.computer01.ansible_ssh_host}}
   - name: set up dns for tw2-demos.threebean.net
     route53: >
-        aws_access_key={{ aws_access_key.secret }}
-        aws_secret_key={{ aws_secret_key.secret }}
+        aws_access_key={{ aws_access_key }}
+        aws_secret_key={{ aws_secret_key }}
         command=create
         overwrite=yes
         zone=threebean.net

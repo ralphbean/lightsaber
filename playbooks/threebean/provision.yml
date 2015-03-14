@@ -5,9 +5,9 @@
 
   vars_files:
   - vars/global.yml
+  - vars/private.yml
 
   tasks:
-  - include: private.yml
   - include: "{{ tasks }}/provision.yml"
 
 # For some reason this is broken now... it was nice to have.

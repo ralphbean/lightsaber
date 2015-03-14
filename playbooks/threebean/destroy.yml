@@ -4,10 +4,9 @@
   hosts: "{{target}}"
   gather_facts: false
 
-  # digital ocean creds are kept in the private repo
   vars_files:
   - vars/global.yml
-  - "{{ private }}/vars.yml"
+  - vars/private.yml
 
   tasks:
       - name: shutdown the host from the inside
@@ -21,10 +20,9 @@
   connection: local
   gather_facts: false
 
-  # digital ocean creds are kept in the private repo
   vars_files:
   - vars/global.yml
-  - "{{ private }}/vars.yml"
+  - vars/private.yml
 
   tasks:
       - name: kill it with fire
