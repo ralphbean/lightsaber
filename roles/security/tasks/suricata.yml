@@ -95,6 +95,11 @@
   - security
   - ids
 
+- name: suricata | Make sure ethtool is present
+  yum: pkg=ethtool state=present
+  tags:
+  - security
+  - ids
 
 - name: suricata | ethtool | Disable generic receive offloading and tx/rx checksumming
   command: /usr/sbin/ethtool --offload {{ hostvars[inventory_hostname].ansible_default_ipv4.interface }} {{ item }} off
