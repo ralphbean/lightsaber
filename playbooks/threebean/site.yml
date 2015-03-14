@@ -75,9 +75,7 @@
   - vars/global.yml
   - vars/private.yml
   roles:
-  - role: irc
-    freenode_password:          "{{ freenode }}"
-    bitlbee_password:           "{{ bitlbee }}"
+  - irc
 
 - name: playbook | site | Set up computer01 content
   hosts: computer01
