@@ -3,6 +3,7 @@
   with_items:
   - weechat
   - bitlbee
+  - tmux
   tags:
   - packages
   - irc
@@ -17,5 +18,13 @@
 
 - name: Set bitlbee to start
   service: name=bitlbee state=started
-  tags:
-  - irc
+  tags: irc
+
+- name: Copy in a tmux systemd service file
+  copy: src=tmux-service dest=/usr/lib/systemd/system/tmux@{{username}}.service
+  notify: reload systemd service files
+  tags: irc
+
+- name: Set that tmux session to start
+  service: name=tmux@{{username}} state=started
+  tags: irc
