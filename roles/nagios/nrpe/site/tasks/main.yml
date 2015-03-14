@@ -4,6 +4,8 @@
       dest=/etc/nrpe.d/site-{{ site }}.cfg
       mode=0644
   notify: restart nrpe
+  tags:
+    - nagios
 
 - name: nrpe | copy httpd/site config to the nagios head
   template: >
@@ -13,3 +15,5 @@
   notify: restart nagios
   delegate_to: "{{ item }}"
   with_items: groups.nagios
+  tags:
+    - nagios

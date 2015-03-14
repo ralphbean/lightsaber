@@ -9,6 +9,8 @@
   - nrpe
   notify:
     - restart nrpe
+  tags:
+    - nagios
 
 - name: copy memory plugin in
   copy: >
@@ -20,12 +22,18 @@
   template: src=nrpe.cfg dest=/etc/nagios/nrpe.cfg
   notify:
     - restart nrpe
+  tags:
+    - nagios
 
 - name: nrpe | make sure nrpe can ping (sticky bit)
   file: dest=/usr/bin/ping mode=4755
+  tags:
+    - nagios
 
 - name: nrpe | start nrpe
   service: name=nrpe enabled=yes state=started
+  tags:
+    - nagios
 
 - name: nrpe | open a port
   firewalld: >
@@ -37,3 +45,5 @@
       - 5666
   notify:
     - restart firewalld
+  tags:
+    - nagios

@@ -1,11 +1,15 @@
 - name: nrpe | install deps for websocket plugin
   yum: pkg=python-websocket-client state=present
+  tags:
+    - nagios
 
 - name: nrpe | copy websocket plugin to the monitored node
   copy: >
       src=check_websocket.py
       dest=/usr/lib64/nagios/plugins/check_websocket.py
       mode=0755
+  tags:
+    - nagios
 
 - name: nrpe | copy websocket config to the monitored node
   template: >
@@ -13,6 +17,8 @@
       dest=/etc/nrpe.d/websocket-{{ name }}.cfg
       mode=0644
   notify: restart nrpe
+  tags:
+    - nagios
 
 - name: nrpe | copy httpd/websocket config to the nagios head
   template: >
@@ -22,3 +28,5 @@
   notify: restart nagios
   delegate_to: "{{ item }}"
   with_items: groups.nagios
+  tags:
+    - nagios
