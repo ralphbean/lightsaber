@@ -68,6 +68,10 @@
     site: www.wintonroad.org
     target: experienced
     path: /
+  - role: nagios/nrpe/websocket
+    name: fedmsg-websocket
+    address: "wss://hub.fedoraproject.org:9939"
+    timeout: 10
 
 - name: playbook | site | Set up bouncer
   hosts: buttermilk
