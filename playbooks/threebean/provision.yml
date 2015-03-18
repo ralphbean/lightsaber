@@ -1,23 +1,23 @@
----
-- name: playbook | provision | provision cloud nodes
+- name: provision cloud nodes
   hosts: localhost
   connection: local
+  gather_facts: false
 
-  # digital ocean creds are kept in the private repo
   vars_files:
   - vars/global.yml
-  - "{{ private }}/vars.yml"
+  - vars/private.yml
 
   tasks:
   - include: "{{ tasks }}/provision.yml"
 
-- name: playbook | provision | setup a local /etc/hosts
-  hosts: localhost
-  connection: local
-  user: root
-
-  vars_files:
-  - vars/global.yml
-
-  tasks:
-  - include: "{{ tasks }}/record_hosts.yml"
+# For some reason this is broken now... it was nice to have.
+#- name: setup a local /etc/hosts
+#  hosts: localhost
+#  connection: local
+#  user: root
+#
+#  vars_files:
+#  - vars/global.yml
+#
+#  tasks:
+#  - include: "{{ tasks }}/record_hosts.yml"

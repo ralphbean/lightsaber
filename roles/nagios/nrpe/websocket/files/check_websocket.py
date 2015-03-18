@@ -11,10 +11,10 @@ import websocket
 parser = argparse.ArgumentParser()
 parser.add_argument('--timeout', type=int)
 parser.add_argument('--address')
-parser.add_argument('--topic')
+parser.add_argument('--topic', default='*')
 args = parser.parse_args()
 
-for attr in ['timeout', 'address', 'topic']:
+for attr in ['timeout', 'address']:
     if not getattr(args, attr, None):
         print "UNK:  --%s is required" % attr
         sys.exit(3)
