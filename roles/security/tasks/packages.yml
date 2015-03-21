@@ -13,7 +13,7 @@
 
 - name: Pause before rebooting
   pause: prompt="We need to restart for the updates to take effect"
-  when: needs_restarting.stdout
+  when: needs_restarting.stdout and dont_pause_before_reboot is not defined
 
 - name: Reboot for updated packages
   include: "{{ tasks }}/reboot.yml"

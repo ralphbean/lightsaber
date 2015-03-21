@@ -1,1 +1,2 @@
 permit_root_login: yes
+dont_pause_before_reboot: yes
