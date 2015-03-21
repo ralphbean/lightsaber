@@ -19,3 +19,6 @@ if [ "$(cat $GPG_INFO_FILE)" != "$GPG_AGENT_INFO" ]; then
         export GPG_AGENT_INFO=$(cat $GPG_INFO_FILE)
     fi
 fi
+
+# Run this every time a terminal is opened
+task list limit:page
