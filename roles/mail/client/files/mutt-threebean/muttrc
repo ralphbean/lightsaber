@@ -31,6 +31,7 @@ mailboxes = +"redhat/fedmsg-errors"
 # All bz emails
 mailboxes = +"redhat/phab"
 mailboxes = +"gmail/github"
+mailboxes = +"redhat/pagure"
 mailboxes = +"redhat/bugzilla"
 mailboxes = +"redhat/scm-commits"
 
