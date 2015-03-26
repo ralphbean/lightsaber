@@ -53,6 +53,7 @@ mailboxes = +"redhat/prod-dept
 mailboxes = +"redhat/memo-list"
 mailboxes = +"redhat/osas"
 mailboxes = +"redhat/sysadmin-logs"
+mailboxes = +"redhat/melange"
 
 mailboxes = +"gmail/announce-list"
 mailboxes = +"gmail/RAW"
