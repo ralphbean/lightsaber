@@ -338,9 +338,9 @@ autocmd FileType html set expandtab
 au BufWritePost *.py !pyflakes %
 au BufWritePost *.py !pep8 %
 
-call pathogen#infect('bundle')
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+"call pathogen#infect('bundle')
+"call pathogen#runtime_append_all_bundles()
+"call pathogen#helptags()
 let g:Powerline_symbols = 'fancy'
 set laststatus=2
 set encoding=utf-8
