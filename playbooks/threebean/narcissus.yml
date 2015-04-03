@@ -1,0 +1,10 @@
+---
+- name: setup the log sender on mirrors
+  hosts: mirrors
+  roles:
+  - narcissus/sender
+
+- name: narcissus stuff for pencil
+  hosts: narcissus
+  roles:
+  - narcissus/server
