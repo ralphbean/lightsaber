@@ -1,0 +1,14 @@
+[Unit]
+Description=Narcissus Log Sending Script
+After=network.target
+Documentation=https://github.com/ralphbean/narcissus
+
+[Service]
+ExecStart=/usr/local/bin/narcissus-log-tailer.sh
+Type=simple
+User=nobody
+Group=nobody
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
