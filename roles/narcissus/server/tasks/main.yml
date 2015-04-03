@@ -1,10 +1,15 @@
 - name: Install packages
   yum: name={{item}} state=latest
   with_items:
+  - python-narcissus-hub
   - python-narcissus-app
   - libselinux-python
+  - python-moksha-hub
+  - GeoIP
   tags: narcissus
-  notify: restart httpd
+  notify:
+  - restart httpd
+  - restart narcissus-hub
 
 - name: Copy over httpd conf file for narcissus wsgi app
   copy: >
@@ -27,18 +32,37 @@
   tags: narcissus
   notify:
   - restart httpd
-  #- restart moksha-hub
+  - restart narcissus-hub
 
 - name: Make a directory for moksha config
   file: dest=/etc/moksha state=directory
   tags: narcissus
   notify:
   - restart httpd
-  #- restart moksha-hub
+  - restart narcissus-hub
 
 - name: Symlink the config to another name
   file: src=/etc/narcissus.ini dest=/etc/moksha/production.ini state=link
   tags: narcissus
   notify:
   - restart httpd
-  #- restart moksha-hub
+  - restart narcissus-hub
+
+- name: Copy over narcissus-hub systemd service file
+  copy: >
+      src=narcissus-hub.service
+      dest=/usr/lib/systemd/system/narcissus-hub.service
+  tags: narcissus
+  notify:
+  - reload systemd
+  - restart narcissus-hub
+
+- name: Update our GeoIP databases from maxmind
+  command: geoipupdate
+  tags: narcissus
+  notify:
+  - restart narcissus-hub
+
+- name: Set the narcissus hub service to start
+  service: name=narcissus-hub state=running enabled=yes
+  tags: narcissus

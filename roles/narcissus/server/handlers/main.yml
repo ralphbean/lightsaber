@@ -1,2 +1,8 @@
 - name: restart httpd
   command: apachectl graceful
+
+- name: restart narcissus-hub
+  command: systemctl restart narcissus-hub
+
+- name: reload systemd
+  command: systemctl daemon-reload
