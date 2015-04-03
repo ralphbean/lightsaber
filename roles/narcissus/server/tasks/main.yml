@@ -59,6 +59,9 @@
 
 - name: Update our GeoIP databases from maxmind
   command: geoipupdate
+  register: geoipupdate
+  changed_when: geoipupdate.rc == 0
+  ignore_errors: yes
   tags: narcissus
   notify:
   - restart narcissus-hub
