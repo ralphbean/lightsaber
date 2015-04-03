@@ -10,6 +10,7 @@
   copy: >
     src=narcissus-log-tailer.sh
     dest=/usr/local/bin/narcissus-log-tailer.sh
+    mode=0755
   tags: narcissus
   notify: restart narcissus sender
 
