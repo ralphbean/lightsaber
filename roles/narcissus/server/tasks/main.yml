@@ -1,0 +1,44 @@
+- name: Install packages
+  yum: name={{item}} state=latest
+  with_items:
+  - python-narcissus-app
+  - libselinux-python
+  tags: narcissus
+  notify: restart httpd
+
+- name: Copy over httpd conf file for narcissus wsgi app
+  copy: >
+      src=narcissus.conf
+      dest=/etc/httpd/conf.d/narcissus.conf
+  tags: narcissus
+  notify: restart httpd
+
+- name: Copy over mod_wsgi script for the narcissus app
+  copy: >
+      src=narcissus.wsgi
+      dest=/var/www/narcissus.wsgi
+  tags: narcissus
+  notify: restart httpd
+
+- name: Copy over config file shared by hub and apache
+  template: >
+      src=narcissus.ini
+      dest=/etc/narcissus.ini
+  tags: narcissus
+  notify:
+  - restart httpd
+  #- restart moksha-hub
+
+- name: Make a directory for moksha config
+  file: dest=/etc/moksha state=directory
+  tags: narcissus
+  notify:
+  - restart httpd
+  #- restart moksha-hub
+
+- name: Symlink the config to another name
+  file: src=/etc/narcissus.ini dest=/etc/moksha/production.ini state=link
+  tags: narcissus
+  notify:
+  - restart httpd
+  #- restart moksha-hub
