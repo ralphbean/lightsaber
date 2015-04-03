@@ -13,7 +13,7 @@ import subprocess
 import re
 
 
-FILE_REGEX = re.compile(r'(py|rst|css|txt|html|rb|feature|README|yml|conf|ini|wsgi)$')
+FILE_REGEX = re.compile(r'(py|rst|css|txt|html|rb|feature|README|yml|conf|ini|wsgi|cfg)$')
 STAT_INTERVAL = .25 # seconds
 CRAWL_INTERVAL = 10 # seconds
 
