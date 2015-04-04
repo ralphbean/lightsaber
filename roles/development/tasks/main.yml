@@ -17,6 +17,7 @@
   - fedpkg
   - fedora-packager
   - redhat-rpm-config
+  - libxslt-devel  # For building lxml in a venv
   tags:
   - development
 

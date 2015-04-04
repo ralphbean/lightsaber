@@ -1,0 +1,10 @@
+- name: reload systemd
+  command: systemctl daemon-reload
+  when: ansible_distribution_major_version != '6'
+
+- name: restart narcissus sender
+  command: systemctl restart narcissus-sender
+  when: ansible_distribution_major_version != '6'
+
+- name: save iptables
+  command: iptables-save

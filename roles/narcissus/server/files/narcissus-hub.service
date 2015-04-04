@@ -1,0 +1,14 @@
+[Unit]
+Description=Narcissus message processing daemon
+After=network.target
+Documentation=https://github.com/ralphbean/narcissus
+
+[Service]
+ExecStart=/usr/bin/moksha-hub /etc/narcissus.ini
+Type=simple
+User=nobody
+Group=nobody
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
