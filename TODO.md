@@ -8,8 +8,8 @@ local stuff
 
 server stuff
 - [ ] backups and restore from backup for tahrir db - duplicity or bakthat from git
-- [ ] password for nagios htpasswd file
+- [x] password for nagios htpasswd file
 - [ ] nagios check for open ports:  nmap host
 - [ ] nagios openscap checks
 - [ ] nagios notifications to an IRC channel
-- [ ] suricata?  leaving this one to lmacken
+- [x] suricata?  leaving this one to lmacken
