@@ -1,0 +1,55 @@
+- name: Install packages
+  yum: name={{item}} state=latest
+  with_items:
+  - python-narcissus-common
+  - libselinux-python
+  tags: narcissus
+  notify: restart narcissus sender
+
+- name: Copy our tailing script
+  copy: >
+    src=narcissus-log-tailer.sh
+    dest=/usr/local/bin/narcissus-log-tailer.sh
+    mode=0755
+  tags: narcissus
+  notify: restart narcissus sender
+
+- name: Copy over a systemd service file for the sender
+  copy: >
+      src=narcissus-sender.service
+      dest=/usr/lib/systemd/system/narcissus-sender.service
+  tags: narcissus
+  when: ansible_distribution_major_version != '6'
+  notify:
+  - reload systemd
+  - restart narcissus sender
+
+- name: Check if port 5672 is managed by iptables
+  shell: iptables -L | grep -q "Let in pencil for narcissus"
+  register: check_allow_narcissus
+  ignore_errors: yes
+  changed_when: no
+  always_run: yes
+  tags: narcissus
+
+- name: Let in pencil on port 5672
+  command: >
+    iptables -A INPUT -p tcp -m tcp --dport 5672
+    -s "{{ hostvars['pencil']['ansible_ssh_host'] }}"
+    -m comment --comment "Let in pencil for narcissus" -j ACCEPT
+  when: check_allow_narcissus.rc != 0
+  notify: save iptables
+  tags: narcissus
+
+- name: Keep out everyone else on port 5672
+  command: >
+    iptables -A INPUT -p tcp -m tcp --dport 5672
+    -m comment --comment "Keep out everyone else" -j REJECT
+  when: check_allow_narcissus.rc != 0
+  notify: save iptables
+  tags: narcissus
+
+- name: Set log tailer service to start
+  service: name=narcissus-sender state=running enabled=yes
+  when: ansible_distribution_major_version != '6'
+  tags: narcissus

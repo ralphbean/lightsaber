@@ -8,6 +8,8 @@
   - python-rdflib
   - python-pip
   - python-paste-script
+  tags:
+  - badges
 
 - name: copy tahrir app configuration
   template: >
@@ -17,6 +19,8 @@
   - tahrir.ini
   notify:
   - restart httpd
+  tags:
+  - badges
 
 - name: copy tahrir wsgi script
   copy: >
@@ -26,6 +30,8 @@
   - tahrir.wsgi
   notify:
   - restart httpd
+  tags:
+  - badges
 
 - name: copy tahrir httpd config
   copy: >
@@ -35,12 +41,16 @@
   - tahrir.conf
   notify:
   - restart httpd
+  tags:
+  - badges
 
 - name: make badge rst directory
   file: >
     path=/usr/share/badges/sitedocs
     state=directory
     owner=root group=root mode=0755
+  tags:
+  - badges
 
 - name: hotfix velruse so that stateless openid works (fml)
   copy: >
@@ -50,6 +60,8 @@
   - openid.py
   notify:
   - restart httpd
+  tags:
+  - badges
 
 - name: copy over all our .rst site docs
   copy: >
@@ -60,12 +72,16 @@
   - threebean-sitedocs/*.rst
   notify:
   - restart httpd
+  tags:
+  - badges
 
 - name: make badge png directory
   file: >
     path=/usr/share/badges/pngs
     state=directory
     owner=root group=root mode=0755
+  tags:
+  - badges
 
 - name: copy over all our badge images
   copy: >
@@ -74,6 +90,8 @@
     owner=root group=root mode=0644
   with_fileglob:
     - threebean-pngs/*.png
+  tags:
+  - badges
 
 - name: copy over handy scripts
   copy: >
@@ -84,6 +102,8 @@
       - award-badge
       - get-badges-person-id
       - add-badges-person
+  tags:
+  - badges
 
 - name: ensure /var/cache/tahrir exists
   file: >
@@ -93,11 +113,15 @@
       group=tahrir
       mode=0755
       setype=httpd_sys_script_rw_t
+  tags:
+  - badges
 
 - name: create our badges db
   command: >
       /usr/bin/initialize_tahrir_db /etc/tahrir/tahrir.ini
       creates=/var/cache/tahrir/tahrir-db.sql
+  tags:
+  - badges
 
 - name: ensure sqlite db is readable by tahrir
   file: >
@@ -105,6 +129,10 @@
       owner=tahrir
       group=tahrir
       mode=0644
+  tags:
+  - badges
 
 - name: install the threebean theme...
   pip: name=threebean-tahrir-theme state=latest
+  tags:
+  - badges

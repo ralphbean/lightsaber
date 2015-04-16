@@ -1,2 +1,3 @@
 - include: firewalld.yml
 - include: sshd.yml
+- include: fail2ban.yml

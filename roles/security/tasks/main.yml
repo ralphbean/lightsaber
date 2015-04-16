@@ -12,6 +12,7 @@
 - include: fprintd.yml
 - include: suricata.yml
 - include: firefox.yml
+- include: fail2ban.yml
 
 # Lock down ipv6 when ipv6 is available
 - include: ipv6.yml

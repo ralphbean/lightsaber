@@ -1,0 +1,27 @@
+- name: Install fail2ban
+  yum: pkg=fail2ban-systemd state=present
+  notify: restart fail2ban
+  tags:
+  - security
+  - fail2ban
+
+- name: Enable sshd filtering
+  copy: src=00-sshd.conf dest=/etc/fail2ban/jail.d/00-sshd.conf
+  notify: restart fail2ban
+  tags:
+  - security
+  - fail2ban
+
+- name: Send fail2ban logs to syslog
+  copy: src=fail2ban.conf dest=/etc/fail2ban/fail2ban.conf
+  notify: restart fail2ban
+  tags:
+  - security
+  - fail2ban
+
+- name: Fire it up
+  service: name=fail2ban enabled=yes state=started
+  notify: restart fail2ban
+  tags:
+  - security
+  - fail2ban
