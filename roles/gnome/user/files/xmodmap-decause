@@ -1,0 +1,3 @@
+clear Control
+
+add Control = Control_L Control_R Home End
