@@ -15,7 +15,7 @@ computer01      ansible_ssh_host=104.131.96.144
 pencil          ansible_ssh_host=129.21.39.186 ansible_ssh_user=root
 
 [mirrors]
-ganon           ansible_ssh_host=129.21.171.98 ansible_ssh_user=root
+smoke           ansible_ssh_host=129.21.171.72 ansible_ssh_user=root
 
 # This is a meta group just so nagios knows who to monitor
 [monitored:children]
