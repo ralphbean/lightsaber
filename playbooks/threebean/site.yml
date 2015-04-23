@@ -43,6 +43,7 @@
     site: narcissus.rc.rit.edu
     target: narcissus
     path: /map/
+    timeout: 10
   - role: nagios/nrpe/websocket
     name: narcissus
     address: "ws://narcissus.rc.rit.edu:9998"
@@ -52,22 +53,27 @@
     site: threebean.org
     target: widget
     path: /blog/
+    timeout: 10
   - role: nagios/nrpe/site
     site: toscawidgets.org
     target: ZOMG
     path: /
+    timeout: 10
   - role: nagios/nrpe/site
     site: tw2-demos.threebean.org
     target: widget
     path: /
+    timeout: 10
   - role: nagios/nrpe/site
     site: monroe-threebean.rhcloud.com
     target: foreclosures
     path: /graph\?from_date=01%2F01%2F2013\&to_date=01%2F01%2F2013
+    timeout: 30
   - role: nagios/nrpe/site
     site: www.wintonroad.org
     target: experienced
     path: /
+    timeout: 10
   - role: nagios/nrpe/websocket
     name: fedmsg-websocket
     address: "wss://hub.fedoraproject.org:9939"
@@ -102,3 +108,4 @@
     site: badges.threebean.net
     target: Tahrir
     path: /
+    timeout: 10
