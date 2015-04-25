@@ -10,6 +10,13 @@
 #
 set folder = ~/.imap-mail
 
+set pager_context=1
+set pager_index_lines=8
+
+# crucial for memo-list
+bind index . collapse-all
+
+
 # This is the list of mailboxes created by offlineimap.  We want to
 # check these for new mail.
 #
