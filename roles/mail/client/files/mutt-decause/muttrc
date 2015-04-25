@@ -10,6 +10,13 @@
 #
 set folder = ~/.imap-mail
 set signature = ~/.mutt/sig
+set pager_context=1
+set pager_index_lines=8
+
+
+
+bind index . collapse-all
+
 
 # This is the list of mailboxes created by offlineimap.  We want to
 # check these for new mail.
@@ -17,7 +24,6 @@ set signature = ~/.mutt/sig
 #source ~/.mutt/muttmailboxes
 #
 #inboxes
-mailboxes = +"gmail/gmail"
 
 ## Red Hat
 mailboxes = +"redhat/redhat"
@@ -41,7 +47,8 @@ mailboxes = +"redhat/prod-dept"
 mailboxes = +"redhat/python"
 mailboxes = +"redhat/android-users"
 
-
+## GMail
+mailboxes = +"gmail/gmail"
 
 
 ## Fedora
@@ -104,10 +111,10 @@ mailboxes = +"redhat/android-users"
 
 # when you start mutt, this is the inbox that will open by default
 #
-set spoolfile = +"gmail/Inbox"
-set mbox = +"gmail/archive"
+set spoolfile = +"redhat/Inbox"
+set mbox = +"redhat/archive"
 set mbox_type = Maildir
-set postponed = +"gmail/[Gmail].Drafts"
+set postponed = +"redhat/[redhat].Drafts"
 
 # Other global configuration files to include.
 #
@@ -130,10 +137,10 @@ folder-hook +redhat/.* "source ~/.mutt/redhat"
 # These are the addresses that you mutt to think are you.  You can have them be
 # for any 
 alternates decause@gmail.com rdecause@redhat.com
-set sendmail="/usr/bin/msmtp -a gmail"
+set sendmail="/usr/bin/msmtp -a redhat"
 
 # notmuch config -- only compatible with mutt-kz
-set nm_default_uri = "notmuch:///home/threebean/.imap-mail"
+set nm_default_uri = "notmuch:///home/decause/.imap-mail"
 
 # crazy gmail style labels.  mutt-kz only.
 set index_format = "%4C %Z %{%b %d} %-15.15L %?g?(%g)? (%?l?%4l&%4c?) %s"
