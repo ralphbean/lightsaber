@@ -6,8 +6,8 @@ Documentation=https://github.com/ralphbean/narcissus
 [Service]
 ExecStart=/usr/local/bin/narcissus-log-tailer.sh
 Type=simple
-User=nobody
-Group=nobody
+User=lighttpd
+Group=lighttpd
 Restart=on-failure
 
 [Install]

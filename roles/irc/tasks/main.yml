@@ -17,7 +17,7 @@
   tags: irc
 
 - name: Set bitlbee to start
-  service: name=bitlbee state=started
+  service: name=bitlbee state=started enabled=yes
   tags: irc
 
 - name: Copy in a tmux systemd service file
@@ -26,5 +26,5 @@
   tags: irc
 
 - name: Set that tmux session to start
-  service: name=tmux@{{username}} state=started
+  service: name=tmux@{{username}} state=started enabled=yes
   tags: irc
