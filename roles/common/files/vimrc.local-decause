@@ -58,6 +58,10 @@ set smarttab
 set enc=utf-8
 set number
 
+" Show column of cursor, not the line
+set cursorcolumn
+set nocursorline
+
 " Enable a nice big viminfo file
 set viminfo='1000,f1,:1000,/1000
 
