@@ -13,4 +13,4 @@ server stuff
 - [ ] nagios openscap checks
 - [ ] nagios notifications to an IRC channel
 - [x] suricata?  leaving this one to lmacken
-- [ ] get fail2ban to whitelist the ip that ansible-playbook is being run on
+- [ ] get fail2ban to whitelist the ip that ansible-playbook is being run on (disabled for now)
