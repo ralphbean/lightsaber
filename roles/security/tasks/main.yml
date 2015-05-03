@@ -12,7 +12,11 @@
 - include: fprintd.yml
 - include: suricata.yml
 - include: firefox.yml
-- include: fail2ban.yml
+
+# Ignore fail2ban for now until I have a good way to whitelist myself.  I keep
+# getting banned when ansible "waits for ssh to come back" because it just
+# tries to ssh over and over again... and gets banned.
+#- include: fail2ban.yml
 
 # Lock down ipv6 when ipv6 is available
 - include: ipv6.yml
