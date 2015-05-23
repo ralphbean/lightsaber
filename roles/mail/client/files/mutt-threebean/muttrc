@@ -42,6 +42,7 @@ mailboxes = +"redhat/bugzilla"
 mailboxes = +"redhat/scm-commits"
 
 #lists
+mailboxes = +"gmail/taigaio"
 mailboxes = +"redhat/lugor-discuss"
 mailboxes = +"redhat/women-outreach"
 mailboxes = +"redhat/fedora-infra"
