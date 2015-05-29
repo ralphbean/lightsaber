@@ -5,6 +5,13 @@ This is an ansible setup I use to manage my own machine(s).
 
 I've tried to make it generic enough that you can clone it and use it too.
 
+The playbooks in the ``playbooks/`` directory are separated out by user -- each
+user keeps their own scripts there with no particular structure.  The
+``roles/`` dir has shared roles, some of which do different things for
+different users based on the presence of vars.  See
+``roles/mail/client/tasks/main.yml`` for an example.
+
+
 Credentials
 -----------
 

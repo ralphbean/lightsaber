@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import datetime
 import getpass
 import fedora.client.bodhi
 
@@ -16,15 +15,18 @@ data = client.query(
     limit=999,
 )
 
-then = datetime.datetime.now() - datetime.timedelta(days=14)
-parse = lambda s: datetime.datetime.strptime(s, '%Y-%m-%d %H:%M:%S')
 link = lambda s: "https://admin.fedoraproject.org/updates/%s" % s
 
 good, bad = [], []
 
+# Scrape the comments to figure out what we can do.  :-x
 for update in data['updates']:
-    if parse(update.date_pushed) < then:
-        good.append(update)
+    if update.request:
+        continue
+    for comment in update.comments:
+        if 'can be pushed to stable now' in comment.text:
+            good.append(update)
+            break
     else:
         bad.append(update)
 

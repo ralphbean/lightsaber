@@ -1,0 +1,4 @@
+#!/usr/bin/bash -x
+
+sudo unbound-control forward_add redhat.com 10.5.30.160 10.11.5.19
+sudo unbound-control flush_zone redhat.com

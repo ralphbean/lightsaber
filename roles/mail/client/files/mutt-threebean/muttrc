@@ -10,6 +10,12 @@
 #
 set folder = ~/.imap-mail
 
+set pager_context=1
+set pager_index_lines=8
+
+# crucial for memo-list
+bind index . collapse-all
+
 # This is the list of mailboxes created by offlineimap.  We want to
 # check these for new mail.
 #
@@ -36,6 +42,7 @@ mailboxes = +"redhat/bugzilla"
 mailboxes = +"redhat/scm-commits"
 
 #lists
+mailboxes = +"gmail/taigaio"
 mailboxes = +"redhat/lugor-discuss"
 mailboxes = +"redhat/women-outreach"
 mailboxes = +"redhat/fedora-infra"
@@ -65,6 +72,7 @@ mailboxes = +"redhat/toscawidgets"
 mailboxes = +"redhat/phab"
 mailboxes = +"redhat/fedora-devel"
 mailboxes = +"redhat/python-devel"
+mailboxes = +"redhat/centos-devel"
 mailboxes = +"redhat/fedora-python"
 mailboxes = +"redhat/nodejs"
 mailboxes = +"redhat/packaging"
