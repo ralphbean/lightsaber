@@ -46,6 +46,10 @@ map ,s :split<Enter>
 map ,e :E<Enter>
 map ,p :Project<Enter>
 
+"insert some defaults into the <a> tag
+let @a='ysw<a target="_blank" href="#"><Enter>'
+nnoremap ,,a @a
+
 set nocompatible
 
 set guifont=Liberation\ Mono\ 9
@@ -57,10 +61,6 @@ set expandtab
 set smarttab
 set enc=utf-8
 set number
-
-" Show column of cursor, not the line
-set cursorcolumn
-set nocursorline
 
 " Enable a nice big viminfo file
 set viminfo='1000,f1,:1000,/1000
@@ -81,6 +81,10 @@ set incsearch
 set ignorecase
 set infercase
 set hlsearch
+
+" Show CursorColumn
+set cursorcolumn
+set nocursorline
 
 set showfulltag " Show full tags when doing search completion
 " set lazyredraw " Speed up macros
@@ -140,7 +144,7 @@ filetype plugin on
 filetype indent on
 
 " gitcomment.vim 
-autocmd BufNewFile,BufRead COMMIT_EDITMSG set filetype=gitcommit
+"autocmd BufNewFile,BufRead COMMIT_EDITMSG set filetype=gitcommit
 
 " taglist.vim stuff
 let Tlist_Use_Right_Window = 1
