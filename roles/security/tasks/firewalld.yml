@@ -1,11 +1,15 @@
 - name: Security | firewalld | Make sure firewalld is installed
-  yum: name=firewalld state=present
+  yum:
+      name: firewalld
+      state: present
   tags:
     - security
     - firewall
 
 # On Pidora the firewalld unit is masked
-- file: path=/etc/systemd/system/firewalld.service follow=yes
+- file:
+      path: /etc/systemd/system/firewalld.service
+      follow: yes
   register: firewalld_unit
   failed_when: False
   tags:
@@ -20,7 +24,10 @@
     - firewall
 
 - name: Security | firewalld | Start the firewalld service
-  service: name=firewalld enabled=yes state=started
+  service:
+      name: firewalld
+      enabled: yes
+      state: started
   tags:
     - security
     - firewall

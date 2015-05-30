@@ -1,15 +1,21 @@
 ---
 - name: install s3cmd
-  yum: pkg=s3cmd state=present
+  yum:
+      pkg: s3cmd
+      state: present
   tags:
     - backups
 
 - name: copy s3 config
-  template: src=s3cfg dest=/root/.s3cfg
+  template:
+      src: s3cfg
+      dest: /root/.s3cfg
   tags:
     - backups
 
 - name: add a cronjob to backup
-  template: src=s3-cronjob dest=/etc/cron.d/s3-backup-{{name}}
+  template:
+      src: s3-cronjob
+      dest: "/etc/cron.d/s3-backup-{{name}}"
   tags:
     - backups

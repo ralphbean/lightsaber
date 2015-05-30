@@ -1,10 +1,12 @@
 - name: Enable the updates-testing repository
-  copy: >
-      src=fedora-updates-testing.repo
-      dest=/etc/yum.repos.d/fedora-updates-testing.repo
+  copy:
+      src: fedora-updates-testing.repo
+      dest: /etc/yum.repos.d/fedora-updates-testing.repo
 
 - name: Common | update all packages
-  yum: state=latest name=*
+  yum:
+      state: latest
+      name: "*"
 
 - name: See if any updated packages need restarting
   command: /usr/bin/needs-restarting
@@ -12,7 +14,8 @@
   register: needs_restarting
 
 - name: Pause before rebooting
-  pause: prompt="We need to restart for the updates to take effect"
+  pause:
+      prompt: "We need to restart for the updates to take effect"
   when: needs_restarting.stdout and dont_pause_before_reboot is not defined
 
 - name: Reboot for updated packages

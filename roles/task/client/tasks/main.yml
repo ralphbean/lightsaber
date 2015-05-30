@@ -1,5 +1,7 @@
 - name: Install taskwarrior and others
-  yum: name={{item}} state=present
+  yum:
+      name: "{{item}}"
+      state: present
   with_items:
   - task
   - python-ansi2html
@@ -7,26 +9,28 @@
   - task/client
 
 - name: Copy over user-specific .taskrc
-  copy: >
-      src=taskrc-{{item.user}}
-      dest={{item.homedir}}/.taskrc
-      owner={{item.user}}
-      group={{item.user}}
+  copy:
+      src: "taskrc-{{item.user}}"
+      dest: "{{item.homedir}}/.taskrc"
+      owner: "{{item.user}}"
+      group: "{{item.user}}"
   with_items: "{{ all_users }}"
   tags:
   - task/client
 
 - name: Synchronize common task scripts to /usr/local/bin
-  synchronize: src=bin/ dest=/usr/local/bin/
+  synchronize:
+      src: bin/
+      dest: /usr/local/bin/
   tags:
   - task/client
 
 - name: Copy over user-specific .bugwarriorrc
-  copy: >
-      src=bugwarriorrc-{{item.user}}
-      dest={{item.homedir}}/.bugwarriorrc
-      owner={{item.user}}
-      group={{item.user}}
+  copy:
+      src: "bugwarriorrc-{{item.user}}"
+      dest: "{{item.homedir}}/.bugwarriorrc"
+      owner: "{{item.user}}"
+      group: "{{item.user}}"
   with_items: "{{ all_users }}"
   tags:
   - task/client

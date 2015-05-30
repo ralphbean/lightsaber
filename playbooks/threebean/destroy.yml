@@ -26,12 +26,12 @@
 
   tasks:
       - name: kill it with fire
-        digital_ocean: >
-          state=deleted
-          name={{ item }}
-          client_id={{ do_client_id }}
-          api_key={{ do_api_key }}
-          unique_name=true
+        digital_ocean:
+          state: deleted
+          name: "{{ item }}"
+          client_id: "{{ do_client_id }}"
+          api_key: "{{ do_api_key }}"
+          unique_name: true
         with_items: target
 
 # TODO -- scrub the old host from ~/.ssh/known_hosts

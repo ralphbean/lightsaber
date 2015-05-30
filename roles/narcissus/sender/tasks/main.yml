@@ -1,5 +1,7 @@
 - name: Install packages
-  yum: name={{item}} state=latest
+  yum:
+      name: "{{item}}"
+      state: latest
   with_items:
   - python-narcissus-common
   - libselinux-python
@@ -7,17 +9,17 @@
   notify: restart narcissus sender
 
 - name: Copy our tailing script
-  copy: >
-    src=narcissus-log-tailer.sh
-    dest=/usr/local/bin/narcissus-log-tailer.sh
-    mode=0755
+  copy:
+      src: narcissus-log-tailer.sh
+      dest: /usr/local/bin/narcissus-log-tailer.sh
+      mode: 0755
   tags: narcissus
   notify: restart narcissus sender
 
 - name: Copy over a systemd service file for the sender
-  copy: >
-      src=narcissus-sender.service
-      dest=/usr/lib/systemd/system/narcissus-sender.service
+  copy:
+      src: narcissus-sender.service
+      dest: /usr/lib/systemd/system/narcissus-sender.service
   tags: narcissus
   when: ansible_distribution_major_version != '6'
   notify:
@@ -50,6 +52,9 @@
   tags: narcissus
 
 - name: Set log tailer service to start
-  service: name=narcissus-sender state=running enabled=yes
+  service:
+      name: narcissus-sender
+      state: running
+      enabled: yes
   when: ansible_distribution_major_version != '6'
   tags: narcissus

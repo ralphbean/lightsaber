@@ -1,11 +1,16 @@
 - name: yum | install yum-cron
-  yum: state=present name=yum-cron
+  yum:
+      state: present
+      name: yum-cron
   tags:
   - packages
   - security
 
 - name: yum | make yum-cron automatically apply security updates
-  lineinfile: dest=/etc/yum/yum-cron.conf regexp="{{ item.regexp }}" line="{{ item.line }}"
+  lineinfile:
+      dest: /etc/yum/yum-cron.conf
+      regexp: "{{ item.regexp }}"
+      line: "{{ item.line }}"
   with_items:
   - { regexp: '^update_cmd', line: 'update_cmd = security' }
   - { regexp: '^apply_updates', line: 'apply_updates = yes' }
@@ -14,7 +19,10 @@
   - security
 
 - name: yum | enable the yum-cron service
-  service: name=yum-cron enabled=yes state=started
+  service:
+      name: yum-cron
+      enabled: yes
+      state: started
   tags:
   - packages
   - security

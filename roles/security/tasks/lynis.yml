@@ -1,7 +1,9 @@
 # file: roles/security/tasks/lynis.yml
 
 - name: Security | lynis | Make sure lynis is installed
-  yum: name=lynis state=present
+  yum:
+      name: lynis
+      state: present
   tags:
     - security
     - lynis

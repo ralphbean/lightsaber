@@ -1,5 +1,7 @@
 - include: packages.yml
-- yum: name=ntp state=present
+- yum:
+      name: ntp
+      state: present
 - service: name=ntpd state=started enabled=yes
 - include: rkhunter.yml
 - include: lynis.yml

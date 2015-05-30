@@ -1,5 +1,7 @@
 - name: JustDecauseThings | install common packages
-  yum: state=present name={{ item }}
+  yum:
+    state: present
+    name: "{{ item }}"
   with_items:
   - nethack
   - wesnoth

@@ -1,8 +1,12 @@
 - name: copy a copr repo file into place
-  copy: src=ralph-taskd.repo dest=/etc/yum.repos.d/ralph-taskd.repo
+  copy:
+      src: ralph-taskd.repo
+      dest: /etc/yum.repos.d/ralph-taskd.repo
 
 - name: task-server | install required packages
-  yum: state=present name={{ item }}
+  yum:
+      state: present
+      name: "{{ item }}"
   with_items:
   - wget
   - tree
@@ -12,21 +16,27 @@
   - packages
 
 - name: task-server | copy config
-  copy: src=config dest=/var/lib/taskd/config owner=taskd group=taskd
+  copy:
+      src: config
+      dest: /var/lib/taskd/config
+      owner: taskd
+      group: taskd
   notify:
   - restart taskd
 
 # TODO -- run the generate script here but only if necessary.
 
 - name: task-server | start the service
-  service: name=taskd state=started
+  service:
+      name: taskd
+      state: started
 
 - name: task-server | Open a port
-  firewalld: >
-      port={{ item }}/tcp
-      state=enabled
-      permanent=true
-      zone=public
+  firewalld:
+      port: "{{ item }}/tcp"
+      state: enabled
+      permanent: true
+      zone: public
   with_items:
       - 6544
   notify:
