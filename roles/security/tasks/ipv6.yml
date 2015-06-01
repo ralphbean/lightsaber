@@ -1,6 +1,11 @@
 # https://tools.ietf.org/html/rfc4941
 - name: ipv6 | Enable Privacy Extensions (RFC 4941)
-  sysctl: name="net.ipv6.conf.{{ item }}.use_tempaddr" value=2 sysctl_set=yes state=present reload=yes
+  sysctl:
+      name: "net.ipv6.conf.{{ item }}.use_tempaddr"
+      value: 2
+      sysctl_set: yes
+      state: present
+      reload: yes
   with_items:
     - "{{ ansible_default_ipv6.interface }}"
     - default

@@ -1,12 +1,18 @@
 
 - name: Install the adobe-linux repo
-  copy: src=adobe-linux-x86_64.repo dest=/etc/yum.repos.d/.
+  copy:
+      src: adobe-linux-x86_64.repo
+      dest: /etc/yum.repos.d/
 
 - name: Install their gpg public key
-  copy: src=RPM-GPG-KEY-adobe-linux dest=/etc/pki/rpm-gpg/.
+  copy:
+      src: RPM-GPG-KEY-adobe-linux
+      dest: /etc/pki/rpm-gpg/
 
 # Import that public key!??!
 # rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-adobe-linux
 
 - name: Using that repo, install the plugin
-  yum: name=flash-plugin state=present
+  yum:
+      name: flash-plugin
+      state: present

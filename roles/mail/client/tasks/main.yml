@@ -1,5 +1,7 @@
 - name: Include some packages
-  yum: name={{ item }} state=present
+  yum:
+      name: "{{ item }}"
+      state: present
   with_items:
   - dnf
   - dnf-plugins-core
@@ -15,12 +17,16 @@
   - mail/client
 
 - name: And install it, of course.
-  yum: name=mutt-kz state=present
+  yum:
+      name: mutt-kz
+      state: present
   tags:
   - mail/client
 
 - name: Also, we want msmtp for sending and isync for receipt
-  yum: name={{ item }} state=present
+  yum:
+      name: "{{ item }}"
+      state: present
   with_items:
   - msmtp
   - isync
@@ -28,17 +34,19 @@
   - mail/client
 
 - name: Synchronize some mail-checkery scripts to /usr/local/bin
-  synchronize: src=bin/ dest=/usr/local/bin/
+  synchronize:
+      src: bin/
+      dest: /usr/local/bin/
   tags:
   - mail/client
 
 - name: Ensure that maildirs are present in homedir.
-  file: >
-      dest=/home/{{user}}/.imap-mail/{{item}}
-      state=directory
-      owner={{user}}
-      group={{user}}
-      mode=0750
+  file:
+      dest: "/home/{{user}}/.imap-mail/{{item}}"
+      state: directory
+      owner: "{{user}}"
+      group: "{{user}}"
+      mode: 0750
   with_items:
   - gmail
   - redhat
@@ -47,12 +55,12 @@
   - mail/client
 
 - name: Copy top level generic configs
-  copy: >
-      src={{item}}
-      dest=/home/{{user}}/.{{item}}
-      owner={{user}}
-      group={{user}}
-      mode=0600
+  copy:
+      src: "{{item}}"
+      dest: "/home/{{user}}/.{{item}}"
+      owner: "{{user}}"
+      group: "{{user}}"
+      mode: 0600
   with_items:
   - mbsync.redhat.crt
   - mailcap
@@ -60,12 +68,12 @@
   - mail/client
 
 - name: Copy top level user-specific configs
-  copy: >
-      src={{item}}-{{username}}
-      dest=/home/{{user}}/.{{item}}
-      owner={{user}}
-      group={{user}}
-      mode=0600
+  copy:
+      src: "{{item}}-{{username}}"
+      dest: "/home/{{user}}/.{{item}}"
+      owner: "{{user}}"
+      group: "{{user}}"
+      mode: 0600
   with_items:
   - msmtprc
   - mbsyncrc
@@ -74,13 +82,16 @@
   - mail/client
 
 - name: Sync over the .mutt/ dir.
-  synchronize: >
-      src=mutt-{{username}}/
-      dest=/home/{{user}}/.mutt
+  synchronize:
+      src: "mutt-{{username}}/"
+      dest: "/home/{{user}}/.mutt"
   tags:
   - mail/client
 
 - name: Lastly, symlink the main muttrc into place
-  file: src=/home/{{user}}/.mutt/muttrc dest=/home/{{user}}/.muttrc state=link
+  file:
+      src: "/home/{{user}}/.mutt/muttrc"
+      dest: "/home/{{user}}/.muttrc"
+      state: link
   tags:
   - mail/client

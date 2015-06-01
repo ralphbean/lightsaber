@@ -1,4 +1,4 @@
 - name: setup a local etc/hosts
-  template: >
-    src={{ templates }}/hosts-localhost
-    dest=/etc/hosts
+  template:
+      src: "{{ templates }}/hosts-localhost
+      dest: /etc/hosts

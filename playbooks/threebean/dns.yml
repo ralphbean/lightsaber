@@ -9,32 +9,32 @@
 
   tasks:
   - name: set up dns for fml.threebean.net
-    route53: >
-        aws_access_key={{ aws_access_key }}
-        aws_secret_key={{ aws_secret_key }}
-        command=create
-        overwrite=yes
-        zone=threebean.net
-        record=fml.threebean.net
-        type=A
-        value={{hostvars.computer01.ansible_ssh_host}}
+    route53:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        command: create
+        overwrite: yes
+        zone: threebean.net
+        record: fml.threebean.net
+        type: A
+        value: "{{hostvars.computer01.ansible_ssh_host}}"
   - name: set up dns for badges.threebean.net
-    route53: >
-        aws_access_key={{ aws_access_key }}
-        aws_secret_key={{ aws_secret_key }}
-        command=create
-        overwrite=yes
-        zone=threebean.net
-        record=badges.threebean.net
-        type=A
-        value={{hostvars.computer01.ansible_ssh_host}}
+    route53:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        command: create
+        overwrite: yes
+        zone: threebean.net
+        record: badges.threebean.net
+        type: A
+        value: "{{hostvars.computer01.ansible_ssh_host}}"
   - name: set up dns for tw2-demos.threebean.net
-    route53: >
-        aws_access_key={{ aws_access_key }}
-        aws_secret_key={{ aws_secret_key }}
-        command=create
-        overwrite=yes
-        zone=threebean.net
-        record=tw2-demos.threebean.net
-        type=A
-        value={{hostvars.computer01.ansible_ssh_host}}
+    route53:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        command: create
+        overwrite: yes
+        zone: threebean.net
+        record: tw2-demos.threebean.net
+        type: A
+        value: "{{hostvars.computer01.ansible_ssh_host}}"

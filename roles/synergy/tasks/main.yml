@@ -1,6 +1,8 @@
 ---
 - name: Install synergy
-  yum: name=synergy state=present
+  yum:
+      name: synergy
+      state: present
   tags:
   - synergy
 

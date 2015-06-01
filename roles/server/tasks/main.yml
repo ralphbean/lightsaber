@@ -1,5 +1,7 @@
 - name: Server | install server packages
-  yum: state=present name={{ item }}
+  yum:
+      state: present
+      name: "{{ item }}"
   with_items:
   - mosh
   - firewalld
@@ -7,11 +9,11 @@
   - packages
 
 - name: Server | open some ports for mosh
-  firewalld: >
-      port={{ item }}/udp
-      state=enabled
-      permanent=true
-      zone=public
+  firewalld:
+      port: "{{ item }}/udp"
+      state: enabled
+      permanent: true
+      zone: public
   with_items:
       - 60000
       - 60001
@@ -22,6 +24,6 @@
     - restart firewalld
 
 - name: Server | users | give {{ username }} an ssh key
-  authorized_key: >
-    user={{ username }}
-    key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  authorized_key:
+    user: "{{ username }}"
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

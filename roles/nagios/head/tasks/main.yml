@@ -1,5 +1,7 @@
 - name: nagios | install nagios
-  yum: state=latest pkg={{ item }}
+  yum:
+    state: latest
+    pkg: "{{ item }}"
   with_items:
   - nagios
   - nagios-plugins-nrpe
@@ -13,11 +15,15 @@
   - nagios
 
 - name: remove the default htpasswd file
-  file: dest=/etc/nagios/passwd state=absent
+  file:
+    dest: /etc/nagios/passwd
+    state: absent
   when: installation.changed
 
 - name: nagios | remove some default files
-  file: dest=/etc/nagios/objects/{{ item }} state=absent
+  file:
+    dest: "/etc/nagios/objects/{{ item }}"
+    state: absent
   with_items:
   - localhost.cfg
   - printer.cfg
@@ -27,7 +33,9 @@
   - nagios
 
 - name: nagios | add our master nagios config
-  copy: src={{ item }} dest=/etc/nagios/{{ item }}
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/nagios/{{ item }}"
   with_items:
   - nagios.cfg
   - cgi.cfg
@@ -37,7 +45,9 @@
   - nagios
 
 - name: nagios | copy over the supporting config
-  copy: src={{ item }} dest=/etc/nagios/objects/{{ item }}
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/nagios/objects/{{ item }}"
   with_items:
       - commands.cfg
   notify:
@@ -46,25 +56,30 @@
   - nagios
 
 - name: nagios | ensure /etc/nagios/hosts is there
-  file: dest=/etc/nagios/hosts state=directory
+  file:
+    dest: /etc/nagios/hosts
+    state: directory
   tags:
   - nagios
 
 - name: copy host configs to the nagios head
-  template: src=host.cfg dest="/etc/nagios/hosts/{{ item }}.cfg" mode=0644
+  template:
+    src: host.cfg
+    dest: "/etc/nagios/hosts/{{ item }}.cfg"
+    mode: 0644
   with_items: "{{ groups.monitored }}"
   notify: restart nagios
   tags:
   - nagios
 
 # Add myself to the nagios admin list
-- htpasswd: >
-    path=/etc/nagios/passwd
-    name=threebean
-    password={{ nagios_password }}
-    owner=apache
-    group=apache
-    mode=0640
+- htpasswd:
+    path: /etc/nagios/passwd
+    name: threebean
+    password: "{{ nagios_password }}"
+    owner: apache
+    group: apache
+    mode: 0640
   notify:
   - restart nagios
   - restart httpd
@@ -72,7 +87,10 @@
   - nagios
 
 # Ensure the default user is absent
-- htpasswd: path=/etc/nagios/passwd name=nagiosadmin state=absent
+- htpasswd:
+    path: /etc/nagios/passwd
+    name: nagiosadmin
+    state: absent
   notify:
   - restart nagios
   - restart httpd
@@ -80,30 +98,39 @@
   - nagios
 
 - name: copy nagios httpd config
-  copy: >
-    src=nagios.conf dest=/etc/httpd/conf.d/nagios.conf
-    owner=apache group=apache mode=0644
+  copy:
+    src: nagios.conf
+    dest: /etc/httpd/conf.d/nagios.conf
+    owner: apache
+    group: apache
+    mode: 0644
   notify:
   - restart httpd
   tags:
   - nagios
 
 - name: nagios | start httpd
-  service: name=httpd enabled=yes state=started
+  service:
+    name: httpd
+    enabled: yes
+    state: started
   tags:
   - nagios
 
 - name: nagios | start nagios
-  service: name=nagios enabled=yes state=started
+  service:
+    name: nagios
+    enabled: yes
+    state: started
   tags:
   - nagios
 
 - name: nagios | open a port
-  firewalld: >
-      port={{ item }}/tcp
-      state=enabled
-      permanent=true
-      zone=public
+  firewalld:
+      port: "{{ item }}/tcp"
+      state: enabled
+      permanent: true
+      zone: public
   with_items:
     - 80
   notify:

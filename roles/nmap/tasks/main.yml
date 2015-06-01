@@ -1,11 +1,14 @@
 - name: Ensure nmap is installed
-  yum: name=nmap state=installed
+  yum:
+      name: nmap
+      state: installed
   tags:
     - security
     - nmap
 
 - name: Check if ~/.lightsaber/nmap_scans exists
-  stat: path=/home/{{ username }}/.lightsaber/nmap_scans
+  stat:
+      path: "/home/{{ username }}/.lightsaber/nmap_scans"
   register: nmap_init
   tags:
     - security
@@ -67,14 +70,16 @@
 
 
 - name: Output the port changes
-  debug: msg="{{ nmap_diff.stdout }}"
+  debug:
+      msg: "{{ nmap_diff.stdout }}"
   when: nmap_diff.stdout != ''
   tags:
     - security
     - nmap
 
 - name: Host ports have changed!
-  pause: prompt="The port scanner has detected a change in open ports"
+  pause:
+      prompt: "The port scanner has detected a change in open ports"
   when: nmap_diff.stdout != ''
   tags:
     - security

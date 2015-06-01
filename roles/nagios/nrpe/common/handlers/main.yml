@@ -1,12 +1,18 @@
 - name: restart firewalld
-  service: name=firewalld state=restarted
+  service:
+      name: firewalld
+      state: restarted
 
 - name: restart nrpe
-  service: name=nrpe state=restarted
+  service:
+      name: nrpe
+      state: restarted
 
 # it would be sick if we could delegate to a group
 - name: restart nagios
-  service: name=nagios state=restarted
+  service:
+      name: nagios
+      state: restarted
   delegate_to: "{{ item }}"
   with_items: groups.nagios
 
