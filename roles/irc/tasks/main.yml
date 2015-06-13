@@ -1,5 +1,7 @@
 - name: install common packages
-  yum: state=present name={{ item }}
+  yum:
+      state: present
+      name: "{{ item }}"
   with_items:
   - weechat
   - bitlbee
@@ -9,22 +11,34 @@
   - irc
 
 - name: Copy weechat config with rsync
-  synchronize: src=weechat/ dest=/home/{{username}}/.weechat/
+  synchronize:
+      src: weechat/
+      dest: "/home/{{username}}/.weechat/"
   tags: irc
 
 - name: Copy weechat config template directly
-  template: src=irc.conf dest=/home/{{ username }}/.weechat/irc.conf owner={{ username }}
+  template:
+      src: irc.conf
+      dest: "/home/{{ username }}/.weechat/irc.conf owner={{ username }}"
   tags: irc
 
 - name: Set bitlbee to start
-  service: name=bitlbee state=started enabled=yes
+  service:
+      name: bitlbee
+      state: started
+      enabled: yes
   tags: irc
 
 - name: Copy in a tmux systemd service file
-  copy: src=tmux-service dest=/usr/lib/systemd/system/tmux@{{username}}.service
+  copy:
+      src: tmux-service
+      dest: "/usr/lib/systemd/system/tmux@{{username}}.service"
   notify: reload systemd service files
   tags: irc
 
 - name: Set that tmux session to start
-  service: name=tmux@{{username}} state=started enabled=yes
+  service:
+      name: "tmux@{{username}}"
+      state: started
+      enabled: yes
   tags: irc

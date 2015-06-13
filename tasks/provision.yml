@@ -1,27 +1,27 @@
 # Use the digital ocean module to spin up cloud nodes.
 # TODO -- use host_vars, group_vars and looping over 'dynamic' to automate this
 - name: playbook | provision | Provision buttermilk if necessary
-  digital_ocean: >
-    state=active
-    name=buttermilk
-    ssh_key_ids=36649
-    size_id=66
-    region_id=8
-    image_id=9640922
-    wait_timeout=500
-    client_id={{ do_client_id }}
-    api_key={{ do_api_key }}
-    unique_name=true
+  digital_ocean:
+      state: active
+      name: buttermilk
+      ssh_key_ids: 36649
+      size_id: 66
+      region_id: 8
+      image_id: 9640922
+      wait_timeout: 500
+      client_id: "{{ do_client_id }}"
+      api_key: "{{ do_api_key }}"
+      unique_name: true
 
 - name: playbook | provision | Provision computer01 if necessary
-  digital_ocean: >
-    state=active
-    name=computer01
-    ssh_key_ids=36649
-    size_id=66
-    region_id=8
-    image_id=9640922
-    wait_timeout=500
-    client_id={{ do_client_id }}
-    api_key={{ do_api_key }}
-    unique_name=true
+  digital_ocean:
+      state: active
+      name: computer01
+      ssh_key_ids: 36649
+      size_id: 66
+      region_id: 8
+      image_id: 9640922
+      wait_timeout: 500
+      client_id: "{{ do_client_id }}"
+      api_key: "{{ do_api_key }}"
+      unique_name: true

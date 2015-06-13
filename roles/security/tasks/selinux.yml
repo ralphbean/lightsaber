@@ -1,12 +1,16 @@
 ---
 - name: Ensure Installed - policycoreutils-python
-  yum: pkg=policycoreutils-python state=present
+  yum:
+      pkg: policycoreutils-python
+      state: present
   tags:
     - security
     - selinux
 
 - name: SELinux Enforcing (Targeted)
-  selinux: policy=targeted state=enforcing
+  selinux:
+      policy: targeted
+      state: enforcing
   register: selinux_result
   tags:
     - security

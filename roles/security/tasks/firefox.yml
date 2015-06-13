@@ -1,6 +1,7 @@
 
 - name: Check if Firefox is installed
-  stat: path=/usr/bin/firefox
+  stat:
+      path: /usr/bin/firefox
   register: firefox
   tags:
     - security
@@ -8,7 +9,9 @@
 
 
 - name: Install Firefox security extensions
-  yum: name={{ item }} state=present
+  yum:
+      name: "{{ item }}"
+      state: present
   with_items:
       - mozilla-noscript
       - mozilla-https-everywhere

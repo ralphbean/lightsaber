@@ -1,5 +1,8 @@
 - name: Set up a bunch of GPG gsettings values
-  gsettings: schema={{ item.schema }} key={{ item.key }} value={{ item.value }}
+  gsettings:
+      schema: "{{ item.schema }}"
+      key: "{{ item.key }}"
+      value: "{{ item.value }}"
   notify:
   - restart gnome-shell
   with_items: "{{ gpg_gsettings }}"
@@ -8,7 +11,10 @@
   - gnome
 
 - name: Set up a bunch of keyboard gsettings values
-  gsettings: schema={{ item.schema }} key={{ item.key }} value={{ item.value }}
+  gsettings:
+      schema: "{{ item.schema }}"
+      key: "{{ item.key }}"
+      value: "{{ item.value }}"
   notify:
   - restart gnome-shell
   with_items: "{{ standard_keyboard_gsettings }}"
@@ -17,13 +23,20 @@
   - gnome
 
 - name: Make a dir for my shortcut scripts
-  file: dest=~/bin state=directory owner={{username}} group={{username}}
+  file:
+      dest: ~/bin
+      state: directory
+      owner: "{{username}}"
+      group: "{{username}}"
   tags:
   - gnome/user
   - gnome
 
 - name: Copy over my shortcut scripts there
-  copy: src={{item}} dest=~/bin/{{item}} mode=0755
+  copy:
+      src: "{{item}}"
+      dest: "~/bin/{{item}}"
+      mode: 0755
   with_items:
   - dagdclip
   - clip-to-firefox
@@ -34,11 +47,11 @@
   - gnome
 
 - name: Setup custom keyboard shortcuts | just the names
-  gsettings: >
-    schema=org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
-    path=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/{{ item.index }}/
-    key=name
-    value={{ item.name }}
+  gsettings:
+      schema: org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
+      path: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/{{ item.index }}/"
+      key: name
+      value: "{{ item.name }}"
   notify:
   - restart gnome-shell
   with_items: "{{ custom_shortcuts }}"
@@ -47,11 +60,11 @@
   - gnome
 
 - name: Setup custom keyboard shortcuts | just the commands
-  gsettings: >
-    schema=org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
-    path=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/{{ item.index }}/
-    key=command
-    value={{ item.command }}
+  gsettings:
+      schema: org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
+      path: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/{{ item.index }}/"
+      key: command
+      value: "{{ item.command }}"
   notify:
   - restart gnome-shell
   with_items: "{{ custom_shortcuts }}"
@@ -60,11 +73,11 @@
   - gnome
 
 - name: Setup custom keyboard shortcuts | just the bindings
-  gsettings: >
-    schema=org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
-    path=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/{{ item.index }}/
-    key=binding
-    value={{ item.binding }}
+  gsettings:
+      schema: org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
+      path: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/{{ item.index }}/"
+      key: binding
+      value: "{{ item.binding }}"
   notify:
   - restart gnome-shell
   with_items: "{{ custom_shortcuts }}"
@@ -73,10 +86,10 @@
   - gnome
 
 - name: Lastly, put in the full list of short indices
-  gsettings: >
-    schema=org.gnome.settings-daemon.plugins.media-keys
-    key=custom-keybindings
-    value={{ custom_shortcuts_list }}
+  gsettings:
+      schema: org.gnome.settings-daemon.plugins.media-keys
+      key: custom-keybindings
+      value: "{{ custom_shortcuts_list }}"
   notify:
   - restart gnome-shell
   tags:
@@ -84,7 +97,9 @@
   - gnome
 
 - name: Copy over xmodmap settings for my kinesis
-  copy: src=xmodmap dest=~/.xmodmap
+  copy:
+      src: xmodmap
+      dest: ~/.xmodmap
   tags:
   - gnome/user
   - gnome

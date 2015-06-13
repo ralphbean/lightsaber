@@ -1,17 +1,17 @@
 - name: nrpe | copy site config to the monitored node
-  template: >
-      src=nrpe-site.cfg
-      dest=/etc/nrpe.d/site-{{ site }}.cfg
-      mode=0644
+  template:
+    src: nrpe-site.cfg
+    dest: "/etc/nrpe.d/site-{{ site }}.cfg"
+    mode: 0644
   notify: restart nrpe
   tags:
     - nagios
 
 - name: nrpe | copy httpd/site config to the nagios head
-  template: >
-    src=nrpe-nagios-side-site.cfg
-    dest=/etc/nagios/hosts/{{ inventory_hostname }}.{{ site }}.cfg
-    mode=0644
+  template:
+    src: nrpe-nagios-side-site.cfg
+    dest: "/etc/nagios/hosts/{{ inventory_hostname }}.{{ site }}.cfg"
+    mode: 0644
   notify: restart nagios
   delegate_to: "{{ item }}"
   with_items: groups.nagios

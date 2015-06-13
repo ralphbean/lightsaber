@@ -11,4 +11,8 @@
     command: /sbin/reboot
 
   - name: wait for host to come back - up to 6 minutes
-    local_action: wait_for host={{ target }} port=22 delay=120 timeout=420
+    wait_for:
+        host: "{{ target }}"
+        port: 22
+        delay: 120
+        timeout: 420

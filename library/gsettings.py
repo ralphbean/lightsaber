@@ -14,104 +14,60 @@ short_description: Set gsettings values.
 # TODO with no arguments should just list recurisvely and return as a var
 
 
-import json
-import shlex
-import subprocess as sp
-import sys
+def main():
+    module = AnsibleModule(
+        argument_spec = dict(
+            schema = dict(required=True),
+            value = dict(required=True),
+            key = dict(required=True),
+            path = dict(required=False, default=None),
+        ),
+    )
 
-# read the argument string from the arguments file
-args_file = sys.argv[1]
-args_data = file(args_file).read()
+    schema = module.params['schema']
+    key = module.params['key']
+    value = module.params['value']
+    path = module.params['path']
+    if path is not None:
+        schema = '%s:%s' % (schema, path)
 
-args_lookup = {}
-arguments = shlex.split(args_data)
+    dbus_bin = module.get_bin_path('dbus-launch', required=True)
+    gsettings_bin = module.get_bin_path('gsettings', required=True)
+    # First, check to see if the field is even writable
+    cmd = [
+        dbus_bin, '--exit-with-session', gsettings_bin,
+        'writable', schema, key,
+    ]
+    (rc, stdout, stderr) = module.run_command(cmd)
+    if rc != 0:
+        module.fail_json(msg="%r %r is not writable, %r, %r" % (schema, key, stdout, stderr))
 
-for arg in arguments:
-    if "=" not in arg:
-        print json.dumps({
-            "failed": True,
-            "msg": "Argument %r is not of the form 'name=value'" % arg,
-        })
-        sys.exit(1)
+    # If it is writable, then see if it has the value we want
+    cmd = [
+        dbus_bin, '--exit-with-session', gsettings_bin,
+        'get', schema, key,
+    ]
+    (rc, stdout, stderr) = module.run_command(cmd)
 
-    (key, value) = arg.split("=")
-    args_lookup[key] = value
+    if stdout.strip().replace("', '", "','") in [value, "'%s'" % value]:
+        module.exit_json(changed=False)
 
-# Various arguments...
-required = set(['schema', 'value', 'key'])
-optional = set(['path'])
-actual = set(args_lookup.keys())
+    # If it has a different value, then write in the one we want.
+    cmd = [
+        dbus_bin, '--exit-with-session', gsettings_bin,
+        'set', schema, key, value,
+    ]
+    (rc, stdout, stderr) = module.run_command(cmd)
+    if rc != 0:
+        module.fail_json(msg="failed to set %r %r to %r.\nstdout: %r\nstderr: %r\ncmd: %r" % (schema, key, value, stdout, stderr, cmd))
 
-missing = required - actual
-if missing:
-    print json.dumps({
-        "failed": True,
-        "msg": "Missing required fields %r" % missing,
-    })
-    sys.exit(1)
+    # Sometimes 'gsettings set' exits with code 0 even though it failed.
+    if 'dconf-WARNING' in stderr:
+        module.fail_json(msg=stderr)
 
-possible = required.union(optional)
-extra = actual - possible
-if extra:
-    print json.dumps({
-        "failed": True,
-        "msg": "Extra fields found %r" % extra,
-    })
-    sys.exit(1)
+    # Report that we are happy.
+    module.exit_json(changed=True)
 
-value = args_lookup['value']
-key = args_lookup['key']
-schema = args_lookup['schema']
-if 'path' in args_lookup:
-    schema = schema + ":" + args_lookup['path']
-
-# First, check to see if the field is even writable
-cmd = [
-    '/usr/bin/dbus-launch', '--exit-with-session', '/usr/bin/gsettings',
-    'writable', schema, key,
-]
-proc = sp.Popen(cmd, stdout=sp.PIPE, stderr=sp.PIPE)
-stdout, stderr = proc.communicate()
-if proc.returncode != 0:
-    print json.dumps({
-        "failed" : True,
-        "msg"    : "%r %r is not writable, %r, %r" % (schema, key, stdout, stderr),
-    })
-    sys.exit(proc.returncode)
-
-# If it is writable, then see if it has the value we want
-cmd = [
-    '/usr/bin/dbus-launch', '--exit-with-session', '/usr/bin/gsettings',
-    'get', schema, key,
-]
-proc = sp.Popen(cmd, stdout=sp.PIPE, stderr=sp.PIPE)
-stdout, stderr = proc.communicate()
-if stdout.strip().replace("', '", "','") in [value, "'%s'" % value]:
-    print json.dumps({
-        "changed": False,
-    })
-    sys.exit(0)
-
-# If it has a different value, then write in the one we want.
-cmd = [
-    '/usr/bin/dbus-launch', '--exit-with-session', '/usr/bin/gsettings',
-    'set', schema, key, value,
-]
-proc = sp.Popen(cmd, stdout=sp.PIPE, stderr=sp.PIPE)
-stdout, stderr = proc.communicate()
-if proc.returncode != 0:
-    print json.dumps({
-        "failed" : True,
-        "msg"    : "failed to set %r %r to %r.\nstdout: %r\nstderr: %r\ncmd: %r" % (schema, key, value, stdout, stderr, cmd),
-    })
-    sys.exit(proc.returncode)
-
-# Sometimes 'gsettings set' exits with code 0 even though it failed.
-if 'dconf-WARNING' in stderr:
-    print json.dumps({"failed" : True, "msg": stderr})
-    sys.exit(1)
-
-# Report that we are happy.
-print json.dumps({
-    "changed" : True
-})
+from ansible.module_utils.basic import *
+if __name__ == '__main__':
+    main()

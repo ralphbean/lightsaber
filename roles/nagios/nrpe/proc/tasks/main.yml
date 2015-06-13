@@ -1,17 +1,17 @@
 - name: nrpe | copy proc config to the monitored node
-  template: >
-      src=nrpe-proc.cfg
-      dest=/etc/nrpe.d/proc-{{ proc }}.cfg
-      mode=0644
+  template:
+    src: nrpe-proc.cfg
+    dest: "/etc/nrpe.d/proc-{{ proc }}.cfg"
+    mode: 0644
   notify: restart nrpe
   tags:
     - nagios
 
 - name: nrpe | copy proc monitor config to the nagios head
-  template: >
-    src=nrpe-nagios-side-proc.cfg
-    dest=/etc/nagios/hosts/{{ inventory_hostname }}.proc.{{ proc }}.cfg
-    mode=0644
+  template:
+    src: nrpe-nagios-side-proc.cfg
+    dest: "/etc/nagios/hosts/{{ inventory_hostname }}.proc.{{ proc }}.cfg"
+    mode: 0644
   notify: restart nagios
   delegate_to: "{{ item }}"
   with_items: groups.nagios

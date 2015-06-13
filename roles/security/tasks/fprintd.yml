@@ -1,12 +1,16 @@
 - name: fprintd | Remove the fingerprint reader service
-  yum: name=libfprint state=absent
+  yum:
+      name: libfprint
+      state: absent
   tags:
   - security
   - auth
   - fingerprint
 
 - name: fprintd | Install authconfig
-  yum: name=authconfig state=present
+  yum:
+      name: authconfig
+      state: present
   tags:
   - security
   - auth

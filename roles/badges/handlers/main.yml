@@ -1,2 +1,4 @@
 - name: restart httpd
-  action: service name=httpd state=restarted
+  service:
+      name: httpd
+      state: restarted

@@ -1,22 +1,26 @@
 - name: suricata | Install the suricata intrusion detection system
-  yum: pkg=suricata state=present
+  yum:
+      pkg: suricata
+      state: present
   tags:
   - security
   - ids
 
 - name: suricata | Downloading the latest ETOpen Ruleset https://emergingthreats.net/open-source/etopen-ruleset
-  get_url: url=https://rules.emergingthreats.net/open/suricata/emerging.rules.tar.gz
-           dest=/var/tmp/emerging.rules.tar.gz
-           force=yes
+  get_url:
+      url: "https://rules.emergingthreats.net/open/suricata/emerging.rules.tar.gz"
+      dest: /var/tmp/emerging.rules.tar.gz
+      force: yes
   register: ruleset
   tags:
   - security
   - ids
 
 - name: suricata | Downloading the latest ETOpen configs
-  get_url: url="https://rules.emergingthreats.net/open/suricata/{{ item }}"
-           dest="/etc/suricata/{{ item }}"
-           force=yes
+  get_url:
+      url: "https://rules.emergingthreats.net/open/suricata/{{ item }}"
+      dest: "/etc/suricata/{{ item }}"
+      force: yes
   with_items:
     - reference.config
     - classification.config
@@ -25,10 +29,11 @@
   - ids
 
 - name: suricata | Extracting ruleset
-  unarchive: src=/var/tmp/emerging.rules.tar.gz
-             dest=/etc/suricata
-             force=yes
-             copy=no
+  unarchive:
+      src: /var/tmp/emerging.rules.tar.gz
+      dest: /etc/suricata
+      force: yes
+      copy: no
   when: ruleset|changed
   tags:
   - security
@@ -36,14 +41,18 @@
 
 - name: suricata | Update the configuration with our device name
   replace:
-    dest=/etc/sysconfig/suricata regexp='^OPTIONS="\-i .*"$'
-    replace="OPTIONS=\"-i {{ hostvars[inventory_hostname].ansible_default_ipv4.interface }}\""
+      dest: /etc/sysconfig/suricata
+      regexp: '^OPTIONS="\-i .*"$'
+      replace: "OPTIONS=\"-i {{ hostvars[inventory_hostname].ansible_default_ipv4.interface }}\""
   tags:
   - security
   - ids
 
 - name: suricata | Optimize the configuration
-  replace: dest=/etc/suricata/suricata.yaml regexp="{{ item.regexp }}" replace="{{ item.line }}"
+  replace:
+      dest: /etc/suricata/suricata.yaml
+      regexp: "{{ item.regexp }}"
+      replace: "{{ item.line }}"
   with_items:
   - { regexp: '(syslog\s+- syslog:\s+enabled:) no', line: '\1 yes' }
   - { regexp: '(compiled in.\s+enabled:) yes', line: '\1 no' }
@@ -57,11 +66,11 @@
 
 - name: suricata | Disable certain IDS rules
   lineinfile:
-    dest=/etc/suricata/suricata.yaml
-    regexp='^( - {{ item }}.rules)'
-    line='#\1'
-    backrefs=yes
-    backup=yes
+      dest: /etc/suricata/suricata.yaml
+      regexp: '^( - {{ item }}.rules)'
+      line: '#\1'
+      backrefs: yes
+      backup: yes
   with_items:
   - decoder-events
   - stream-events
@@ -80,11 +89,12 @@
   - ids
 
 - name: suricata | Disable specific IDS alerts
-  lineinfile: dest=/etc/suricata/rules/{{ item.rules }}.rules
-              regexp='^(alert .*{{ item.alert }}.*)$'
-              line='#\1'
-              backrefs=yes
-              backup=yes
+  lineinfile:
+      dest: '/etc/suricata/rules/{{ item.rules }}.rules'
+      regexp: '^(alert .*{{ item.alert }}.*)$'
+      line: '#\1'
+      backrefs: yes
+      backup: yes
   with_items:
     - { rules: 'emerging-policy', alert: 'YUM User-Agent' }
     - { rules: 'emerging-policy', alert: 'W32/BitCoinMiner.MultiThreat' }
@@ -96,7 +106,9 @@
   - ids
 
 - name: suricata | Make sure ethtool is present
-  yum: pkg=ethtool state=present
+  yum:
+      pkg: ethtool
+      state: present
   tags:
   - security
   - ids
@@ -115,13 +127,18 @@
   - ids
 
 - name: suricata | Start the suricata service
-  service: name=suricata state=running enabled=yes
+  service:
+      name: suricata
+      state: running
+      enabled: yes
   tags:
   - security
   - ids
 
 - name: suricata | Restart suricata
-  service: name=suricata state=restarted
+  service:
+      name: suricata
+      state: restarted
   when: ruleset|changed or suri_cfg|changed or rulealerts|changed
   tags:
   - security

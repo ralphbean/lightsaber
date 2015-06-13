@@ -2,7 +2,9 @@
 # Configuration for the tahrir webapp
 
 - name: install needed packages
-  yum: pkg={{ item }} state=installed
+  yum:
+      pkg: "{{ item }}"
+      state: installed
   with_items:
   - python-tahrir
   - python-rdflib
@@ -12,9 +14,12 @@
   - badges
 
 - name: copy tahrir app configuration
-  template: >
-    src={{ item }} dest=/etc/tahrir/{{ item }}
-    owner=tahrir group=tahrir mode=0600
+  template:
+      src: "{{ item }}"
+      dest: "/etc/tahrir/{{ item }}"
+      owner: tahrir
+      group: tahrir
+      mode: 0600
   with_items:
   - tahrir.ini
   notify:
@@ -23,9 +28,12 @@
   - badges
 
 - name: copy tahrir wsgi script
-  copy: >
-    src={{ item }} dest=/usr/share/tahrir/{{ item }}
-    owner=apache group=apache mode=0644
+  copy:
+      src: "{{ item }}"
+      dest: "/usr/share/tahrir/{{ item }}"
+      owner: apache
+      group: apache
+      mode: 0644
   with_items:
   - tahrir.wsgi
   notify:
@@ -34,9 +42,12 @@
   - badges
 
 - name: copy tahrir httpd config
-  copy: >
-    src={{ item }} dest=/etc/httpd/conf.d/{{ item }}
-    owner=apache group=apache mode=0644
+  copy:
+      src: "{{ item }}"
+      dest: "/etc/httpd/conf.d/{{ item }}"
+      owner: apache
+      group: apache
+      mode: 0644
   with_items:
   - tahrir.conf
   notify:
@@ -45,17 +56,19 @@
   - badges
 
 - name: make badge rst directory
-  file: >
-    path=/usr/share/badges/sitedocs
-    state=directory
-    owner=root group=root mode=0755
+  file:
+      path: /usr/share/badges/sitedocs
+      state: directory
+      owner: root
+      group: root
+      mode: 0755
   tags:
   - badges
 
 - name: hotfix velruse so that stateless openid works (fml)
-  copy: >
-    src={{item}}
-    dest=/usr/lib/python2.7/site-packages/velruse/providers/{{item}}
+  copy:
+      src: "{{item}}"
+      dest: "/usr/lib/python2.7/site-packages/velruse/providers/{{item}}"
   with_items:
   - openid.py
   notify:
@@ -64,10 +77,12 @@
   - badges
 
 - name: copy over all our .rst site docs
-  copy: >
-    src={{ item }}
-    dest=/usr/share/badges/sitedocs
-    owner=root group=root mode=0644
+  copy:
+      src: "{{ item }}"
+      dest: /usr/share/badges/sitedocs
+      owner: root
+      group: root
+      mode: 0644
   with_fileglob:
   - threebean-sitedocs/*.rst
   notify:
@@ -76,28 +91,34 @@
   - badges
 
 - name: make badge png directory
-  file: >
-    path=/usr/share/badges/pngs
-    state=directory
-    owner=root group=root mode=0755
+  file:
+      path: /usr/share/badges/pngs
+      state: directory
+      owner: root
+      group: root
+      mode: 0755
   tags:
   - badges
 
 - name: copy over all our badge images
-  copy: >
-    src={{ item }}
-    dest=/usr/share/badges/pngs/
-    owner=root group=root mode=0644
+  copy:
+      src: "{{ item }}"
+      dest: /usr/share/badges/pngs/
+      owner: root
+      group: root
+      mode: 0644
   with_fileglob:
     - threebean-pngs/*.png
   tags:
   - badges
 
 - name: copy over handy scripts
-  copy: >
-    src={{ item }}
-    dest=/usr/local/bin/{{ item }}
-    owner=root group=root mode=0755
+  copy:
+      src: "{{ item }}"
+      dest: "/usr/local/bin/{{ item }}"
+      owner: root
+      group: root
+      mode: 0755
   with_items:
       - award-badge
       - get-badges-person-id
@@ -106,13 +127,13 @@
   - badges
 
 - name: ensure /var/cache/tahrir exists
-  file: >
-      dest=/var/cache/tahrir/
-      state=directory
-      owner=tahrir
-      group=tahrir
-      mode=0755
-      setype=httpd_sys_script_rw_t
+  file:
+      dest: /var/cache/tahrir/
+      state: directory
+      owner: tahrir
+      group: tahrir
+      mode: 0755
+      setype: httpd_sys_script_rw_t
   tags:
   - badges
 
@@ -124,15 +145,17 @@
   - badges
 
 - name: ensure sqlite db is readable by tahrir
-  file: >
-      dest=/var/cache/tahrir/tahrir-db.sql
-      owner=tahrir
-      group=tahrir
-      mode=0644
+  file:
+      dest: /var/cache/tahrir/tahrir-db.sql
+      owner: tahrir
+      group: tahrir
+      mode: 0644
   tags:
   - badges
 
 - name: install the threebean theme...
-  pip: name=threebean-tahrir-theme state=latest
+  pip:
+      name: threebean-tahrir-theme
+      state: latest
   tags:
   - badges

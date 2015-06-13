@@ -1,5 +1,7 @@
 - name: nrpe | install nrpe
-  yum: state=latest pkg={{ item }}
+  yum:
+      state: latest
+      pkg: "{{ item }}"
   with_items:
   - nagios-plugins-all
   - nagios-plugins-check-updates
@@ -13,34 +15,41 @@
     - nagios
 
 - name: copy memory plugin in
-  copy: >
-      src=check_memory.py
-      dest=/usr/lib64/nagios/plugins/check_memory.py
-      mode=0755
+  copy:
+      src: check_memory.py
+      dest: /usr/lib64/nagios/plugins/check_memory.py
+      mode: 0755
 
 - name: nrpe | copy over basic nrpe tasks
-  template: src=nrpe.cfg dest=/etc/nagios/nrpe.cfg
+  template:
+      src: nrpe.cfg
+      dest: /etc/nagios/nrpe.cfg
   notify:
     - restart nrpe
   tags:
     - nagios
 
 - name: nrpe | make sure nrpe can ping (sticky bit)
-  file: dest=/usr/bin/ping mode=4755
+  file:
+      dest: /usr/bin/ping
+      mode: 4755
   tags:
     - nagios
 
 - name: nrpe | start nrpe
-  service: name=nrpe enabled=yes state=started
+  service:
+      name: nrpe
+      enabled: yes
+      state: started
   tags:
     - nagios
 
 - name: nrpe | open a port
-  firewalld: >
-      port={{ item }}/tcp
-      state=enabled
-      permanent=true
-      zone=public
+  firewalld:
+      port: "{{ item }}/tcp"
+      state: enabled
+      permanent: true
+      zone: public
   with_items:
       - 5666
   notify:

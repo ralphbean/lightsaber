@@ -1,5 +1,7 @@
 - name: IPython | install required packages
-  yum: state=present name={{ item }}
+  yum:
+      state: present
+      name: "{{ item }}"
   with_items:
   - ipython
   - systemd
@@ -7,37 +9,39 @@
   - packages
 
 - name: IPython | create the required user.
-  user: name=ipynb
+  user:
+      name: ipynb
 
 - name: IPython | create the required group.
-  group: name=ipynb
+  group:
+      name: ipynb
 
 - name: IPython | Ensure that the ipynb user has a homedir
-  file: >
-      dest={{ item }}
-      owner=ipynb
-      group=ipynb
-      state=directory
+  file:
+      dest: "{{ item }}"
+      owner: ipynb
+      group: ipynb
+      state: directory
   with_items:
       - /home/ipynb
       - /home/ipynb/notebooks
 
 - name: IPython | Copy over the systemd service file
-  copy: >
-      src=ipython-notebook.service
-      dest=/usr/lib/systemd/system/ipython-notebook.service
+  copy:
+      src: ipython-notebook.service
+      dest: /usr/lib/systemd/system/ipython-notebook.service
 
 - name: IPython | Start the notebook daemon
-  service: >
-      name=ipython-notebook
-      state=started
+  service:
+      name: ipython-notebook
+      state: started
 
 - name: IPython | Open a port
-  firewalld: >
-      port={{ item }}/tcp
-      state=enabled
-      permanent=true
-      zone=public
+  firewalld:
+      port: "{{ item }}/tcp"
+      state: enabled
+      permanent: true
+      zone: public
   with_items:
       - 8891
   notify:

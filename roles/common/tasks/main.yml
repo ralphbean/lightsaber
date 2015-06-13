@@ -1,5 +1,7 @@
 - name: Common | install common packages
-  yum: state=present name={{ item }}
+  yum:
+      state: present
+      name: "{{ item }}"
   with_items:
   - vim-enhanced
   - tmux
@@ -18,7 +20,9 @@
   - common
 
 - name: Common | install zsh if you want
-  yum: state=present name={{ item }}
+  yum:
+      state: present
+      name: "{{ item }}"
   with_items:
   - zsh
   tags:
@@ -27,40 +31,50 @@
   when: shell == "/usr/bin/zsh"
 
 - name: Server | users | setup some users
-  user: name={{item.user}} shell={{shell}}
+  user:
+      name: "{{item.user}}"
+      shell: "{{shell}}"
   with_items: "{{ all_users }}"
   tags:
   - common
 
 - name: Common | Ensure that those users own their homedir
-  file: >
-      dest={{item.homedir}}
-      owner={{item.user}}
-      group={{item.user}}
-      state=directory
+  file:
+      dest: "{{item.homedir}}"
+      owner: "{{item.user}}"
+      group: "{{item.user}}"
+      state: directory
   with_items: "{{ all_users }}"
   tags:
   - common
 
 - name: Common | Ensure the all users have a bin dir
-  file: dest={{item.homedir}}/bin/ state=directory
+  file:
+      dest: "{{item.homedir}}/bin/"
+      state: directory
   with_items: "{{ all_users }}"
   tags:
   - common
 
 - name: Common | Copy over custom bashrc prompt
-  copy: src=bashrc-gitprompt dest=/etc/profile.d/bashrc-gitprompt.sh
+  copy:
+      src: bashrc-gitprompt
+      dest: /etc/profile.d/bashrc-gitprompt.sh
   tags:
   - common
 
 - name: Common | tmux | Copy over tmux config
-  copy: src=tmux.conf dest=/etc/tmux.conf
+  copy:
+      src: tmux.conf
+      dest: /etc/tmux.conf
   tags:
   - common
 
 # TODO -- do this one just like the custom zshrc config so we can drop 'username'
 - name: Common | git | Copy over git config
-  copy: src={{ item }}-{{ username }} dest=/home/{{ username }}/.{{ item }}
+  copy:
+      src: "{{ item }}-{{ username }}"
+      dest: "/home/{{ username }}/.{{ item }}"
   with_items:
   - gitconfig
   - githelpers
@@ -69,28 +83,30 @@
   - common
 
 - name: Common | zsh | Copy over the oh-my-zsh bundle
-  synchronize: >
-      src=oh-my-zsh/
-      dest=/usr/local/share/oh-my-zsh
-      owner=false
+  synchronize:
+      src: oh-my-zsh/
+      dest: /usr/local/share/oh-my-zsh
+      owner: false
   tags:
   - zsh
   - common
   when: shell == "/usr/bin/zsh"
 
 - name: Common | zsh | Copy over global zshrc
-  copy: src=zshrc-global dest=/etc/zshrc
+  copy:
+      src: zshrc-global
+      dest: /etc/zshrc
   tags:
   - zsh
   - common
   when: shell == "/usr/bin/zsh"
 
 - name: Common | bash | Copy over user-specific bashrc
-  copy: >
-      src=bashrc-{{item.user}}
-      dest={{item.homedir}}/.bashrc
-      owner={{item.user}}
-      group={{item.user}}
+  copy:
+      src: "bashrc-{{item.user}}"
+      dest: "{{item.homedir}}/.bashrc"
+      owner: "{{item.user}}"
+      group: "{{item.user}}"
   with_items: "{{ all_users }}"
   tags:
   - bash
@@ -98,11 +114,11 @@
   when: shell != "/usr/bin/zsh"
 
 - name: Common | zsh | Copy over user-specific zshrc
-  copy: >
-      src=zshrc-{{item.user}}
-      dest={{item.homedir}}/.zshrc
-      owner={{item.user}}
-      group={{item.user}}
+  copy:
+      src: "zshrc-{{item.user}}"
+      dest: "{{item.homedir}}/.zshrc"
+      owner: "{{item.user}}"
+      group: "{{item.user}}"
   with_items: "{{ all_users }}"
   tags:
   - zsh
@@ -110,10 +126,10 @@
   when: shell == "/usr/bin/zsh"
 
 - name: Common | vim | Get the spf13-vim3 installer
-  get_url: >
-      url=https://raw.github.com/spf13/spf13-vim/3.0/bootstrap.sh
-      dest=/usr/local/bin/install-spf13-vim3
-      mode=0755
+  get_url:
+      url: "https://raw.github.com/spf13/spf13-vim/3.0/bootstrap.sh"
+      dest: /usr/local/bin/install-spf13-vim3
+      mode: 0755
   tags:
   - vim
   - common
@@ -126,11 +142,11 @@
   - common
 
 - name: Common | vim | Copy over user-specific vimrc.local
-  copy: >
-      src=vimrc.local-{{item.user}}
-      dest={{item.homedir}}/.vimrc.local
-      owner={{item.user}}
-      group={{item.user}}
+  copy:
+      src: "vimrc.local-{{item.user}}"
+      dest: "{{item.homedir}}/.vimrc.local"
+      owner: "{{item.user}}"
+      group: "{{item.user}}"
   with_items: "{{ all_users }}"
   tags:
   - vim

@@ -1,5 +1,9 @@
 - name: restart firewalld
-  action: service name=firewalld state=restarted
+  service:
+      name: firewalld
+      state: restarted
 
 - name: restart taskd
-  action: service name=taskd state=restarted
+  service:
+      name: taskd
+      state: restarted
