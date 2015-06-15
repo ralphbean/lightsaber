@@ -18,3 +18,8 @@
       dest: /usr/local/bin/
   tags:
   - jumpoff
+
+- seboolean: name=mozilla_plugin_use_bluejeans persistent=yes state=yes
+  tags:
+  - jumpoff
+  - selinux
