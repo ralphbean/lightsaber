@@ -105,7 +105,7 @@
     s3_aws_backup_access_key:  "{{ aws_backup_access_key }}"
     s3_aws_backup_secret_key:  "{{ aws_backup_secret_key }}"
   - role: nagios/nrpe/site
-    site: badges.threebean.net
+    site: badges.threebean.org
     target: Tahrir
     path: /
     timeout: 10
