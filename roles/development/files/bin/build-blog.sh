@@ -1,4 +1,13 @@
-#!/bin/bash
+#!/bin/bash -x
 
 # build the blog
-ssh threebean.org "cd threebean-blog; git pull origin master; source ~/.virtualenvs/blog/bin/activate; blogofile build; echo done"
+pushd ~/devel/threebean-blog
+git pull origin master
+source ~/.virtualenvs/threebean-blog/bin/activate
+blogofile build
+rm -rf ~/scratch/threebean.org/blog
+cp -rf _site/ ~/scratch/threebean.org/blog
+deactivate
+source ~/.virtualenvs/awscli/bin/activate
+aws s3 sync ~/scratch/threebean.org s3://threebean.org
+popd
