@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+""" kaomojicli.py - Print the latest tweet from @kaomojicafe
+
+Run with hotkey as 'kaomojicli.py | xclip -i' for best effect.
+"""
+
+import os
+
+import tweepy
+import yaml
+
+with open(os.path.expanduser("~/.local/twitter-read-only.yml"), 'r') as f:
+    config = yaml.load(f)
+
+auth_handler = tweepy.OAuthHandler(**config['consumer'])
+auth_handler.set_access_token(**config['token'])
+twitter = tweepy.API(auth_handler)
+
+user = twitter.get_user('kaomojicafe')
+print user.timeline()[0].text.strip()  # ⁝(ृ•ˇ‸ˇ•。 ृ　)ु⁝
