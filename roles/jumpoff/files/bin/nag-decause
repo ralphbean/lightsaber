@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo https://fedora-infra.github.io/fedora-stats-tools/ | cowsay -W 55 -f $(ls /usr/share/cowsay | shuf | head -1) | vipe #| mutt -s "GOOD MJORNING" decause@redhat.com 
+echo https://fedora-infra.github.io/fedora-stats-tools/ | cowsay -W 55 -f $(ls /usr/share/cowsay | shuf | head -1) | vipe | mutt -s "GOOD MJORNING $(kaomojicli)" decause@redhat.com
