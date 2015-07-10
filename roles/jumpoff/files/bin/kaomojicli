@@ -2,7 +2,12 @@
 # -*- coding: utf-8 -*-
 """ kaomojicli.py - Print the latest tweet from @kaomojicafe
 
-Run with hotkey as 'kaomojicli.py | xclip -i' for best effect.
+Run with hotkey as 'kaomojicli.py | xclip -i' for great effect.
+
+Still better::
+
+    kaomojicli | pee 'xclip -i' 'xargs --null notify-send "kaomojicli got"'
+
 """
 
 import os
@@ -18,4 +23,4 @@ auth_handler.set_access_token(**config['token'])
 twitter = tweepy.API(auth_handler)
 
 user = twitter.get_user('kaomojicafe')
-print user.timeline()[0].text.strip()  # ⁝(ृ•ˇ‸ˇ•。 ृ　)ु⁝
+print user.timeline()[0].text.strip().encode('utf-8'),  # ⁝(ृ•ˇ‸ˇ•。 ृ　)ु⁝
