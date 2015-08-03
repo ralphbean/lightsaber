@@ -1,9 +1,12 @@
 #!/bin/bash
 
 today=$(date +%Y-%m-%d)
-/usr/local/bin/timesheet.sh | ansi2html --linkify > /tmp/timesheet.html
-scp /tmp/timesheet.html threebean.org:~/webapps/static/timesheets/$today.html
-scp /tmp/timesheet.html threebean.org:~/webapps/static/timesheets/latest.html
+/usr/local/bin/timesheet.sh | ~/.virtualenvs/ansi2html/bin/ansi2html --linkify > /tmp/timesheet.html
+cp /tmp/timesheet.html ~/scratch/threebean.org/timesheets/$today.html
+cp /tmp/timesheet.html ~/scratch/threebean.org/timesheets/latest.html
 rm /tmp/timesheet.html
+
+source ~/.virtualenvs/awscli/bin/activate
+aws s3 sync ~/scratch/threebean.org s3://threebean.org
 
 echo "http://threebean.org/timesheets/$today.html"
