@@ -161,8 +161,12 @@ def main():
                 p = sh.fedpkg.build(**io)
                 p.wait()
 
-        cmd = "bodhi %s --new --user %s --type %s --notes \"%s\"" % (
-            nevra, args.user, args.type, args.notes,
+        # For development...
+        executable = os.path.expanduser(
+            '~/.virtualenvs/bodhi-python2.7/bin/bodhi'
+        )
+        cmd = "%s new %s --user %s --type %s --notes \"%s\"" % (
+            executable, nevra, args.user, args.type, args.notes,
         )
 
         if args.bugs:
