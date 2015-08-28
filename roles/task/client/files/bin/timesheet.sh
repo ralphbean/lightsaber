@@ -2,11 +2,11 @@
 
 source /home/threebean/.bashrc
 
-phrase="1-weeks-ago"
+phrase="2-weeks-ago"
 fmt="%Y-%m-%d"
 start=$(date +$fmt -d $phrase)
 end=$(date +$fmt)
-filter="project.isnt:apply project.isnt:family project.isnt:xmas project.isnt:cersc project.isnt:iso project.isnt:monroe project.isnt:house project.isnt:misc project.isnt:rit project.isnt:tos-rit-projects-seminar project.isnt:music project.isnt:hfoss project.isnt:wrns project.isnt:wupotus project.isnt:council-private"
+filter="project.isnt:apply project.isnt:family project.isnt:xmas project.isnt:cersc project.isnt:iso project.isnt:monroe project.isnt:house project.isnt:misc project.isnt:rit project.isnt:tos-rit-projects-seminar project.isnt:music project.isnt:hfoss project.isnt:wrns $1"
 config="rc.defaultwidth=180 rc.defaultheight=75 rc._forcecolor=yes"
 
 echo "    (generated at $(date))"
@@ -29,5 +29,5 @@ echo
 echo " -- History -- "
 /usr/bin/task $config $filter history
 /usr/bin/task $config $filter ghistory
-/usr/bin/task $config burndown
-/usr/bin/task $config burndown.daily
+/usr/bin/task $config $1 burndown
+/usr/bin/task $config $1 burndown.daily
