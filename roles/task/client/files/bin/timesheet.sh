@@ -2,7 +2,7 @@
 
 source /home/threebean/.bashrc
 
-phrase="2-weeks-ago"
+phrase="1-weeks-ago"
 fmt="%Y-%m-%d"
 start=$(date +$fmt -d $phrase)
 end=$(date +$fmt)
@@ -29,5 +29,6 @@ echo
 echo " -- History -- "
 /usr/bin/task $config $filter history
 /usr/bin/task $config $filter ghistory
+/usr/bin/task $config $1 burndown.monthly
 /usr/bin/task $config $1 burndown
 /usr/bin/task $config $1 burndown.daily
