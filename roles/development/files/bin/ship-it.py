@@ -170,7 +170,7 @@ def main():
         )
 
         if args.bugs:
-            cmd += " -b %s" % args.bugs
+            cmd += " --bugs %s" % args.bugs
 
         print cmd
         #foo = raw_input("Create a bodhi update in another window... (continue)")
