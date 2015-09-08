@@ -7,6 +7,8 @@ import argparse
 import subprocess as sp
 import sys
 
+from distutils.version import LooseVersion
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -43,6 +45,7 @@ def run(cmd):
 def get_tags():
     cmd = "git tag -l"
     tags = run(cmd)
+    tags.sort(key=LooseVersion)
     tags.append('develop')
     return list(reversed(tags))
 
@@ -64,10 +67,11 @@ def main(username, project, version):
 
     tags = get_tags()
 
-    print "Changelog"
-    print "========="
+    # This would do all tags
+    #for i in range(len(tags) - 1)
 
-    for i in range(len(tags) - 1):
+    # But we're just doing the first one now..
+    for i in range(1):
         start, stop = tags[i], tags[i + 1]
         commits = get_commits(start, stop)
 
