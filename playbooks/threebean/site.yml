@@ -60,11 +60,6 @@
     path: /
     timeout: 10
   - role: nagios/nrpe/site
-    site: tw2-demos.threebean.org
-    target: widget
-    path: /
-    timeout: 10
-  - role: nagios/nrpe/site
     site: monroe-threebean.rhcloud.com
     target: foreclosures
     path: /graph\?from_date=01%2F01%2F2013\&to_date=01%2F01%2F2013
@@ -107,5 +102,13 @@
   - role: nagios/nrpe/site
     site: badges.threebean.org
     target: Tahrir
+    path: /
+    timeout: 10
+
+  - role: tw2-demos
+
+  - role: nagios/nrpe/site
+    site: tw2-demos.threebean.org
+    target: widget
     path: /
     timeout: 10

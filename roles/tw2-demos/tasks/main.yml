@@ -1,0 +1,34 @@
+---
+
+- name: install needed packages
+  yum:
+      pkg: "{{ item }}"
+      state: installed
+  with_items:
+  - python-pip
+  - python-virtualenv
+  tags: tw2-demos
+
+- copy: src=requirements.txt dest=/var/lib/tw2-demos-venv/requirements.txt
+  tags: tw2-demos
+  notify: restart httpd
+
+- copy: src=tw2-demos.wsgi dest=/var/lib/tw2-demos-venv/tw2-demos.wsgi
+  tags: tw2-demos
+  notify: restart httpd
+
+- pip:
+    requirements=/var/lib/tw2-demos-venv/requirements.txt
+    virtualenv=/var/lib/tw2-demos-venv
+  tags: tw2-demos
+  notify: restart httpd
+
+- name: copy tw2-demos reverse proxy httpd configuration
+  copy:
+      src: tw2-demos.conf
+      dest: /etc/httpd/conf.d/tw2-demos.conf
+      owner: apache
+      group: apache
+      mode: 0644
+  notify: restart httpd
+  tags: tw2-demos
