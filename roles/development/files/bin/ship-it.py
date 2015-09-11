@@ -165,7 +165,7 @@ def main():
         executable = os.path.expanduser(
             '~/.virtualenvs/bodhi-python2.7/bin/bodhi'
         )
-        cmd = "%s new %s --user %s --type %s --notes \"%s\"" % (
+        cmd = "%s updates new %s --user %s --type %s --notes \"%s\"" % (
             executable, nevra, args.user, args.type, args.notes,
         )
 
