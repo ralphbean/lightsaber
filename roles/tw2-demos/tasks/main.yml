@@ -9,6 +9,10 @@
   - python-virtualenv
   tags: tw2-demos
 
+- file: dest=/var/lib/tw2-demos-venv/ state=directory
+  tags: tw2-demos
+  notify: restart httpd
+
 - copy: src=requirements.txt dest=/var/lib/tw2-demos-venv/requirements.txt
   tags: tw2-demos
   notify: restart httpd
