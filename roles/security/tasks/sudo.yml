@@ -23,7 +23,7 @@
   copy:
       content: 'Defaults env_keep += "SSH_AUTH_SOCK"\n'
       dest: '/etc/sudoers.d/ssh_auth_sock'
-      validate: 'visudo -cf %s'
+      #validate: 'visudo -cf %s'
       owner: root
       group: root
       mode: 0440
@@ -35,7 +35,7 @@
   copy:
       content: 'Defaults !requiretty\n'
       dest: '/etc/sudoers.d/norequiretty'
-      validate: 'visudo -cf %s'
+      #validate: 'visudo -cf %s'
       owner: root
       group: root
       mode: 0440
