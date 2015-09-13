@@ -7,7 +7,8 @@
       ssh_key_ids: 36649
       size_id: 66
       region_id: 8
-      image_id: 9640922
+      image_id: 12065782
+      #image_id: 9640922
       wait_timeout: 500
       client_id: "{{ do_client_id }}"
       api_key: "{{ do_api_key }}"
@@ -20,7 +21,8 @@
       ssh_key_ids: 36649
       size_id: 66
       region_id: 8
-      image_id: 9640922
+      image_id: 12065782
+      #image_id: 9640922
       wait_timeout: 500
       client_id: "{{ do_client_id }}"
       api_key: "{{ do_api_key }}"

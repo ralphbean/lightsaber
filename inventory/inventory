@@ -5,11 +5,11 @@ geier           ansible_ssh_host=localhost
 chapeauxrouge   ansible_ssh_host=localhost
 
 [dynamic]
-buttermilk      ansible_ssh_host=104.131.95.186
-computer01      ansible_ssh_host=104.131.96.144
+buttermilk      ansible_ssh_host=45.55.48.40
+computer01      ansible_ssh_host=45.55.41.100
 
 [nagios]
-computer01      ansible_ssh_host=104.131.96.144
+computer01      ansible_ssh_host=45.55.41.100
 
 [narcissus]
 pencil          ansible_ssh_host=129.21.39.186 ansible_ssh_user=root
