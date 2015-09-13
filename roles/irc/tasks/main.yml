@@ -19,7 +19,8 @@
 - name: Copy weechat config template directly
   template:
       src: irc.conf
-      dest: "/home/{{ username }}/.weechat/irc.conf owner={{ username }}"
+      dest: "/home/{{ username }}/.weechat/irc.conf"
+      owner: "{{ username }}"
   tags: irc
 
 - name: Set bitlbee to start
