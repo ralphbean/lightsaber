@@ -13,6 +13,6 @@
 # rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-adobe-linux
 
 - name: Using that repo, install the plugin
-  yum:
+  dnf:
       name: flash-plugin
       state: present

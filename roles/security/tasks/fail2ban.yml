@@ -1,5 +1,5 @@
 - name: Install fail2ban
-  yum:
+  dnf:
       pkg: fail2ban-systemd
       state: present
   notify: restart fail2ban

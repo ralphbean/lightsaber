@@ -1,7 +1,7 @@
 # file: roles/security/tasks/rkhunter.yml
 
 - name: Security | rkhunter | Make sure rkhunter is installed and up to date
-  yum:
+  dnf:
       name: rkhunter
       state: present
   tags:

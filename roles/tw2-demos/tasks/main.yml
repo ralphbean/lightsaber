@@ -1,7 +1,7 @@
 ---
 
 - name: install needed packages
-  yum:
+  dnf:
       pkg: "{{ item }}"
       state: installed
   with_items:

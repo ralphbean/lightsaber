@@ -1,6 +1,6 @@
 ---
 - name: install s3cmd
-  yum:
+  dnf:
       pkg: s3cmd
       state: present
   tags:

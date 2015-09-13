@@ -1,5 +1,5 @@
 - name: Security | dnssec | Ensure packages are installed
-  yum:
+  dnf:
       pkg: dnssec-trigger
       state: present
 

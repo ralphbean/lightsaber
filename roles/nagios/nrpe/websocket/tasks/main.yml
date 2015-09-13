@@ -1,5 +1,5 @@
 - name: nrpe | install deps for websocket plugin
-  yum:
+  dnf:
       pkg: python-websocket-client
       state: present
   tags:

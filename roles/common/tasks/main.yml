@@ -1,5 +1,5 @@
 - name: Common | install common packages
-  yum:
+  dnf:
       state: present
       name: "{{ item }}"
   with_items:
@@ -20,7 +20,7 @@
   - common
 
 - name: Common | install zsh if you want
-  yum:
+  dnf:
       state: present
       name: "{{ item }}"
   with_items:

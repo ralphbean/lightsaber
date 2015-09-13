@@ -4,7 +4,7 @@
       dest: /etc/yum.repos.d/fedora-updates-testing.repo
 
 - name: Common | update all packages
-  yum:
+  dnf:
       state: latest
       name: "*"
 

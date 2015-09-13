@@ -1,5 +1,5 @@
 - name: Include some packages
-  yum:
+  dnf:
       name: "{{ item }}"
       state: present
   with_items:

@@ -1,5 +1,5 @@
 - name: nagios | install nagios
-  yum:
+  dnf:
     state: latest
     pkg: "{{ item }}"
   with_items:

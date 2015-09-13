@@ -1,5 +1,5 @@
 - name: Server | install server packages
-  yum:
+  dnf:
       state: present
       name: "{{ item }}"
   with_items:

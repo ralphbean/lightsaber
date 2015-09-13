@@ -1,6 +1,6 @@
 ---
 - name: Install synergy
-  yum:
+  dnf:
       name: synergy
       state: present
   tags:

@@ -1,6 +1,6 @@
 ---
 - name: Ensure Installed - policycoreutils-python
-  yum:
+  dnf:
       pkg: policycoreutils-python
       state: present
   tags:

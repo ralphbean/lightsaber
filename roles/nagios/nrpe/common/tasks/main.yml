@@ -1,5 +1,5 @@
 - name: nrpe | install nrpe
-  yum:
+  dnf:
       state: latest
       pkg: "{{ item }}"
   with_items:

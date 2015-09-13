@@ -1,5 +1,5 @@
 - name: yum | install yum-cron
-  yum:
+  dnf:
       state: present
       name: yum-cron
   tags:

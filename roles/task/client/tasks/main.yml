@@ -1,5 +1,5 @@
 - name: Install taskwarrior and others
-  yum:
+  dnf:
       name: "{{item}}"
       state: present
   with_items:

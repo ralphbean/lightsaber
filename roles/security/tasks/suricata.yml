@@ -1,5 +1,5 @@
 - name: suricata | Install the suricata intrusion detection system
-  yum:
+  dnf:
       pkg: suricata
       state: present
   tags:
@@ -106,7 +106,7 @@
   - ids
 
 - name: suricata | Make sure ethtool is present
-  yum:
+  dnf:
       pkg: ethtool
       state: present
   tags:

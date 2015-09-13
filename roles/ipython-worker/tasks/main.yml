@@ -1,5 +1,5 @@
 - name: IPython | install required packages
-  yum:
+  dnf:
       state: present
       name: "{{ item }}"
   with_items:

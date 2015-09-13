@@ -4,7 +4,7 @@
       dest: /etc/yum.repos.d/ralph-taskd.repo
 
 - name: task-server | install required packages
-  yum:
+  dnf:
       state: present
       name: "{{ item }}"
   with_items:

@@ -1,5 +1,5 @@
 - name: Ensure nmap is installed
-  yum:
+  dnf:
       name: nmap
       state: installed
   tags:
