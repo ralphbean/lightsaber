@@ -14,7 +14,7 @@
 _forcecolor=yes
 
 default.project=unsorted
-default.priority=H
+uda.priority.default=H
 
 #taskd.certificate=/home/threebean/.task/client.cert.pem
 #taskd.key=/home/threebean/.task/client.key.pem
