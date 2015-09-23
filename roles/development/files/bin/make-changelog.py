@@ -7,6 +7,8 @@ import argparse
 import subprocess as sp
 import sys
 
+import requests
+
 from distutils.version import LooseVersion
 
 
@@ -58,10 +60,25 @@ def get_commits(start, stop):
     return commits
 
 
-def url_for(username, project, slug):
+def commit_url_for(username, project, slug):
     template = "https://github.com/{username}/{project}/commit/{slug}"
-    return template.format(username=username, project=project, slug=slug)
+    return template.format(username=username, project=project, slug=slug[:9])
 
+
+def pull_url_for(username, project, number):
+    template = "https://github.com/{username}/{project}/pull/{number}"
+    return template.format(username=username, project=project, number=number)
+
+def get_pull_info(username, project, number):
+    template = 'https://api.github.com/repos/' + \
+        '{username}/{project}/pulls/{number}'
+    url = template.format(username=username, project=project, number=number)
+    response = requests.get(url)
+    body = response.json()
+    title = body['title']
+    author = body['user']['login']
+    link = pull_url_for(username, project, number)
+    return title, author, link
 
 def main(username, project, version):
 
@@ -81,16 +98,36 @@ def main(username, project, version):
         else:
             commits = commits[:-1]
 
+        relstr = "Merge branch 'release"
+        pullstr = "Merge pull request #"
+
+        commits = [(slug, msg) for slug, msg in commits if relstr not in msg]
+        pulls = [(slug, msg) for slug, msg in commits if pullstr in msg]
+        commits = [(slug, msg) for slug, msg in commits if pullstr not in msg]
+
         print
         print start
         print "-" * len(start)
-        print
+
+        if pulls:
+            print
+            print "Pull Requests"
+            print
+
+        for slug, msg in pulls:
+            number = msg[len(pullstr):].split()[0]
+            title, author, link = get_pull_info(username, project, number)
+            author = "(@%s)" % author
+            print "- %s %s `#%s\n  <%s>`_" % (author.ljust(17), title, number, link)
+
+        if commits:
+            print
+            print "Commits"
+            print
 
         for slug, msg in commits:
-            if "Merge branch 'release" in msg:
-                continue
-            print "- %s `%s <%s>`_" % (
-                msg, slug[:9], url_for(username, project, slug))
+            print "- %s `%s\n  <%s>`_" % (
+                msg, slug[:9], commit_url_for(username, project, slug))
 
 
 if __name__ == '__main__':
