@@ -119,9 +119,9 @@ echo "Cutting release '$new_vers' from '$old_vers' (for $username/$project)"
 if yesno "Is this correct?"; then
     git flow release start $new_vers
     changelog=$(make-changelog.py --username $username --project $project --version $new_vers | vipe)
-    echo $changelog
+    echo "$changelog"
     if yesno "Does this CHANGELOG entry look okay?"; then
-        echo $changelog | cat - CHANGELOG.rst | sponge CHANGELOG.rst
+        echo "$changelog" | cat - CHANGELOG.rst | sponge CHANGELOG.rst
     else
         echo Okay.. bailing.
         exit 1
@@ -148,7 +148,7 @@ if yesno "Do you want to push the release back to github?"; then
 fi
 
 if yesno "Mail that changelog to the infrastructure list?"; then
-    echo $changelog | vipe | mutt -s "[release] $project: $new_vers" infrastructure@lists.fedoraproject.org
+    echo "$changelog" | vipe | mutt -s "[release] $project: $new_vers" infrastructure@lists.fedoraproject.org
 fi
 
 if yesno "Do you want to force a version check with anitya?"; then
