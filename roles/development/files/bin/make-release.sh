@@ -148,7 +148,7 @@ if yesno "Do you want to push the release back to github?"; then
 fi
 
 if yesno "Mail that changelog to the infrastructure list?"; then
-    echo "$changelog" | vipe | mutt -s "[release] $project: $new_vers" infrastructure@lists.fedoraproject.org
+    echo "$changelog" | vipe | mutt -e "source ~/.mutt/redhat" -s "[release] $project: $new_vers" infrastructure@lists.fedoraproject.org
 fi
 
 if yesno "Do you want to force a version check with anitya?"; then
