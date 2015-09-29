@@ -13,7 +13,7 @@ import requests
 
 from distutils.version import LooseVersion
 
-github_session = requests.session()
+requests_session = requests.session()
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -94,7 +94,7 @@ def get_pull_info_github(username, project, number):
         '{username}/{project}/pulls/{number}'
     url = template.format(username=username, project=project, number=number)
     password = commands.getoutput('pass sites/github')
-    response = github_session.get(url, auth=('ralphbean', password))
+    response = requests_session.get(url, auth=('ralphbean', password))
     body = response.json()
     title = body['title']
     author = body['user']['login']
@@ -105,7 +105,7 @@ def get_pull_info_github(username, project, number):
 def get_pull_info_pagure(username, project, number):
     template = 'https://pagure.io/api/0/{project}/pull-request/{number}'
     url = template.format(project=project, number=number)
-    response = github_session.get(url)
+    response = requests_session.get(url)
     body = response.json()
     title = body['title']
     author = body['user']['name']
@@ -117,7 +117,7 @@ def get_pull_request_pagure(project, commit):
     commit_date = arrow.get(commit[1])
     template = 'https://pagure.io/api/0/{project}/pull-requests?status=Merged'
     url = template.format(project=project)
-    response = github_session.get(url)
+    response = requests_session.get(url)
     body = response.json()
     requests = []
     for request in body.get('requests', []):
