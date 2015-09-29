@@ -152,9 +152,15 @@ def main(username, project, version, pagure=False):
 
         relstr = "Merge branch 'release"
         pullstr = "Merge pull request #"
+        get_pull_info = get_pull_info_github
+        pull_url = pull_url_for_github
+        commit_url = commit_url_for_github
 
         if pagure:
             pullstr = "Merge #"
+            get_pull_info = get_pull_info_pagure
+            pull_url = pull_url_for_pagure
+            commit_url = commit_url_for_pagure
 
         commits = [
             (slug, comdate, msg)
@@ -184,7 +190,7 @@ def main(username, project, version, pagure=False):
         if pagure:
             for number, title, author in pulls:
                 author = "(@%s)" % author
-                link = pull_url_for_pagure(project, number)
+                link = pull_url(project, number)
 
                 print "- %s #%s, %s\n  %s" % (author.ljust(17), number, title, link)
 
@@ -192,7 +198,7 @@ def main(username, project, version, pagure=False):
             for slug, msg in pulls:
                 number = msg[len(pullstr):].split()[0]
                 try:
-                    title, author, link = get_pull_info_github(
+                    title, author, link = get_pull_info(
                         username, project, number)
                     author = "(@%s)" % author
                 except KeyError as e:
@@ -201,9 +207,10 @@ def main(username, project, version, pagure=False):
                     # Some fallbacks
                     author = ''
                     title = msg
-                    link = pull_url_for_github(username, project, number)
+                    link = pull_url(username, project, number)
 
-                print "- %s #%s, %s\n  %s" % (author.ljust(17), number, title, link)
+                print "- %s #%s, %s\n  %s" % (
+                    author.ljust(17), number, title, link)
 
         if commits:
             print
@@ -211,13 +218,8 @@ def main(username, project, version, pagure=False):
             print
 
         for slug, comdate, msg in commits:
-            if pagure:
-                print "- %s %s\n  %s" % (
-                    slug[:9], msg, commit_url_for_pagure(project, slug))
-            else:
-                print "- %s %s\n  %s" % (
-                    slug[:9], msg,
-                    commit_url_for_github(username, project, slug))
+            print "- %s %s\n  %s" % (
+                slug[:9], msg, commit_url(username, project, slug))
 
 
 if __name__ == '__main__':
