@@ -65,7 +65,10 @@ def get_commits(start, stop):
     commits = []
     for line in output:
         line = line.split(None, 4)
-        commits.append([line[0], ' '.join(line[1:4]), line[4]])
+        commit_hash = line[0]
+        commit_date = ' '.join(line[1:4])
+        commit_msg = line[4]
+        commits.append([commit_hash, commit_date, commit_msg])
     return commits
 
 
@@ -113,8 +116,8 @@ def get_pull_info_pagure(username, project, number):
     return title, author, link
 
 
-def get_pull_requests_pagure(project, commit):
-    commit_date = arrow.get(commit[1])
+def get_pull_requests_pagure(project, since):
+    commit_date = arrow.get(since)
     template = 'https://pagure.io/api/0/{project}/pull-requests?status=Merged'
     url = template.format(project=project)
     response = requests_session.get(url)
@@ -178,7 +181,13 @@ def main(username, project, version, pagure=False):
         print "-" * len(start)
 
         if pagure:
-            pulls.extend(get_pull_requests_pagure(project, commits[0]))
+            # We first got all the pull-requests that were merged with
+            # a merge commit (like what GitHub does).
+            # Here we want to find all the pull-requests that were merged
+            # fast-forward (which pagure does when possible).
+
+            # commit[0][1] is the date of the first commit retrieved
+            pulls.extend(get_pull_requests_pagure(project, commits[0][1]))
 
         if pulls:
             print
