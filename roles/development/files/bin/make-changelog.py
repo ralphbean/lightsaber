@@ -150,7 +150,12 @@ def main(username, project, version, pagure=False):
         for slug, msg in pulls:
             number = msg[len(pullstr):].split()[0]
             try:
-                title, author, link = get_pull_info(username, project, number)
+                if pagure:
+                    title, author, link = get_pull_info_pagure(
+                        project, number)
+                else:
+                    title, author, link = get_pull_info_github(
+                        username, project, number)
                 author = "(@%s)" % author
             except KeyError as e:
                 sys.stderr.write('Problems getting info for '
