@@ -74,7 +74,7 @@ def commit_url_for_github(username, project, slug):
     return template.format(username=username, project=project, slug=slug[:9])
 
 
-def commit_url_for_pagure(project, slug):
+def commit_url_for_pagure(username, project, slug):
     template = "https://pagure.io/{project}/{slug}"
     return template.format(project=project, slug=slug[:9])
 
@@ -84,7 +84,7 @@ def pull_url_for_github(username, project, number):
     return template.format(username=username, project=project, number=number)
 
 
-def pull_url_for_pagure(project, number):
+def pull_url_for_pagure(username, project, number):
     template = "https://pagure.io/{project}/pull-request/{number}"
     return template.format(project=project, number=number)
 
@@ -109,7 +109,7 @@ def get_pull_info_pagure(username, project, number):
     body = response.json()
     title = body['title']
     author = body['user']['name']
-    link = pull_url_for_pagure(project, number)
+    link = pull_url_for_pagure(None, project, number)
     return title, author, link
 
 
@@ -125,9 +125,7 @@ def get_pull_request_pagure(project, commit):
             request.get('updated_on', request['date_created'])
         )
         if req_update > commit_date:
-            requests.append([
-                request['id'], request['title'], request['user']['name']
-            ])
+            requests.append([request['id'], request['title']])
 
     return requests
 
@@ -187,30 +185,26 @@ def main(username, project, version, pagure=False):
             print "Pull Requests"
             print
 
-        if pagure:
-            for number, title, author in pulls:
-                author = "(@%s)" % author
-                link = pull_url(project, number)
-
-                print "- %s #%s, %s\n  %s" % (author.ljust(17), number, title, link)
-
-        else:
-            for slug, msg in pulls:
+        for slug, msg in pulls:
+            if pagure:
+                number = slug
+            else:
                 number = msg[len(pullstr):].split()[0]
-                try:
-                    title, author, link = get_pull_info(
-                        username, project, number)
-                    author = "(@%s)" % author
-                except KeyError as e:
-                    sys.stderr.write('Problems getting info for '
-                                     '#%s\n%r\n' % (number, e))
-                    # Some fallbacks
-                    author = ''
-                    title = msg
-                    link = pull_url(username, project, number)
 
-                print "- %s #%s, %s\n  %s" % (
-                    author.ljust(17), number, title, link)
+            try:
+                title, author, link = get_pull_info(
+                    username, project, number)
+                author = "(@%s)" % author
+            except KeyError as e:
+                sys.stderr.write('Problems getting info for '
+                                 '#%s\n%r\n' % (number, e))
+                # Some fallbacks
+                author = ''
+                title = msg
+                link = pull_url(username, project, number)
+
+            print "- %s #%s, %s\n  %s" % (
+                author.ljust(17), number, title, link)
 
         if commits:
             print
