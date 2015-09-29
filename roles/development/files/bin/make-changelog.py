@@ -8,6 +8,7 @@ import commands
 import subprocess as sp
 import sys
 
+import arrow
 import requests
 
 from distutils.version import LooseVersion
@@ -58,10 +59,13 @@ def get_tags():
 
 
 def get_commits(start, stop):
-    cmd = "git log {start}...{stop} --pretty=format:'%H %s' --reverse | cat"
+    cmd = "git log {start}...{stop} --pretty=format:'%H %ci %s' --reverse | cat"
     cmd = cmd.format(start=start, stop=stop)
     output = run(cmd)
-    commits = [line.split(None, 1) for line in output]
+    commits = []
+    for line in output:
+        line = line.split(None, 4)
+        commits.append([line[0], ' '.join(line[1:4]), line[4]])
     return commits
 
 
@@ -109,6 +113,25 @@ def get_pull_info_pagure(username, project, number):
     return title, author, link
 
 
+def get_pull_request_pagure(project, commit):
+    commit_date = arrow.get(commit[1])
+    template = 'https://pagure.io/api/0/{project}/pull-requests?status=Merged'
+    url = template.format(project=project)
+    response = github_session.get(url)
+    body = response.json()
+    requests = []
+    for request in body.get('requests', []):
+        req_update = arrow.get(
+            request.get('updated_on', request['date_created'])
+        )
+        if req_update > commit_date:
+            requests.append([
+                request['id'], request['title'], request['user']['name']
+            ])
+
+    return requests
+
+
 def main(username, project, version, pagure=False):
 
     tags = get_tags()
@@ -128,54 +151,63 @@ def main(username, project, version, pagure=False):
             commits = commits[:-1]
 
         relstr = "Merge branch 'release"
-        pullstrs = ["Merge pull request #", "Merge #"]
-        commits = [(slug, msg) for slug, msg in commits if relstr not in msg]
+        pullstr = "Merge pull request #"
 
+        commits = [
+            (slug, comdate, msg)
+            for slug, comdate, msg in commits
+            if relstr not in msg]
         pulls = [
             (slug, msg)
-            for slug, msg in commits
-            for pullstr in pullstrs
+            for slug, comdate, msg in commits
             if pullstr in msg]
-        commits = [(slug, msg) for slug, msg in commits if pullstr not in msg]
+        commits = [
+            (slug, comdate, msg)
+            for slug, comdate, msg in commits
+            if pullstr not in msg]
 
         print
         print start
         print "-" * len(start)
+
+        if pagure:
+            pulls = get_pull_request_pagure(project, commits[0])
 
         if pulls:
             print
             print "Pull Requests"
             print
 
-        for slug, msg in pulls:
-            number = msg[len(pullstr):].split()[0]
-            try:
-                if pagure:
-                    title, author, link = get_pull_info_pagure(
-                        project, number)
-                else:
+        if pagure:
+            for number, title, author in pulls:
+                author = "(@%s)" % author
+                link = pull_url_for_pagure(project, number)
+
+                print "- %s #%s, %s\n  %s" % (author.ljust(17), number, title, link)
+
+        else:
+            for slug, msg in pulls:
+                number = msg[len(pullstr):].split()[0]
+                try:
                     title, author, link = get_pull_info_github(
                         username, project, number)
-                author = "(@%s)" % author
-            except KeyError as e:
-                sys.stderr.write('Problems getting info for '
-                                 '#%s\n%r\n' % (number, e))
-                # Some fallbacks
-                author = ''
-                title = msg
-                if pagure:
-                    link = pull_url_for_pagure(username, project, number)
-                else:
+                    author = "(@%s)" % author
+                except KeyError as e:
+                    sys.stderr.write('Problems getting info for '
+                                     '#%s\n%r\n' % (number, e))
+                    # Some fallbacks
+                    author = ''
+                    title = msg
                     link = pull_url_for_github(username, project, number)
 
-            print "- %s #%s, %s\n  %s" % (author.ljust(17), number, title, link)
+                print "- %s #%s, %s\n  %s" % (author.ljust(17), number, title, link)
 
         if commits:
             print
             print "Commits"
             print
 
-        for slug, msg in commits:
+        for slug, comdate, msg in commits:
             if pagure:
                 print "- %s %s\n  %s" % (
                     slug[:9], msg, commit_url_for_pagure(project, slug))
