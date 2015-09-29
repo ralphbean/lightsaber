@@ -113,7 +113,7 @@ def get_pull_info_pagure(username, project, number):
     return title, author, link
 
 
-def get_pull_request_pagure(project, commit):
+def get_pull_requests_pagure(project, commit):
     commit_date = arrow.get(commit[1])
     template = 'https://pagure.io/api/0/{project}/pull-requests?status=Merged'
     url = template.format(project=project)
