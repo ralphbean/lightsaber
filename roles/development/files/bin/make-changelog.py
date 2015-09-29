@@ -178,7 +178,7 @@ def main(username, project, version, pagure=False):
         print "-" * len(start)
 
         if pagure:
-            pulls.extend(get_pull_request_pagure(project, commits[0]))
+            pulls.extend(get_pull_requests_pagure(project, commits[0]))
 
         if pulls:
             print
