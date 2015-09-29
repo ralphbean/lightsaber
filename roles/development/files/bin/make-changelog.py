@@ -153,6 +153,9 @@ def main(username, project, version, pagure=False):
         relstr = "Merge branch 'release"
         pullstr = "Merge pull request #"
 
+        if pagure:
+            pullstr = "Merge #"
+
         commits = [
             (slug, comdate, msg)
             for slug, comdate, msg in commits
@@ -171,7 +174,7 @@ def main(username, project, version, pagure=False):
         print "-" * len(start)
 
         if pagure:
-            pulls = get_pull_request_pagure(project, commits[0])
+            pulls.extend(get_pull_request_pagure(project, commits[0]))
 
         if pulls:
             print
