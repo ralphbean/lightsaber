@@ -77,7 +77,7 @@ def commit_url_for_github(username, project, slug):
     return template.format(username=username, project=project, slug=slug[:9])
 
 
-def commit_url_for_pagure(username, project, slug):
+def commit_url_for_pagure(_, project, slug):
     template = "https://pagure.io/{project}/{slug}"
     return template.format(project=project, slug=slug[:9])
 
@@ -87,7 +87,7 @@ def pull_url_for_github(username, project, number):
     return template.format(username=username, project=project, number=number)
 
 
-def pull_url_for_pagure(username, project, number):
+def pull_url_for_pagure(_, project, number):
     template = "https://pagure.io/{project}/pull-request/{number}"
     return template.format(project=project, number=number)
 
@@ -105,7 +105,7 @@ def get_pull_info_github(username, project, number):
     return title, author, link
 
 
-def get_pull_info_pagure(username, project, number):
+def get_pull_info_pagure(_, project, number):
     template = 'https://pagure.io/api/0/{project}/pull-request/{number}'
     url = template.format(project=project, number=number)
     response = requests_session.get(url)
