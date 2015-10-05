@@ -125,7 +125,7 @@ def get_pull_requests_pagure(project, since):
     requests = []
     for request in body.get('requests', []):
         req_update = arrow.get(
-            request.get('updated_on', request['date_created'])
+            request.get('closed_at', request['date_created'])
         )
         if req_update > commit_date:
             requests.append([request['id'], request['title']])
