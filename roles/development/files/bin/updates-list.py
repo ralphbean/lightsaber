@@ -1,21 +1,19 @@
 #!/usr/bin/env python
 
-import getpass
 import fedora.client.bodhi
 
-client = fedora.client.bodhi.BodhiClient(
-    username="ralph",
-)
-client.password = getpass.getpass()
+username = "ralph"
+
+client = fedora.client.bodhi.Bodhi2Client()
 
 print " * Making query against bodhi."
 data = client.query(
     status="testing",
-    mine=True,
+    user=username,
     limit=999,
 )
 
-link = lambda s: "https://admin.fedoraproject.org/updates/%s" % s
+link = lambda s: "https://bodhi.fedoraproject.org/updates/%s" % s
 
 good, bad = [], []
 
@@ -23,10 +21,8 @@ good, bad = [], []
 for update in data['updates']:
     if update.request:
         continue
-    for comment in update.comments:
-        if 'can be pushed to stable now' in comment.text:
-            good.append(update)
-            break
+    if update.meets_testing_requirements:
+        good.append(update)
     else:
         bad.append(update)
 
