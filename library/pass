@@ -15,6 +15,7 @@ def main():
         argument_spec=dict(
             name=dict(required=True),
         ),
+        supports_check_mode=True,
     )
 
     name = module.params['name']
