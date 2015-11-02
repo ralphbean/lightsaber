@@ -7,39 +7,28 @@ module: pass
 short_description: Query a local 'pass' database
 # ... snip ...
 '''
+# TODO examples
 
-import json
-import shlex
-import subprocess as sp
-import sys
 
-# read the argument string from the arguments file
-args_file = sys.argv[1]
-args_data = file(args_file).read()
+def main():
+    module = AnsibleModule(
+        argument_spec=dict(
+            name=dict(required=True),
+        ),
+        supports_check_mode=True,
+    )
 
-args_lookup = {}
-arguments = shlex.split(args_data)
+    name = module.params['name']
 
-if len(arguments) != 1:
-    print json.dumps({
-        "failed": True,
-        "msg": "Expected 1 argument but got %r" % arguments,
-    })
-    sys.exit(1)
+    pass_bin = module.get_bin_path('pass', required=True)
+    cmd = [pass_bin, name]
+    (rc, stdout, stderr) = module.run_command(cmd)
 
-name = arguments[0]
+    if rc != 0:
+        module.fail_json(msg="Failed stdout: %r, stderr: %r" % (stdout, stderr))
 
-proc = sp.Popen(['pass', name], stdout=sp.PIPE, stderr=sp.PIPE)
-stdout, stderr = proc.communicate()
-if proc.returncode != 0:
-    print json.dumps({
-        "failed": True,
-        "msg": "Failed stdout: %r, stderr: %r" % (stdout, stderr),
-    })
-    sys.exit(1)
+    module.exit_json(changed=True, secret=stdout.strip())
 
-# Report that we are happy.
-print json.dumps({
-    "changed" : True,
-    "secret": stdout.strip(),
-})
+from ansible.module_utils.basic import *
+if __name__ == '__main__':
+    main()
