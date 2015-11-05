@@ -2,18 +2,18 @@
 # `Everything You Need To Know To Start Using GnuPG with Mutt'
 # http://codesorcery.net/old/mutt/mutt-gnupg-howto
 
-set pgp_decode_command="gpg %?p?--use-agent? --no-verbose --batch --output - %f"
-set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
-set pgp_decrypt_command="gpg --use-agent --no-verbose --batch --output - %f"
-set pgp_sign_command="gpg --no-verbose --batch --output - --use-agent --armor --detach-sign --textmode %?a?-u %a? %f"
-set pgp_clearsign_command="gpg --no-verbose --batch --output - --use-agent --armor --textmode --clearsign %?a?-u %a? %f"
-set pgp_encrypt_only_command="/usr/bin/pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
-set pgp_encrypt_sign_command="/usr/bin/pgpewrap gpg --use-agent --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
-set pgp_import_command="gpg --no-verbose --import -v %f"
-set pgp_export_command="gpg --no-verbose --export --armor %r"
-set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
-set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r" 
-set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r" 
+set pgp_decode_command="gpg2 %?p?--use-agent? --no-verbose --output - %f"
+set pgp_verify_command="gpg2 --no-verbose --output - --verify %s %f"
+set pgp_decrypt_command="gpg2 --use-agent --no-verbose --output - %f"
+set pgp_sign_command="gpg2 --no-verbose --output - --use-agent --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_clearsign_command="gpg2 --no-verbose --output - --use-agent --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_encrypt_only_command="/usr/bin/pgpewrap gpg2 --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
+set pgp_encrypt_sign_command="/usr/bin/pgpewrap gpg2 --use-agent --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
+set pgp_import_command="gpg2 --no-verbose --import -v %f"
+set pgp_export_command="gpg2 --no-verbose --export --armor %r"
+set pgp_verify_key_command="gpg2 --no-verbose --fingerprint --check-sigs %r"
+set pgp_list_pubring_command="gpg2 --no-verbose --with-colons --list-keys %r" 
+set pgp_list_secring_command="gpg2 --no-verbose --with-colons --list-secret-keys %r" 
 
 # If you want all of your email to be autosigned, use this.
 # I only sign email sent from my school address, not gmail, so
