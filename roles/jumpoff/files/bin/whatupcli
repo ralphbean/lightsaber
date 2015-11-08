@@ -17,4 +17,4 @@ response = requests.get('http://www.finnie.org/stuff/whatup.txt')
 contents = response.text
 lines = [t.split('> ', 1)[1] for t in contents.split('\n') if t.strip()]
 choice = random.choice(lines)
-print choice.encode('utf-8')
+print choice.strip().encode('utf-8')
