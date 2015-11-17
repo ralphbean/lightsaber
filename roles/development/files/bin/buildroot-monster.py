@@ -28,6 +28,6 @@ if __name__ == '__main__':
     notes = raw_input("Notes: ")
     print "-" * 20
 
-    tmpl = "bodhi --user ralph --notes=\"{notes}\" --buildroot-override={nvra} --duration=20"
+    tmpl = "~/.virtualenvs/bodhi-python2.7/bin/bodhi overrides save {nvra} --user ralph --notes=\"{notes}\" --duration=20"
     print " &&\\\n".join([tmpl.format(nvra=build, notes=notes)
                           for build in sorted(list(builds))])
