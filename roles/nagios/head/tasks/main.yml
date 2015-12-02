@@ -32,6 +32,17 @@
   tags:
   - nagios
 
+- name: nagios | create a directory that it appears we need.
+  file:
+      dest=/var/log/nagios/rw/
+      owner=nagios
+      group=nagios
+      seuser=system_u
+      setype=nagios_log_t
+      state=directory
+  notify: restart nagios
+  tags: nagios
+
 - name: nagios | add our master nagios config
   copy:
     src: "{{ item }}"
