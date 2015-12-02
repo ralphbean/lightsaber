@@ -6,12 +6,18 @@ Run this after you have made a change, committed and build the master branch.
 """
 
 import argparse
-import getpass
 import os
 import sh
 import sys
 import six
 import textwrap
+
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
+import fedmsg
+import koji
+build_state_names = {v: k for k, v in koji.BUILD_STATES.items()}
 
 # sigh..
 import time
@@ -146,62 +152,71 @@ def main():
         #p = sh.fedpkg.push(**io)
         #p.wait()
         os.system("git push --set-upstream origin " + branch['short'])
-        time.sleep(3)
+        time.sleep(0.5)
 
         if not args.skip:
-            if args.forgive:
-                try:
-                    p = sh.fedpkg.build(**io)
-                    p.wait()
-                except Exception, e:
-                    print "*" * 30
-                    print str(e)
-                    print "*" * 30
-            else:
-                p = sh.fedpkg.build(**io)
-                p.wait()
+            os.system("fedpkg build --nowait")
 
-        # For development...
-        executable = os.path.expanduser(
-            '~/.virtualenvs/bodhi-python2.7/bin/bodhi'
-        )
-        cmd = "%s updates new %s --user %s --type %s --notes \"%s\"" % (
-            executable, nevra, args.user, args.type, args.notes,
-        )
+    nevras = []
+    for branch_key in branch_keys:
+        branch = [b for b in branches if b['short'] == branch_key][0]
+        nevra = nevr + '.' + branch['long']
+        nevras.append(nevra)
 
-        if args.bugs:
-            cmd += " --bugs %s" % args.bugs
+    print "Waiting for build results over fedmsg..."
+    found = 0
+    for n, e, topic, msg in fedmsg.tail_messages():
+        if topic != 'org.fedoraproject.prod.buildsys.build.state.change':
+            continue
+        if msg['msg']['instance'] != 'primary':
+            continue
 
-        print cmd
-        #foo = raw_input("Create a bodhi update in another window... (continue)")
+        state = msg['msg']['new']
+        state = build_state_names[state]
 
-        bodhi_cmds.append(cmd)
+        nevra = "-".join([
+            msg['msg']['name'],
+            msg['msg']['version'],
+            msg['msg']['release'],
+        ])
+        if nevra not in nevras:
+            print "(ignoring)", nevra, state
+            continue
 
-        ## Submit a new update.
-        #kwargs = {
-        #    'new': True,
-        #    'user': args.user,
-        #    'type': args.type,
-        #    'notes': args.notes,
-        #}
-        #kwargs.update(io)
-        #p = sh.bodhi(nevra, **kwargs)
-        #p.wait()
+        print nevra, state
 
+        if state == 'BUILDING':
+            continue
 
-        # Ok.. we don't *really* need a buildroot override.
-        ## Buildroot override
-        #kwargs = {
-        #    'user': args.user,
-        #    'buildroot-override': nevra,
-        #    'duration': args.duration,
-        #    'notes': args.notes,
-        #}
-        #kwargs.update(io)
-        #p = sh.bodhi(**kwargs)
-        #p.wait()
+        for branch_key in branch_keys:
+            branch = [b for b in branches if b['short'] == branch_key][0]
+            if nevra.endswith(branch['long']):
+                found += 1
 
-    print " && ".join(bodhi_cmds)
+        if found == len(branch_keys):
+            break
+
+    nevras = []
+    for branch_key in branch_keys:
+        branch = [b for b in branches if b['short'] == branch_key][0]
+        nevra = nevr + '.' + branch['long']
+        nevras.append(nevra)
+
+    # For development...
+    executable = os.path.expanduser(
+        '~/.virtualenvs/bodhi-python2.7/bin/bodhi'
+    )
+    cmd = "%s updates new %s --user %s --type %s --notes \"%s\"" % (
+        executable, ",".join(nevras), args.user, args.type, args.notes,
+    )
+
+    if args.bugs:
+        cmd += " --bugs %s" % args.bugs
+
+    print
+    print "-" * 40
+    print cmd
+    # TODO -- actually submit the update via the python API instead..
 
 
 if __name__ == '__main__':
