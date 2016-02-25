@@ -129,6 +129,12 @@ if yesno "Is this correct?"; then
 
     sed -i "s/$old_vers/$new_vers/g" setup.py
     git add CHANGELOG.rst setup.py
+
+    if yesno "Bump a specfile also?"; then
+        rpmdev-bumpspec -n $new_vers *.spec
+        git add *.spec
+    fi
+
     git commit -m $new_vers
     if yesno "Do you want to shoot this off to PyPI?"; then
         if [ -f Makefile ]; then
