@@ -96,7 +96,7 @@ def get_pull_info_github(username, project, number):
     template = 'https://api.github.com/repos/' + \
         '{username}/{project}/pulls/{number}'
     url = template.format(username=username, project=project, number=number)
-    password = commands.getoutput('pass sites/github')
+    password = commands.getoutput('pass sites/github').split('\n')[-1].strip()
     response = requests_session.get(url, auth=('ralphbean', password))
     body = response.json()
     title = body['title']
