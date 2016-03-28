@@ -80,7 +80,7 @@
   - vars/global.yml
   - vars/private.yml
   roles:
-  - irc
+  - irc/external
 
 - name: playbook | site | Set up computer01 content
   hosts: computer01
