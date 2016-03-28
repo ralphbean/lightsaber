@@ -27,6 +27,7 @@ dynamic
 [threebean:children]
 threebean-local
 dynamic
+fedorashell
 
 [decause:children]
 decause-local
