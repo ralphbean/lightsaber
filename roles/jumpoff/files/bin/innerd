@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ssh rbean@fedorashell.rdu.redhat.com -t 'tmux attach'
