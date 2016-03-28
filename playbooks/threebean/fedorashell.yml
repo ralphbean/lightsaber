@@ -1,0 +1,7 @@
+---
+- name: Set up internal bouncer
+  hosts: fedorashell
+  vars_files:
+  - vars/global.yml
+  roles:
+  - irc/internal

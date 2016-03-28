@@ -1,0 +1,11 @@
+- name: Copy weechat config with rsync
+  synchronize:
+      src: weechat/
+      dest: "~/.weechat/"
+  tags: irc
+
+- name: Copy weechat config template directly
+  template:
+      src: irc.conf
+      dest: "~/.weechat/irc.conf"
+  tags: irc
