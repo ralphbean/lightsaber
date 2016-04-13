@@ -6,7 +6,9 @@ phrase="1-weeks-ago"
 fmt="%Y-%m-%d"
 start=$(date +$fmt -d $phrase)
 end=$(date +$fmt)
-filter="project.isnt:apply project.isnt:family project.isnt:xmas project.isnt:cersc project.isnt:iso project.isnt:monroe project.isnt:house project.isnt:misc project.isnt:rit project.isnt:tos-rit-projects-seminar project.isnt:music project.isnt:hfoss project.isnt:wrns $1"
+# when I started my new job.
+epoch="2016-04-11"
+filter="project.isnt:family project.isnt:xmas project.isnt:cersc project.isnt:iso project.isnt:house project.isnt:wrns $1"
 config="rc.defaultwidth=180 rc.defaultheight=75 rc._forcecolor=yes"
 
 echo "    (generated at $(date))"
@@ -27,8 +29,8 @@ echo " -- Summary -- "
 echo
 echo
 echo " -- History -- "
-/usr/bin/task $config $filter history
-/usr/bin/task $config $filter ghistory
-/usr/bin/task $config $1 burndown.monthly
-/usr/bin/task $config $1 burndown
-/usr/bin/task $config $1 burndown.daily
+/usr/bin/task $config entry.after:$epoch $filter history
+/usr/bin/task $config entry.after:$epoch $filter ghistory
+/usr/bin/task $config entry.after:$epoch $1 burndown.monthly
+/usr/bin/task $config entry.after:$epoch $1 burndown
+/usr/bin/task $config entry.after:$epoch $1 burndown.daily
