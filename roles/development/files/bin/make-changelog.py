@@ -53,7 +53,7 @@ def get_tags():
     cmd = "git tag -l"
     tags = run(cmd)
     tags.sort(key=LooseVersion)
-    if 'develop' in run('git branch'):
+    if any(['develop' in line for line in run('git branch')]):
         tags.append('develop')
     return list(reversed(tags))
 
