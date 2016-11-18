@@ -1,11 +1,8 @@
 # ~/.bugwarriorrc
 #
 
-# Here you define a comma separated list of targets.  Each of them must have a
-# section below determining their properties, how to query them, etc.  The name
-# is just a symbol, and doesn't have any functional importance.
 [general]
-targets = github, fi_github, bitbucket, moksha, fedora-packages, bz.redhat, infra, badges-ideas
+targets = github, bz.redhat, pagure-ralph, jira.redhat, taiga, gerrit
 
 shorten = True
 inline_links = False
@@ -17,94 +14,40 @@ log.file = /home/threebean/bugwarrior.log
 multiprocessing = True
 legacy_matching = False
 
-#experimental = True
+[gerrit]
+service = gerrit
+gerrit.base_uri = https://code.engineering.redhat.com/gerrit/
+gerrit.username = rbean
+gerrit.password = @oracle:eval:pass sys/gerrit
+gerrit.ssl_ca_path: ~/.mbsync.redhat.crt
 
-#[notifications]
-#notifications = True
-#backend = pynotify
+[taiga]
+service = taiga
+taiga.base_uri = http://taiga.fedorainfracloud.org
+taiga.auth_token = @oracle:eval:pass sys/taiga-bearer
 
-#[qa-devel]
-#service = phabricator
-#
-#add_tags = taskotron
+[jira.redhat]
+service = jira
+jira.base_uri = https://projects.engineering.redhat.com
+jira.username = rbean
+jira.password = @oracle:eval:pass mail/redhat/krb5
 
-# This is a github example.  It says, "scrape every issue from every repository
-# on http://github.com/ralphbean.  It doesn't matter if ralphbean owns the issue
-# or not."
+jira.verify_ssl = False
+jira.import_labels_as_tags = True
+jira.import_sprints_as_tags = True
+jira.default_priority = H
+
 [github]
 service = github
 github.username = ralphbean
-github.default_priority = M
+github.default_priority = L
 
 github.login = ralphbean
 github.password = @oracle:eval:pass sites/github
 
-[fi_github]
-service = github
-github.username = fedora-infra
-github.default_priority = M
+github.exclude_repos = pep8bot
 
-github.exclude_repos = mobile,fas,pkgdb
-
-github.login = ralphbean
-github.password = @oracle:eval:pass sites/github
-
-# This is the same thing, but for bitbucket.  Each target entry must have a
-# 'service' attribute which must be one of 'github', 'bitbucket', or 'trac'.
-[bitbucket]
-service = bitbucket
-bitbucket.username = ralphbean
-
-[badges-ideas]
-service = trac
-
-trac.base_uri = fedorahosted.org/fedora-badges
-trac.username = ralph
-trac.password = @oracle:eval:pass sys/fas
-
-#only_if_assigned = ralph
-#also_unassigned = True
-
-[moksha]
-service = trac
-
-trac.base_uri = fedorahosted.org/moksha
-trac.username = ralph
-trac.password = @oracle:eval:pass sys/fas
-
-only_if_assigned = ralph
-#trac.also_unassigned = True
-
-#[bodhi]
-#service = trac
-#
-#trac.base_uri = fedorahosted.org/bodhi
-#trac.username = ralph
-#trac.password = @oracle:eval:pass sys/fas
-#
-#only_if_assigned = ralph
-##also_unassigned = True
-
-[fedora-packages]
-service = trac
-
-trac.base_uri = fedorahosted.org/fedoracommunity
-trac.username = ralph
-trac.password = @oracle:eval:pass sys/fas
-
-only_if_assigned = ralph
-#also_unassigned = True
-
-[infra]
-service = trac
-
-trac.base_uri = fedorahosted.org/fedora-infrastructure
-trac.username = ralph
-trac.password = @oracle:eval:pass sys/fas
-
-only_if_assigned = ralph
-#also_unassigned = True
-
+github.import_labels_as_tags = True
 
 [bz.redhat]
 service = bugzilla
@@ -112,3 +55,10 @@ service = bugzilla
 bugzilla.base_uri = bugzilla.redhat.com
 bugzilla.username = rbean@redhat.com
 bugzilla.password = @oracle:eval:pass sites/rhbz
+
+[pagure-ralph]
+service = pagure
+pagure.base_url = https://pagure.io
+pagure.tag = ralph
+pagure.import_tags = True
+#pagure.exclude_repos = pagure,ipsilon
